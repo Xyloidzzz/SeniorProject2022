@@ -10,8 +10,6 @@ Jesus Mendez, Jaehun Kim, and Alfredo Pena working along Dr.Chen on a Gradebook 
 
 You'll find the full site here: _when done link here_
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Dev Instructions
 
 First, run the development server:
