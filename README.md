@@ -1,4 +1,4 @@
-# GradeBuddy
+# GradeFlex
 
 _work in progress title_
 
