@@ -70,11 +70,11 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .card {
-  margin: 1rem;
+  margin: 2rem;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
