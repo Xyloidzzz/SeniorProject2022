@@ -1,6 +1,7 @@
-import { Container, Box } from '@chakra-ui/react'
+import { Container, Box, Heading } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
+import Login from '@/components/Login'
 
 export default function Home() {
   return (
@@ -13,21 +14,10 @@ export default function Home() {
       />
 
       <Box className={styles.main}>
-        <h1 className={styles.title}>GradeBook</h1>
-
-        <div>
-          <form action='/classlist' className={styles.card}>
-            <label htmlFor='username'> Username</label>
-            <br />
-            <input type='text'></input>
-            <br />
-            <label htmlFor='password'>Password</label>
-            <br />
-            <input type='text'></input>
-            <br />
-            <input type='submit' value='Login'></input>
-          </form>
-        </div>
+        <Heading as='h1' size='4xl' isTruncated>
+          GradeBook
+        </Heading>
+        <Login width='200px' />
       </Box>
     </Container>
   )
