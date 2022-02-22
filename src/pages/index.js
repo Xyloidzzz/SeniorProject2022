@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '@/styles/Home.module.css'
 
 export default function Home() {
   return (
@@ -18,9 +17,9 @@ export default function Home() {
 
         <div>
           <form action="/classlist" className={styles.card}>
-            <label for="username"> Username</label><br></br>
+            <label htmlFor="username"> Username</label><br></br>
             <input type="text"></input><br/>
-            <label for="password">Password</label><br/>
+            <label htmlFor="password">Password</label><br/>
             <input type="text"></input><br/>
             <input type="submit" value="Login"></input>
           </form>

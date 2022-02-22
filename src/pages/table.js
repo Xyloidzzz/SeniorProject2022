@@ -1,5 +1,5 @@
-import SideMenu from "../components/sidemenu"
-import styles from "../styles/Home.module.css"
+import SideMenu from "@/components/SideMenu"
+import styles from "@/styles/Home.module.css"
 
 export default function table(){
     return(

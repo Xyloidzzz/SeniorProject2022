@@ -1,6 +1,6 @@
-import HeadInfo from '../components/Headinfo'
-// import styles from '../styles/Home.module.css'
-import list from '../styles/Classrooms.module.css'
+import HeadInfo from '@/components/HeadInfo'
+// import styles from '@/styles/Home.module.css'
+import list from '@/styles/Classrooms.module.css'
 import Link from 'next/link'
 
 const classList = () =>{
@@ -16,8 +16,8 @@ const classList = () =>{
                 <ul>
                     <li>
                         <h2>Class Name1</h2>
-                        <Link href='/classroom'>                     
-                        <button>Enter</button>
+                        <Link href='/classroom' passHref>
+                            <button>Enter</button>
                         </Link>   
                     </li>
                     {/* <li>
@@ -35,13 +35,7 @@ const classList = () =>{
                 </ul>
             
             </main>
-
-
-
-
-
         </div>
-        
         </>
     )
 }

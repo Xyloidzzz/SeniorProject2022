@@ -1,4 +1,4 @@
-import styles from '../styles/Classrooms.module.css'
+import styles from '@/styles/Classrooms.module.css'
 import Link from 'next/link'
 
 export default function SideMenu({option1, route1}){
