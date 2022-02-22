@@ -1,19 +1,23 @@
+import { Box } from '@chakra-ui/react'
 import Head from 'next/head'
-const HeadInfo = ({ title, keyword, description }) => {
+
+const HeadInfo = ({ title, keyword, description, icon }) => {
   return (
-    <div>
+    <Box>
       <Head>
         <title>{title}</title>
         <meta keyword={keyword}></meta>
-        <meta description={description}></meta>
+        <meta name='description' content={description}></meta>
+        <link rel='icon' href={icon} />
       </Head>
-    </div>
+    </Box>
   )
 }
 HeadInfo.defaultProps = {
   title: 'Gradebook',
   keyword: 'Login',
-  contents: 'gradebook system',
+  description: 'gradebook system',
+  icon: '/favicon.ico',
 }
 
 export default HeadInfo

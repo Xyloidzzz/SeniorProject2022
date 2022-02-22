@@ -1,5 +1,4 @@
 import HeadInfo from '@/components/HeadInfo'
-// import styles from '@/styles/Home.module.css'
 import list from '@/styles/Classrooms.module.css'
 import Link from 'next/link'
 
@@ -7,7 +6,11 @@ const classList = () => {
   return (
     <>
       <div>
-        <HeadInfo title='class rooms'></HeadInfo>
+        <HeadInfo
+          title='Classrooms'
+          keyword='classrooms'
+          description='classroom list'
+        />
 
         <h1 className={list.head}>My class lists</h1>
         <button>Edit</button>

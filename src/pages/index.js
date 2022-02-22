@@ -1,22 +1,24 @@
-import Head from 'next/head'
+import { Container, Box } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
+import HeadInfo from '@/components/HeadInfo'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Grade Book</title>
-        <meta name='description' content='gradebook system' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+    <Container>
+      <HeadInfo
+        title='GradeBook'
+        keyword='home'
+        description='gradebook system'
+        icon='/favicon.ico'
+      />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to Grade Book</h1>
+      <Box className={styles.main}>
+        <h1 className={styles.title}>GradeBook</h1>
 
         <div>
           <form action='/classlist' className={styles.card}>
             <label htmlFor='username'> Username</label>
-            <br></br>
+            <br />
             <input type='text'></input>
             <br />
             <label htmlFor='password'>Password</label>
@@ -26,7 +28,7 @@ export default function Home() {
             <input type='submit' value='Login'></input>
           </form>
         </div>
-      </main>
-    </div>
+      </Box>
+    </Container>
   )
 }
