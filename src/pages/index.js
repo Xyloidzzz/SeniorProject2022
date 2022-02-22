@@ -14,10 +14,10 @@ export default function Home() {
       />
 
       <Box className={styles.main}>
-        <Heading as='h1' size='4xl' isTruncated>
+        <Heading as='h1' size='4xl'>
           GradeBook
         </Heading>
-        <Login width='200px' />
+        <Login width='200px' padding='10' />
       </Box>
     </Container>
   )
