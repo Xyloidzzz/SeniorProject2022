@@ -5,7 +5,7 @@ import Login from '@/components/Login'
 
 export default function Home() {
   return (
-    <Container>
+    <Container className={styles.main}>
       <HeadInfo
         title='GradeBook'
         keyword='home'
@@ -13,7 +13,7 @@ export default function Home() {
         icon='/favicon.ico'
       />
 
-      <Box className={styles.main}>
+      <Box>
         <Heading as='h1' size='4xl'>
           GradeBook
         </Heading>

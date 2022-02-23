@@ -49,14 +49,13 @@ const Login = ({ width, height, padding }) => {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <NextLink href='/classlist' passHref>
+          <NextLink href='/portal' passHref>
             <Link>
               <IconButton
                 aria-label='Login'
                 icon={<ArrowForwardIcon />}
                 mt={4}
                 colorScheme='blue'
-                type='submit'
               >
                 Login
               </IconButton>
