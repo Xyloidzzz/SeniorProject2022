@@ -17,7 +17,7 @@ HeadInfo.defaultProps = {
   title: 'Gradebook',
   keyword: 'Login',
   description: 'gradebook system',
-  icon: '/favicon.ico',
+  icon: '/grade_icon.ico',
 }
 
 export default HeadInfo
