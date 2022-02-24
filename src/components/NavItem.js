@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router'
 import { Flex, Text, Icon, Link, Menu, MenuButton } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
 export default function NavItem({ icon, title, link, active, navSize }) {
+  const router = useRouter()
   return (
     <Flex
       mt={15}

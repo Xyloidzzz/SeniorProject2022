@@ -8,7 +8,14 @@ import {
   Avatar,
   Heading,
 } from '@chakra-ui/react'
-import { BiMenu, BiHome, BiListUl, BiBook, BiCog } from 'react-icons/bi'
+import {
+  BiMenu,
+  BiHome,
+  BiListUl,
+  BiBook,
+  BiBookOpen,
+  BiCog,
+} from 'react-icons/bi'
 import NavItem from '@/components/NavItem'
 
 //TODO: Make Seperate SideBar Children for classlist and classroom
@@ -64,8 +71,19 @@ export default function Sidebar() {
           icon={BiBook}
           title='Gradebook'
           link='/classlist'
-          active={router.pathname == '/classlist' ? true : false}
+          active={
+            router.pathname == '/classlist' || '/classroom' ? true : false
+          }
         />
+        {/* {router.pathname == '/classroom' && (
+          <NavItem
+            navSize={navSize}
+            icon={BiBookOpen}
+            title='Classroom 1'
+            link='/classroom'
+            active={router.pathname == '/classroom' ? true : false}
+          />
+        )} */}
         <NavItem navSize={navSize} icon={BiCog} title='Settings' link='#' />
       </Flex>
 
