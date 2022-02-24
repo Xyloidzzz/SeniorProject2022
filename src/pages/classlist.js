@@ -23,11 +23,6 @@ const ClassList = () => {
         <Box width='full' flex='1'>
           <SideBar />
         </Box>
-        {/* <Box>
-          <Heading fontSize='xl'>Classrooms</Heading>
-          <Button>Edit</Button>
-          <Button>Add Class</Button>
-        </Box> */}
         <Box width='full' flex='16'>
           <ClassroomListMain />
         </Box>

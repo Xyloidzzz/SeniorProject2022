@@ -43,6 +43,7 @@ const ClassBlock = ({ title, description, link, ...rest }) => {
             </IconButton>
           </Link>
         </NextLink>
+        {/* TODO: Add edit button here. */}
       </Box>
     </Flex>
   )
