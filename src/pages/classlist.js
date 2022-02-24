@@ -29,7 +29,6 @@ const ClassList = () => {
           <Button>Edit</Button>
           <Button>Add Class</Button>
         </Box> */}
-        {/* TODO: Fix this box. Padding and Margins are wack. */}
         <Box width='full' flex='8'>
           <ClassroomListMain />
         </Box>
