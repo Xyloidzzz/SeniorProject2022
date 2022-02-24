@@ -7,16 +7,8 @@ import {
   Avatar,
   Heading,
 } from '@chakra-ui/react'
-import {
-  FiMenu,
-  FiHome,
-  FiCalendar,
-  FiUser,
-  FiDollarSign,
-  FiBriefcase,
-  FiSettings,
-} from 'react-icons/fi'
-import { IoPawOutline } from 'react-icons/io5'
+import { FiMenu, FiHome, FiSettings } from 'react-icons/fi'
+import { BiBook } from 'react-icons/bi'
 import NavItem from '@/components/NavItem'
 
 //TODO: Remove Crap we don't need.
@@ -58,7 +50,7 @@ export default function Sidebar() {
           title='Dashboard'
           description='This is the description for the dashboard.'
         />
-        <NavItem navSize={navSize} icon={FiCalendar} title='Calendar' active />
+        <NavItem navSize={navSize} icon={BiBook} title='Gradebook' active />
         <NavItem navSize={navSize} icon={FiSettings} title='Settings' />
       </Flex>
 

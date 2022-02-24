@@ -1,44 +1,41 @@
-import { Box, Button, Container, Flex, Heading, Stack } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Spacer,
+  Stack,
+} from '@chakra-ui/react'
 import HeadInfo from '@/components/HeadInfo'
-import ClassBlock from '@/components/ClassBlock'
+import ClassroomListMain from '@/components/ClassroomListMain'
 import SideBar from '@/components/SideBar'
 import styles from '@/styles/Classrooms.module.css'
 
-const classList = () => {
+const ClassList = () => {
   return (
-    <Container m='0' p='0'>
+    <Flex width='full' m='0' p='0'>
       <HeadInfo
         title='Classrooms'
         keyword='classrooms'
         description='classroom list'
       />
-      <Flex w='100%'>
-        <SideBar />
+      <Flex width='full' flexDir='row'>
+        <Box width='full' flex='1'>
+          <SideBar />
+        </Box>
         {/* <Box>
           <Heading fontSize='xl'>Classrooms</Heading>
           <Button>Edit</Button>
           <Button>Add Class</Button>
         </Box> */}
-        <Flex
-          pos='absolute'
-          top='50%'
-          left='50%'
-          transform='translate(-50%, -50%)'
-        >
-          {/* TODO: Fix this box. Padding and Margins are wack. */}
-          <Box className={styles.main}>
-            <Stack>
-              <ClassBlock
-                title='Classroom 1'
-                description='This is a classroom description.'
-                link='/classroom'
-              ></ClassBlock>
-            </Stack>
-          </Box>
-        </Flex>
+        {/* TODO: Fix this box. Padding and Margins are wack. */}
+        <Box width='full' flex='8'>
+          <ClassroomListMain />
+        </Box>
       </Flex>
-    </Container>
+    </Flex>
   )
 }
 
-export default classList
+export default ClassList
