@@ -28,7 +28,7 @@ const ClassList = () => {
           <Button>Edit</Button>
           <Button>Add Class</Button>
         </Box> */}
-        <Box width='full' flex='8'>
+        <Box width='full' flex='16'>
           <ClassroomListMain />
         </Box>
       </Flex>
