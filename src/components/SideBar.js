@@ -7,25 +7,24 @@ import {
   Avatar,
   Heading,
 } from '@chakra-ui/react'
-import { FiMenu, FiHome, FiSettings } from 'react-icons/fi'
-import { BiBook } from 'react-icons/bi'
+import { BiMenu, BiHome, BiListUl, BiBook, BiCog } from 'react-icons/bi'
 import NavItem from '@/components/NavItem'
 
-//TODO: Remove Crap we don't need.
 //TODO: Make Seperate SideBar Children for classlist and classroom
 export default function Sidebar() {
   const [navSize, changeNavSize] = useState('large')
   return (
     <Flex
       pos='sticky'
-      left='5'
-      h='95vh'
-      marginTop='2.5vh'
+      h='100vh'
       boxShadow='0 4px 12px 0 rgba(0, 0, 0, 0.05)'
-      borderRadius={navSize == 'small' ? '15px' : '30px'}
+      borderRight='1px'
+      borderColor='gray.200'
+      // borderRadius={navSize == 'small' ? '15px' : '30px'}
       w={navSize == 'small' ? '75px' : '200px'}
       flexDir='column'
       justifyContent='space-between'
+      backgroundColor='gray.100'
     >
       <Flex
         p='5%'
@@ -38,20 +37,27 @@ export default function Sidebar() {
           background='none'
           mt={5}
           _hover={{ background: 'none' }}
-          icon={<FiMenu />}
+          icon={<BiMenu />}
           onClick={() => {
             if (navSize == 'small') changeNavSize('large')
             else changeNavSize('small')
           }}
         />
+        <NavItem navSize={navSize} icon={BiHome} title='Dashboard' link='#' />
         <NavItem
           navSize={navSize}
-          icon={FiHome}
-          title='Dashboard'
-          description='This is the description for the dashboard.'
+          icon={BiListUl}
+          title='Students List'
+          link='#'
         />
-        <NavItem navSize={navSize} icon={BiBook} title='Gradebook' active />
-        <NavItem navSize={navSize} icon={FiSettings} title='Settings' />
+        <NavItem
+          navSize={navSize}
+          icon={BiBook}
+          title='Gradebook'
+          link='/classlist'
+          active // TODO: figure out how to pass this from page and active the right one
+        />
+        <NavItem navSize={navSize} icon={BiCog} title='Settings' link='#' />
       </Flex>
 
       <Flex

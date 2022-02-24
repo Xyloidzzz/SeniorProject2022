@@ -10,7 +10,6 @@ import {
 import HeadInfo from '@/components/HeadInfo'
 import ClassroomListMain from '@/components/ClassroomListMain'
 import SideBar from '@/components/SideBar'
-import styles from '@/styles/Classrooms.module.css'
 
 const ClassList = () => {
   return (
