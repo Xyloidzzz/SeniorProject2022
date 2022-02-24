@@ -49,6 +49,7 @@ const Login = ({ width, height, padding }) => {
               </Button>
             </InputRightElement>
           </InputGroup>
+          <a href="">sign up</a><br/>
           <NextLink href='/portal' passHref>
             <Link>
               <IconButton
