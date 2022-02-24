@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   Flex,
   Text,
@@ -12,6 +13,7 @@ import NavItem from '@/components/NavItem'
 
 //TODO: Make Seperate SideBar Children for classlist and classroom
 export default function Sidebar() {
+  const router = useRouter()
   const [navSize, changeNavSize] = useState('large')
   return (
     <Flex
@@ -43,19 +45,26 @@ export default function Sidebar() {
             else changeNavSize('small')
           }}
         />
-        <NavItem navSize={navSize} icon={BiHome} title='Dashboard' link='#' />
+        <NavItem
+          navSize={navSize}
+          icon={BiHome}
+          title='Dashboard'
+          link='#'
+          active={router.pathname == '/dashboard' ? true : false}
+        />
         <NavItem
           navSize={navSize}
           icon={BiListUl}
           title='Students List'
           link='#'
+          active={router.pathname == '/students' ? true : false}
         />
         <NavItem
           navSize={navSize}
           icon={BiBook}
           title='Gradebook'
           link='/classlist'
-          active // TODO: figure out how to pass this from page and active the right one
+          active={router.pathname == '/classlist' ? true : false}
         />
         <NavItem navSize={navSize} icon={BiCog} title='Settings' link='#' />
       </Flex>
