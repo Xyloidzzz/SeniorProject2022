@@ -8,10 +8,24 @@ import {
   Spacer,
   Flex,
   Table,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-const ClassTable = ({ title, description, link, ...rest }) => {
+const ClassTable = ({ ...rest }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Flex
       width='full'
@@ -29,7 +43,29 @@ const ClassTable = ({ title, description, link, ...rest }) => {
         </Box>
         <Spacer />
         <Box width='full' height='full' flex='1'>
-          <Button>Edit Table?</Button>
+          <Button onClick={onOpen}>Edit Table</Button>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Edit Table</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <FormControl>
+                  <FormLabel>Number of Students (Rows)</FormLabel>
+                  <Input id='rows' placeholder='# of Rows' />
+                  <FormLabel>Number of Assignments (Columns)</FormLabel>
+                  <Input id='col' placeholder='# of Columns' />
+                  <FormHelperText>This feature does not work!</FormHelperText>
+                </FormControl>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={onClose}>
+                  Save
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Box>
       </Flex>
       <Spacer />
