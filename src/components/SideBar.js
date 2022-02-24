@@ -7,6 +7,9 @@ import {
   Divider,
   Avatar,
   Heading,
+  Link,
+  Box,
+  Spacer,
 } from '@chakra-ui/react'
 import {
   BiMenu,
@@ -14,11 +17,12 @@ import {
   BiListUl,
   BiBook,
   BiBookOpen,
+  BiLogOut,
   BiCog,
 } from 'react-icons/bi'
 import NavItem from '@/components/NavItem'
+import NextLink from 'next/link'
 
-//TODO: Make Seperate SideBar Children for classlist and classroom
 export default function Sidebar() {
   const router = useRouter()
   const [navSize, changeNavSize] = useState('large')
@@ -95,11 +99,16 @@ export default function Sidebar() {
         mb={4}
       >
         <Divider display={navSize == 'small' ? 'none' : 'flex'} />
-        <Flex mt={4} align='center'>
+        <Flex
+          width='full'
+          align='center'
+          flexDir={navSize == 'small' ? 'column' : 'row'}
+        >
           <Avatar size='sm' src='avatar.png' />
           <Flex
             flexDir='column'
             ml={4}
+            flex='1'
             display={navSize == 'small' ? 'none' : 'flex'}
           >
             <Heading as='h3' size='sm'>
@@ -107,6 +116,16 @@ export default function Sidebar() {
             </Heading>
             <Text color='gray'>Professor</Text>
           </Flex>
+          <Spacer />
+          <Box width='full' flex='1' align='center'>
+            <NextLink href='/' passHref>
+              <Link>
+                <IconButton aria-label='logout' size='lg' icon={<BiLogOut />}>
+                  Logout
+                </IconButton>
+              </Link>
+            </NextLink>
+          </Box>
         </Flex>
       </Flex>
     </Flex>
