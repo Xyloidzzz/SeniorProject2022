@@ -44,6 +44,8 @@ npx prisma studio
 
 You can use prisma studio to add test data when needed.
 
+Use npx prisma db seed command to run seed.js
+
 ### Start Coding
 
 First, make sure you have all the dependencies installed:
