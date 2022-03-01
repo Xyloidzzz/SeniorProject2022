@@ -46,7 +46,7 @@ You can use prisma studio to add test data when needed.
 
 Use this command to generate sample data
 ```bash
-npx prisma db seed command 
+npx prisma db seed  
 ```
 
 ### Start Coding
