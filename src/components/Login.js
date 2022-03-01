@@ -21,17 +21,17 @@ const Login = ({ width, height, padding }) => {
     <Container centerContent p={padding}>
       <Box width={width} height={height}>
         <FormControl>
-          <FormLabel htmlFor='username'>Username</FormLabel>
+          <FormLabel htmlFor='email'>Email</FormLabel>
           <Input
-            id='username'
-            type='username'
+            id='email'
+            type='email'
             size='sm'
             variant='outline'
             borderColor='gray.400'
             _hover={{ borderColor: 'gray.600' }}
             focusBorderColor='black'
           />
-          <FormLabel htmlFor='username'>Password</FormLabel>
+          <FormLabel htmlFor='password'>Password</FormLabel>
           <InputGroup size='sm'>
             <Input
               id='password'
@@ -49,7 +49,8 @@ const Login = ({ width, height, padding }) => {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <a href="">sign up</a><br/>
+          <a href='/signup'>sign up</a>
+          <br />
           <NextLink href='/portal' passHref>
             <Link>
               <IconButton
