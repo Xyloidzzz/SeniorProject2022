@@ -5,8 +5,11 @@ import {
   FormLabel,
   Input,
   Button,
+  Heading,
 } from '@chakra-ui/react'
 import { useState } from 'react'
+import HeadInfo from '@/components/HeadInfo'
+import styles from '@/styles/Home.module.css'
 
 async function saveUser(user) {
   const response = await fetch('/api/signup', {
@@ -34,9 +37,46 @@ export default function SignUp() {
   }
 
   return (
-    <Container centerContent p='10'>
+    <Container className={styles.main}>
+      <HeadInfo
+        title='Welcome!'
+        keyword='signup'
+        description='enter information for sign up'
+        icon='/grade_icon.ico'
+      />
+      <Heading as='h1' size='4xl' padding='32px'>
+          GradeBook
+      </Heading>
       <Box width='200px'>
         <FormControl isRequired>
+        <FormLabel htmlFor='firstName'>First Name</FormLabel>
+          <Input
+            id='email'
+            type='email'
+            size='sm'
+            variant='outline'
+            borderColor='gray.400'
+            _hover={{
+              borderColor: 'gray.600',
+            }}
+            focusBorderColor='black'
+            //value={email}
+            //onChange={changeEmail}
+          />
+          <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+          <Input
+            id='email'
+            type='email'
+            size='sm'
+            variant='outline'
+            borderColor='gray.400'
+            _hover={{
+              borderColor: 'gray.600',
+            }}
+            focusBorderColor='black'
+            //value={email}
+            //onChange={changeEmail}
+          />
           <FormLabel htmlFor='email'>Email</FormLabel>
           <Input
             id='email'
@@ -51,6 +91,7 @@ export default function SignUp() {
             value={email}
             onChange={changeEmail}
           />
+          
           <FormLabel htmlFor='password'>Password</FormLabel>
           <Input
             id='password'
