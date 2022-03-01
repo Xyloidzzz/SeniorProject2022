@@ -17,7 +17,7 @@ model User {
   password  String
   firstName String
   lastName  String
-  avatar    String
+  avatar    String?
   role      Role       @default(USER)
   classes   Class[]
   student   Student[]
