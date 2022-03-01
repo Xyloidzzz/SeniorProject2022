@@ -2,6 +2,10 @@
   "name": "seniorproject2022",
   "version": "0.1.1",
   "private": true,
+  
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
