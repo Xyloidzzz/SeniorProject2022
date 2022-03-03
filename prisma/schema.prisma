@@ -27,17 +27,17 @@ model User {
 model Student {
   id      Int    @id @default(autoincrement())
   class   Class  @relation(fields: [classId], references: [id])
-  classId String @unique
+  classId String
   user    User   @relation(fields: [userId], references: [id])
-  userId  String @unique
+  userId  String
 }
 
 model Educator {
   id      Int    @id @default(autoincrement())
   Class   Class  @relation(fields: [classId], references: [id])
-  classId String @unique
+  classId String
   user    User   @relation(fields: [userId], references: [id])
-  userId  String @unique
+  userId  String
 }
 
 model Class {
@@ -46,9 +46,8 @@ model Class {
   updatedAt   DateTime     @updatedAt
   name        String       @db.VarChar(255)
   owner       User         @relation(fields: [ownerId], references: [id])
-  ownerId     String       @unique
-  grades      Grades       @relation(fields: [gradesId], references: [id])
-  gradesId    String       @unique
+  ownerId     String
+  grades      Int[] // 1D Array = students, 2D Array = assignments; [[100, 80],[90, 50]]
   students    Student[]
   educators   Educator[]
   assignments Assignment[]
@@ -61,13 +60,7 @@ model Assignment {
   hidden      Boolean  @default(true)
   description String?
   class       Class    @relation(fields: [classId], references: [id])
-  classId     String   @unique
-}
-
-model Grades {
-  id          String @id @default(cuid())
-  class       Class?
-  gradeMatrix Int[] // 1D Array = students, 2D Array = assignments; [[100, 80],[90, 50]]
+  classId     String
 }
 
 enum Role {
