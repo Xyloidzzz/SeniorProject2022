@@ -3,23 +3,15 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 async function main() {
-  const newUser = await prisma.user.createMany({
-    data:[
-      {
-        email:"test@gmail.com",
-        firstName:"Annoy",
-        lastName:"Orange",
-        avatar:"AVATAR!",
-        password:"abcd"
-      },
-      {
-        email:"Random@gmail.com",
-        firstName:"Joe",
-        lastName:"Random",
-        avatar:"AVATAR!",
-        password:"12345"
-      },
-    ]
+  
+  const newUser = await prisma.user.create({
+    data: {
+        email:"test123@gmail.com",
+        firstName:"test",
+        lastName:"testing",
+        avatar:"default avatar",
+        password:"test123",
+      }
   })
 }
 

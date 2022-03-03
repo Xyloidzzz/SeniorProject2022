@@ -34,18 +34,9 @@ function Feature({title,imgUrl,url}){
               borderRadius='full' 
             >
             </Img>
-                
-              {/* <IconButton
-                          aria-label='Enter-Student'
-                          icon={<ArrowForwardIcon/>}
-                      />
-                      <Button mt={4} colorScheme='blue'>
-                        Student
-                      </Button> */}
           </Box>
         </Link>
       </NextLink> 
-    
   )
 }
 
@@ -59,18 +50,6 @@ export default function Portal() {
         <HStack spacing={100} align='center'>
           <Feature title='Students' imgUrl='student_icon.ico' url='portal'></Feature>
           <Feature title='Educator' imgUrl='professor_icon.ico'url='classlist'></Feature>
-          {/* <NextLink href='/classlist' passHref>
-            <Link style={{ textDecoration: 'none' }}>
-              
-              <IconButton
-                aria-label='Enter-Eduacator'
-                icon={<ArrowRightIcon/>}
-              />
-              {<Button mt={4} colorScheme='blue'>
-                Educator
-              </Button>
-            </Link> 
-          </NextLink>  */}
         </HStack>
       </Box>
     </Container>
