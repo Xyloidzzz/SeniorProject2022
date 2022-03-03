@@ -8,15 +8,16 @@ import {
   InputRightElement,
   Button,
   IconButton,
-  Link,
+  useToast,
 } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-
 const Login = ({ width, height, padding }) => {
+
+  const toast = useToast()
 
   const route = useRouter()
 
@@ -39,13 +40,30 @@ const Login = ({ width, height, padding }) => {
     serverStatus = data.serverStat
     console.log(serverStatus)
     if(serverStatus == 200){
+      toast({
+        title: 'login successfully',
+        position:'top',
+        status:'success',
+        isClosable:true
+      })
       route.push("/portal")
     }
     else{
-      route.push('/')
+      toast({
+        title: 'login failed',
+        position:'top',
+        status:'error',
+        isClosable:true
+      })
+      resetState()
     }
-    // Router.push("/portal")
   }
+
+  const resetState = () => {
+    setEmail('')
+    setPassword('')
+  }
+
   return (
     <Container centerContent p={padding}>
       <Box width={width} height={height}>
