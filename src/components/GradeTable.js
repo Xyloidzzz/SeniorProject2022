@@ -13,11 +13,22 @@ import {
   Text,
 } from '@chakra-ui/react'
 import GradeCell from '@/components/GradeCell'
+<<<<<<< HEAD
+import ClassTable from '@/components/ClassTable'
+=======
+>>>>>>> 7feed78b60716d0c57edd1673d41895a4a285760
 
-const GradeTable = () => {
+
+
+const GradeTable = (data) => {
+  console.log(data.rows)
+  console.log(data.col)
+ 
+  
   return (
+    
     <Table variant='unstyled'>
-      <Thead>
+  <Thead>
         <Tr>
           <Th>Students</Th>
           <Th isNumeric>HW 1</Th>
