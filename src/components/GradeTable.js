@@ -10,7 +10,9 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
+  Text,
 } from '@chakra-ui/react'
+import GradeCell from '@/components/GradeCell'
 
 const GradeTable = () => {
   return (
@@ -25,48 +27,42 @@ const GradeTable = () => {
       <Tbody>
         <Tr>
           <Td>Alfredo Pena</Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
+          <GradeCell
+            defaultValue='100'
+            studentName='Alfredo Pena'
+            assignment='HW 1'
+          />
+          <GradeCell
+            defaultValue='100'
+            studentName='Alfredo Pena'
+            assignment='Exam 1'
+          />
         </Tr>
         <Tr>
           <Td>Jesus Mendez</Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
+          <GradeCell
+            defaultValue='100'
+            studentName='Jesus Mendez'
+            assignment='HW 1'
+          />
+          <GradeCell
+            defaultValue='100'
+            studentName='Jesus Mendez'
+            assignment='Exam 1'
+          />
         </Tr>
         <Tr>
           <Td>Jaehun Kim</Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
-          <Td isNumeric>
-            <Editable defaultValue='100'>
-              <EditablePreview />
-              <EditableInput />
-            </Editable>
-          </Td>
+          <GradeCell
+            defaultValue='100'
+            studentName='Jaehun Kim'
+            assignment='HW 1'
+          />
+          <GradeCell
+            defaultValue='100'
+            studentName='Jaehun Kim'
+            assignment='Exam 1'
+          />
         </Tr>
       </Tbody>
     </Table>

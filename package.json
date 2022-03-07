@@ -1,7 +1,10 @@
 {
   "name": "seniorproject2022",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,14 +16,18 @@
     "@chakra-ui/react": "^1.8.5",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@prisma/client": "^3.10.0",
     "framer-motion": "^6.2.7",
     "next": "^12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.27.1",
+    "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1"
   },
   "devDependencies": {
     "eslint": "8.7.0",
-    "eslint-config-next": "12.0.8"
+    "eslint-config-next": "12.0.8",
+    "prisma": "^3.10.0"
   }
 }
