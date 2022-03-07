@@ -13,7 +13,10 @@ import {
   Text,
 } from '@chakra-ui/react'
 import GradeCell from '@/components/GradeCell'
+<<<<<<< HEAD
 import ClassTable from '@/components/ClassTable'
+=======
+>>>>>>> 7feed78b60716d0c57edd1673d41895a4a285760
 
 
 
