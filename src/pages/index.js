@@ -10,7 +10,7 @@ export default function Home() {
         title='GradeBook'
         keyword='home'
         description='gradebook system'
-        icon='/favicon.ico'
+        icon='/grade_icon.ico'
       />
 
       <Box>
@@ -22,3 +22,4 @@ export default function Home() {
     </Container>
   )
 }
+
