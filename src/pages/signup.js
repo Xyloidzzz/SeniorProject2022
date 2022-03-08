@@ -6,16 +6,30 @@ import {
   Input,
   Button,
   Heading,
+  useToast
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import HeadInfo from '@/components/HeadInfo'
 import styles from '@/styles/Home.module.css'
+import { useRouter } from 'next/router'
 
 export default function SignUp() {
+  const route = useRouter()
+
+  const toast = useToast()
+
+  const [show,setShow]=useState(false)
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+
+  const [invalidEmail,setInvalidEmail]=useState(true)
+  const [invalidPass,setInvalidPass]=useState(true)
+  const [invalidFname,setInvalidFname]=useState(true)
+  const [invalidLname,setInvalidLname]=useState(true)
+
 
   const submitUser = async (e) => {
     const response = await fetch('/api/register', {
@@ -25,7 +39,32 @@ export default function SignUp() {
         'Content-Type': 'application/json',
       },
     })
+    const data = await response.json()
+    const serverStatus = data.serverStat
+    if(serverStatus==200){
+      toast({
+        title: 'register successfully',
+        position:'top',
+        status:'success',
+        isClosable:true
+      })
+      route.push("/")
       resetState()
+    }
+    else{
+      toast({
+        title: 'register failed',
+        position:'top',
+        status:'error',
+        isClosable:true
+      })
+      setInvalidEmail(false)
+      setInvalidPass(false)
+      setInvalidFname(false)
+      setInvalidLname(false)
+      setShow(true)
+    }
+      
   }
 
   const resetState = () => {
@@ -54,7 +93,7 @@ export default function SignUp() {
             type='text'
             size='sm'
             variant='outline'
-            borderColor='gray.400'
+            borderColor={invalidFname?'gray.400':'red.400'}
             _hover={{
               borderColor: 'gray.600',
             }}
@@ -68,7 +107,7 @@ export default function SignUp() {
             type='text'
             size='sm'
             variant='outline'
-            borderColor='gray.400'
+            borderColor={invalidLname?'gray.400':'red.400'}
             _hover={{
               borderColor: 'gray.600',
             }}
@@ -82,7 +121,7 @@ export default function SignUp() {
             type='email'
             size='sm'
             variant='outline'
-            borderColor='gray.400'
+            borderColor={invalidEmail?'gray.400':'red.400'}
             _hover={{
               borderColor: 'gray.600',
             }}
@@ -98,12 +137,13 @@ export default function SignUp() {
             pr='4.5rem'
             size='sm'
             variant='outline'
-            borderColor='gray.400'
+            borderColor={invalidPass?'gray.400':'red.400'}
             _hover={{ borderColor: 'gray.600' }}
             focusBorderColor='black'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <p style={{display:show?'block':'none',color:'red'}}>Please enter all required field</p>
           <Button
             mt={4}
             colorScheme='blue'
