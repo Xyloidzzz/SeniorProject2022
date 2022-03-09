@@ -59,23 +59,12 @@ export default function Portal() {
   )
 }
 
-//getting session info if session expires, return to login page
+//getting session info 
 export const getServerSideProps = withSession(
   async ({req,res}) => {
   const user = req.session.get("user")
-  console.log(user.email)
-  //req.session.destroy()
-  if(!user){
-    return {
-      redirect:{
-        destination: '/',
-        permanent:false
-      }
-    }
-  }
-  return {
-    props:{
-      data:user
-    }
+  console.log(user) //logged in user's email will be display in console
+  return{
+    props:{}
   }
 })

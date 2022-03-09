@@ -23,25 +23,3 @@ export default function Home() {
     </Container>
   )
 }
-
-export const getServerSideProps = withSession(
-  async ({req,res}) => {
-  const user = req.session.get("user")
-  console.log(user.email)
-  if(!user){
-    return {
-      redirect:{
-        destination: '/',
-        permanent:false
-      }
-    }
-  }
-  else{
-    return{
-      redirect:{
-        destination:'/portal',
-        permanet:false
-      }
-    }
-  }
-})
