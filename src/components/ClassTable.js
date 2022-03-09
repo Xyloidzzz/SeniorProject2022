@@ -65,7 +65,7 @@ const ClassTable = ({ ...rest }) => {
       {...rest}
     >
       <Flex width='full' height='full' flex='1' flexDir='column' p='8'>
-        <Box width='full' height='full' flex='1'>
+        <Box width='full' height='full' flex='1' >
           <Heading fontSize='xl'>Grades</Heading>
         </Box>
         <Spacer />
@@ -96,7 +96,7 @@ const ClassTable = ({ ...rest }) => {
         </Box>
       </Flex>
       <Spacer />
-      <Box width='full' height='full' flex='16'>
+      <Box maxWidth='full' maxHeight='680px' flex='16' overflowY='auto' overflowX='auto'>
         <GradeTable rdata={rnum} cdata={cnum}></GradeTable>
       </Box>
     </Flex>
