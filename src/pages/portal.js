@@ -5,11 +5,14 @@ import {
   Link,
   Heading,
   Img,
-  Center
+  Center,
+  propNames
 } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import NextLink from 'next/link'
+import withSession from 'lib/session'
+
 
 function Feature({title,imgUrl,url}){
   return (
@@ -55,3 +58,24 @@ export default function Portal() {
     </Container>
   )
 }
+
+//getting session info if session expires, return to login page
+export const getServerSideProps = withSession(
+  async ({req,res}) => {
+  const user = req.session.get("user")
+  console.log(user.email)
+  //req.session.destroy()
+  if(!user){
+    return {
+      redirect:{
+        destination: '/',
+        permanent:false
+      }
+    }
+  }
+  return {
+    props:{
+      data:user
+    }
+  }
+})

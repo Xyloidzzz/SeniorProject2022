@@ -11,7 +11,6 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import NextLink from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -44,7 +43,7 @@ const Login = ({ width, height, padding }) => {
     })
     const data = await response.json()
     serverStatus = data.serverStat
-    console.log(serverStatus)
+    //console.log(serverStatus)
     if(serverStatus == 200){
       toast({
         title: 'login successfully',
@@ -141,6 +140,4 @@ Login.defaultProps = {
 }
 
 export default Login
-export async function getServerSideProps({req,res}){
-  console.log(req.body.email)
-}
+
