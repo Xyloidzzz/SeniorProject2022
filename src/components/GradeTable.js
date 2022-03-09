@@ -21,8 +21,8 @@ import React, { useState } from "react";
 const GradeTable = ({rdata,cdata}) => {
 
   
-  const row = rdata;
-  const col = cdata;
+  const row = cdata;
+  const col = rdata;
   
     const assignment = [];
     const a =[];
