@@ -22,11 +22,17 @@ const Login = ({ width, height, padding }) => {
   const route = useRouter()
 
   const serverStatus = 0
+
+  const [showMssg,setShowMssg] = useState(false)
   
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
+
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
+
+  const [validEmail,setValidEamil] = useState(true)
+  const [validPass,setValidPass] = useState(true)
 
   const submitLogin = async(e) =>{
     const response = await fetch('/api/login',{
@@ -55,6 +61,9 @@ const Login = ({ width, height, padding }) => {
         status:'error',
         isClosable:true
       })
+      setValidEamil(false)
+      setValidPass(false)
+      setShowMssg(true)
       resetState()
     }
   }
@@ -74,7 +83,7 @@ const Login = ({ width, height, padding }) => {
             type='email'
             size='sm'
             variant='outline'
-            borderColor='gray.400'
+            borderColor={validEmail?'gray.400':'red.400'}
             _hover={{ borderColor: 'gray.600' }}
             focusBorderColor='black'
             value={email}
@@ -88,7 +97,7 @@ const Login = ({ width, height, padding }) => {
               pr='4.5rem'
               size='sm'
               variant='outline'
-              borderColor='gray.400'
+              borderColor={validPass?'gray.400':'red.400'}
               _hover={{ borderColor: 'gray.600' }}
               focusBorderColor='black'
               value={password}
@@ -102,6 +111,12 @@ const Login = ({ width, height, padding }) => {
           </InputGroup>
           <a href='/signup'>sign up</a>
           <br />
+          <p 
+            style={{display:showMssg?'block':'none',color:'red'}}
+          >
+              Invalid Email and Password!!
+          </p>
+          
           {/* <NextLink href='/' passHref> */}
             {/* <Link> */}
               <IconButton

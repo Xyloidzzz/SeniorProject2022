@@ -13,19 +13,24 @@ export default async function handler(req, res) {
     const Email = req.body.email
     const Avatar = 'default'
     const Password = req.body.password
-    try{
-      await prisma.user.create({
-        data:{
-          firstName:firstname,
-          lastName:lastname,
-          email:Email,
-          password:Password,
-          avatar:Avatar
+    if(firstname&&lastname&&Email&&Password&&Avatar){
+        try{
+              await prisma.user.create({
+                data:{
+                  firstName:firstname,
+                  lastName:lastname,
+                  email:Email,
+                  password:Password,
+                  avatar:Avatar
+                }
+              })
+              res.status(200).json({serverStat:200})
+            }catch(error){
+              res.status(400).json({error})
         }
-      })
-      res.status(200).json({message:'signed up successfully'})
-    }catch(error){
-      res.status(400).json({error})
+    }
+    else{
+      res.status(404).json({serverStat:404})
     }
   }
 }
