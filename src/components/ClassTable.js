@@ -42,7 +42,7 @@ const ClassTable = ({ ...rest }) => {
 
   const [values, setValues] = useState(Ival);
 
-  const handleInputChange = (e) > {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -79,7 +79,6 @@ const ClassTable = ({ ...rest }) => {
               <ModalBody>
                 <FormControl>
                   <FormLabel>Number of Students (Rows)</FormLabel>
-                  <FormLabel>value = {rnum}</FormLabel>
                   <Input name='rows' placeholder='# of Rows' value={values.rows} onChange={handleInputChange} />
                   <FormLabel>Number of Assignments (Columns)</FormLabel>
                   <Input name='col' placeholder='# of Columns' value={values.col} onChange={handleInputChange} />
