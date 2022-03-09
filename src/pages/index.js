@@ -2,6 +2,7 @@ import { Container, Box, Heading } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import Login from '@/components/Login'
+import withSession from 'lib/session'
 
 export default function Home() {
   return (
@@ -23,3 +24,24 @@ export default function Home() {
   )
 }
 
+export const getServerSideProps = withSession(
+  async ({req,res}) => {
+  const user = req.session.get("user")
+  console.log(user.email)
+  if(!user){
+    return {
+      redirect:{
+        destination: '/',
+        permanent:false
+      }
+    }
+  }
+  else{
+    return{
+      redirect:{
+        destination:'/portal',
+        permanet:false
+      }
+    }
+  }
+})

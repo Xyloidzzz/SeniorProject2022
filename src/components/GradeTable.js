@@ -50,7 +50,7 @@ const GradeTable = ({rdata,cdata}) => {
    
   
   return (
-    <Table variant='unstyled'>
+    <Table variant='unstyled' >
       <Thead>
         <Tr>
           <Th>Students</Th>

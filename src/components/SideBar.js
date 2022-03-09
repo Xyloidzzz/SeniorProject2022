@@ -23,9 +23,11 @@ import {
 import NavItem from '@/components/NavItem'
 import NextLink from 'next/link'
 
+
 export default function Sidebar() {
   const router = useRouter()
   const [navSize, changeNavSize] = useState('large')
+
   return (
     <Flex
       pos='sticky'
