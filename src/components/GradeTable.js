@@ -13,70 +13,55 @@ import {
   Text,
 } from '@chakra-ui/react'
 import GradeCell from '@/components/GradeCell'
-<<<<<<< HEAD
 import ClassTable from '@/components/ClassTable'
-=======
->>>>>>> 7feed78b60716d0c57edd1673d41895a4a285760
+import React, { useState } from "react";
 
 
 
-const GradeTable = (data) => {
-  console.log(data.rows)
-  console.log(data.col)
- 
+const GradeTable = ({rdata,cdata}) => {
+
+  
+  const row = rdata;
+  const col = cdata;
+  
+    const assignment = [];
+    const a =[];
+    const b =[];
+    const c =['Alfredo Pena', 'Jesus Mendez', 'Jaehun Kim', 'John Doe', 'Diego Rivera', 'Peter Parker', 'Nathan Drake'];
+    const s = [];
+
+   
+   for(let i = 0; i < row; i++){            //Row goes here 
+     assignment[i] = 'Assignment'+(i+1);
+   } 
+   
+   for(let i = 0; i<assignment.length; i++){
+    a[i] = <Th isNumeric>{ assignment[i] }</Th>;
+    b[i] = <GradeCell
+    defaultValue='100'
+    studentName={c[i]}
+    assignment={assignment[i]}
+  />
+   }
+
+   for(let i=0; i<col; i++){
+      s[i] = <Tr><Td>{c[i]}</Td>{b}</Tr>  
+   }
+   
   
   return (
-    
     <Table variant='unstyled'>
   <Thead>
         <Tr>
           <Th>Students</Th>
-          <Th isNumeric>HW 1</Th>
-          <Th isNumeric>Exam 1</Th>
+          {a}
         </Tr>
       </Thead>
       <Tbody>
-        <Tr>
-          <Td>Alfredo Pena</Td>
-          <GradeCell
-            defaultValue='100'
-            studentName='Alfredo Pena'
-            assignment='HW 1'
-          />
-          <GradeCell
-            defaultValue='100'
-            studentName='Alfredo Pena'
-            assignment='Exam 1'
-          />
-        </Tr>
-        <Tr>
-          <Td>Jesus Mendez</Td>
-          <GradeCell
-            defaultValue='100'
-            studentName='Jesus Mendez'
-            assignment='HW 1'
-          />
-          <GradeCell
-            defaultValue='100'
-            studentName='Jesus Mendez'
-            assignment='Exam 1'
-          />
-        </Tr>
-        <Tr>
-          <Td>Jaehun Kim</Td>
-          <GradeCell
-            defaultValue='100'
-            studentName='Jaehun Kim'
-            assignment='HW 1'
-          />
-          <GradeCell
-            defaultValue='100'
-            studentName='Jaehun Kim'
-            assignment='Exam 1'
-          />
-        </Tr>
+        {s}
       </Tbody>
     </Table>
+    
   )
 }
 

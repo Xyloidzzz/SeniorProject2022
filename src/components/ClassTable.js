@@ -25,22 +25,24 @@ import {
 import NextLink from 'next/link'
 import React, { createContext, useState } from "react";
 
-export const UserContext = createContext();
 
 const ClassTable = ({ ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   
-
+  /*const [Ival, setIval] = React.useState('')
+  const handleChange = (event) => setIval(event.target.Ival)
+  const num = Ival;*/
+  
   const Ival = {
-    rows: '',
-    col: '',
+    rows: 0 ,
+    col: 0 ,
   };
 
 
   const [values, setValues] = useState(Ival);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) > {
     const { name, value } = e.target;
     setValues({
       ...values,
@@ -48,6 +50,8 @@ const ClassTable = ({ ...rest }) => {
     });
   };
 
+  const rnum = values.rows;
+  const cnum = values.col;
 
   return (
     <Flex
@@ -75,6 +79,7 @@ const ClassTable = ({ ...rest }) => {
               <ModalBody>
                 <FormControl>
                   <FormLabel>Number of Students (Rows)</FormLabel>
+                  <FormLabel>value = {rnum}</FormLabel>
                   <Input name='rows' placeholder='# of Rows' value={values.rows} onChange={handleInputChange} />
                   <FormLabel>Number of Assignments (Columns)</FormLabel>
                   <Input name='col' placeholder='# of Columns' value={values.col} onChange={handleInputChange} />
@@ -83,7 +88,7 @@ const ClassTable = ({ ...rest }) => {
               </ModalBody>
  
               <ModalFooter>
-                <Button type='submit' colorScheme='blue' mr={3} onClick={onClose}>
+                <Button type='submit' colorScheme='blue' mr={3} onClick={onClose} /*onSubmit={onSubmitListener}*/>
                   Save
                 </Button>
               </ModalFooter>
@@ -93,11 +98,10 @@ const ClassTable = ({ ...rest }) => {
       </Flex>
       <Spacer />
       <Box width='full' height='full' flex='16'>
-        <GradeTable data={Ival}></GradeTable>
+        <GradeTable rdata={rnum} cdata={cnum}></GradeTable>
       </Box>
     </Flex>
   )
-  
 }
 
 
