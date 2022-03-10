@@ -52,19 +52,22 @@ model Class {
   educators   Educator[]
   assignments Assignment[]
   grades      Grade[]
-  posts       Post[]
 }
 
 model Assignment {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  hidden      Boolean  @default(true)
-  description String?
-  class       Class    @relation(fields: [classId], references: [id])
-  classId     String
-  files       String[]
-  grades      Grade[]
+  id               String         @id @default(cuid())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  type             AssignmentType @default(BASIC)
+  hidden           Boolean        @default(true)
+  title            String
+  body             String?
+  shortDescription String?
+  author           String
+  class            Class          @relation(fields: [classId], references: [id])
+  classId          String
+  files            String[]
+  grades           Grade[]
 }
 
 model Grade {
@@ -77,17 +80,14 @@ model Grade {
   assignmentId String
 }
 
-model Post {
-  id      String  @id @default(cuid())
-  Class   Class   @relation(fields: [classId], references: [id])
-  classId String
-  hidden  Boolean @default(true)
-  title   String
-  body    String?
-  author  String
-}
-
 enum Role {
   USER
   ADMIN
+}
+
+enum AssignmentType {
+  BASIC
+  LAB
+  QUIZ
+  EXAM
 }
