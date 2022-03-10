@@ -78,6 +78,7 @@ model Grade {
   studentId    String
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
   assignmentId String
+  grade        Int
 }
 
 enum Role {
