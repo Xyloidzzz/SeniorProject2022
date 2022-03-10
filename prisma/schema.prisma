@@ -25,12 +25,13 @@ model User {
 }
 
 model Student {
-  id      String  @id @default(cuid())
-  class   Class   @relation(fields: [classId], references: [id])
-  classId String
-  user    User    @relation(fields: [userId], references: [id])
-  userId  String
-  Grade   Grade[]
+  id         String  @id @default(cuid())
+  class      Class   @relation(fields: [classId], references: [id])
+  classId    String
+  user       User    @relation(fields: [userId], references: [id])
+  userId     String
+  grades     Grade[]
+  finalGrade Int?
 }
 
 model Educator {
