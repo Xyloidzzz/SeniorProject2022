@@ -25,15 +25,16 @@ model User {
 }
 
 model Student {
-  id      Int    @id @default(autoincrement())
-  class   Class  @relation(fields: [classId], references: [id])
+  id      String  @id @default(cuid())
+  class   Class   @relation(fields: [classId], references: [id])
   classId String
-  user    User   @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
   userId  String
+  Grade   Grade[]
 }
 
 model Educator {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(cuid())
   Class   Class  @relation(fields: [classId], references: [id])
   classId String
   user    User   @relation(fields: [userId], references: [id])
@@ -47,20 +48,32 @@ model Class {
   name        String       @db.VarChar(255)
   owner       User         @relation(fields: [ownerId], references: [id])
   ownerId     String
-  grades      Int[] // 1D Array = students, 2D Array = assignments; [[100, 80],[90, 50]]
   students    Student[]
   educators   Educator[]
   assignments Assignment[]
+  grades      Grade[]
 }
 
 model Assignment {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   hidden      Boolean  @default(true)
   description String?
   class       Class    @relation(fields: [classId], references: [id])
   classId     String
+  files       String[]
+  Grade       Grade[]
+}
+
+model Grade {
+  id           String     @id @default(cuid())
+  class        Class      @relation(fields: [classId], references: [id])
+  classId      String
+  student      Student    @relation(fields: [studentId], references: [id])
+  studentId    String
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  assignmentId String
 }
 
 enum Role {
