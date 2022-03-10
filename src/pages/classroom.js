@@ -2,6 +2,7 @@ import { Flex, Box } from '@chakra-ui/react'
 import HeadInfo from '@/components/HeadInfo.js'
 import SideBar from '@/components/SideBar'
 import ClassroomMain from '@/components/ClassroomMain'
+import ClassroomListMain from '@/components/ClassroomListMain'
 
 export default function classroom({ column, rows }) {
   return (
@@ -11,7 +12,7 @@ export default function classroom({ column, rows }) {
         <SideBar />
       </Box>
       <Box width='full' flex='16'>
-        <ClassroomMain title='Classroom 1' />
+        <ClassroomMain title= 'Class' />
       </Box>
     </Flex>
   )
