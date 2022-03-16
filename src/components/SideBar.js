@@ -69,8 +69,8 @@ export default function Sidebar() {
           navSize={navSize}
           icon={BiListUl}
           title='Students List'
-          link='#'
-          active={router.pathname == '/students' ? true : false}
+          link='/studentsList'
+          active={router.pathname == '/studentsList' ? true : false}
         />
         <NavItem
           navSize={navSize}
