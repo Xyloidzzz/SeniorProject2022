@@ -13,6 +13,8 @@ import {
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { signIn } from "next-auth/react"
+
 
 const Login = ({ width, height, padding }) => {
 
@@ -20,58 +22,54 @@ const Login = ({ width, height, padding }) => {
 
   const route = useRouter()
 
-  const serverStatus = 0
-
   const [showMssg,setShowMssg] = useState(false)
   
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
+  const [email,setEmail] = useState('')             //get email value
+  const [password,setPassword] = useState('')       //get pw value
 
-  const [validEmail,setValidEamil] = useState(true)
-  const [validPass,setValidPass] = useState(true)
+  const [validEmail,setValidEamil] = useState(true) //check for valid email
+  const [validPass,setValidPass] = useState(true)   //check for valid pw
 
+  //authentication
   const submitLogin = async(e) =>{
-    const response = await fetch('/api/login',{
-      method : 'POST',
-      body : JSON.stringify({email,password}),
-      headers: {
-        'Content-Type' : 'application/json'
-      },
+    const response = await signIn("credentials",{
+      redirect: false,
+      email: email,
+      password: password
     })
-    const data = await response.json()
-    serverStatus = data.serverStat
-    //console.log(serverStatus)
-    if(serverStatus == 200){
+    if(!response.error){
+      //login success msg
       toast({
-        title: 'login successfully',
-        position:'top',
-        status:'success',
-        isClosable:true
-      })
-      route.push("/portal")
+              title: 'login successfully',
+              position:'top',
+              status:'success',
+              isClosable:true
+             })
+      route.push('/portal')
     }
     else{
+      //pop up msg for failure
       toast({
-        title: 'login failed',
-        position:'top',
-        status:'error',
-        isClosable:true
-      })
+              title: 'login failed',
+              position:'top',
+              status:'error',
+              isClosable:true
+            })
       setValidEamil(false)
       setValidPass(false)
       setShowMssg(true)
       resetState()
     }
-  }
-
+  } 
+  //set email and pw input to empty string
   const resetState = () => {
     setEmail('')
     setPassword('')
   }
-
+  
   return (
     <Container centerContent p={padding}>
       <Box width={width} height={height}>
@@ -114,10 +112,7 @@ const Login = ({ width, height, padding }) => {
             style={{display:showMssg?'block':'none',color:'red'}}
           >
               Invalid Email and Password!!
-          </p>
-          
-          {/* <NextLink href='/' passHref> */}
-            {/* <Link> */}
+          </p>        
               <IconButton
                 aria-label='Login'
                 icon={<ArrowForwardIcon />}
@@ -127,8 +122,6 @@ const Login = ({ width, height, padding }) => {
               >
                 Login
               </IconButton>
-            {/* </Link> */}
-          {/* </NextLink> */}
         </FormControl>
       </Box>
     </Container>
