@@ -11,7 +11,9 @@ import {
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import NextLink from 'next/link'
-import withSession from 'lib/session'
+// import withSession from 'lib/session'
+import { useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 
 
 function Feature({title,imgUrl,url}){
@@ -45,6 +47,8 @@ function Feature({title,imgUrl,url}){
 
 
 export default function Portal() {
+  // const {data:session,status} = useSession()
+  // console.log(session.user)
   return (
     // TODO: Add a setting that saves a default select through database
     <Container centerContent className={styles.main}>
@@ -59,12 +63,20 @@ export default function Portal() {
   )
 }
 
-//getting session info 
-export const getServerSideProps = withSession(
-  async ({req,res}) => {
-  const user = req.session.get("user")
-  console.log(user) //logged in user's email will be display in console
-  return{
+export async function getServerSideProps (context){
+  
+  const session = await getSession(context)
+  console.log(session)
+  if(!session){
+    return{
+      redirect :{
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+  return {
     props:{}
   }
-})
+  
+}

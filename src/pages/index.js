@@ -1,8 +1,8 @@
-import { Container, Box, Heading } from '@chakra-ui/react'
+import { Container, Box, Heading, Button, Link } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import Login from '@/components/Login'
-import withSession from 'lib/session'
+import { getSession, useSession } from 'next-auth/react'
 
 export default function Home() {
   return (
@@ -23,3 +23,22 @@ export default function Home() {
     </Container>
   )
 }
+
+//if user logged in, page will redirect to portal page
+export async function getServerSideProps (context){
+  
+  const session = await getSession(context)
+  if(session){
+    return{
+      redirect :{
+        destination: '/portal',
+        permanent: false
+      }
+    }
+  }
+  return {
+    props:{}
+  }
+  
+}
+
