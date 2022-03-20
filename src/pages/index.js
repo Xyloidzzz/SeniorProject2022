@@ -2,7 +2,7 @@ import { Container, Box, Heading, Button, Link } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import Login from '@/components/Login'
-import { getSession, useSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 
 export default function Home() {
   return (
@@ -31,7 +31,7 @@ export async function getServerSideProps (context){
   if(session){
     return{
       redirect :{
-        destination: '/portal',
+        destination: '/classlist',
         permanent: false
       }
     }
