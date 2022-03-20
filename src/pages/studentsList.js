@@ -11,6 +11,7 @@ import
 import HeadInfo from '@/components/HeadInfo'
 import SideBar from '@/components/SideBar'
 import StudentList from '@/components/StudentList'
+import { getSession } from 'next-auth/react'
 
 
 const StudentsList = () => {
@@ -36,3 +37,20 @@ return(
 }
 
 export default StudentsList
+
+export async function getServerSideProps (context){
+  
+  const session = await getSession(context)
+  if(session){
+    return{
+      redirect :{
+        destination: '/classlist',
+        permanent: false
+      }
+    }
+  }
+  return {
+    props:{}
+  }
+  
+}

@@ -21,10 +21,10 @@ import {
   BiCog,
 } from 'react-icons/bi'
 import NavItem from '@/components/NavItem'
-import NextLink from 'next/link'
+import { signOut } from 'next-auth/react'
 
 
-export default function Sidebar() {
+export default function Sidebar({userInfo}) {
   const router = useRouter()
   const [navSize, changeNavSize] = useState('large')
 
@@ -35,7 +35,6 @@ export default function Sidebar() {
       boxShadow='0 4px 12px 0 rgba(0, 0, 0, 0.05)'
       borderRight='1px'
       borderColor='gray.200'
-      // borderRadius={navSize == 'small' ? '15px' : '30px'}
       w={navSize == 'small' ? '75px' : '200px'}
       flexDir='column'
       justifyContent='space-between'
@@ -81,15 +80,6 @@ export default function Sidebar() {
             router.pathname == '/classlist' || '/classroom' ? true : false
           }
         />
-        {/* {router.pathname == '/classroom' && (
-          <NavItem
-            navSize={navSize}
-            icon={BiBookOpen}
-            title='Classroom 1'
-            link='/classroom'
-            active={router.pathname == '/classroom' ? true : false}
-          />
-        )} */}
         <NavItem navSize={navSize} icon={BiCog} title='Settings' link='#' />
       </Flex>
 
@@ -114,19 +104,15 @@ export default function Sidebar() {
             display={navSize == 'small' ? 'none' : 'flex'}
           >
             <Heading as='h3' size='sm'>
-              Username
+              {userInfo}
             </Heading>
             <Text color='gray'>Professor</Text>
           </Flex>
           <Spacer />
           <Box width='full' flex='1' align='center'>
-            <NextLink href='/' passHref>
-              <Link>
-                <IconButton aria-label='logout' size='lg' icon={<BiLogOut />}>
+                <IconButton aria-label='logout' size='lg' icon={<BiLogOut />} onClick={()=>signOut({callbackUrl:'/'})} >
                   Logout
                 </IconButton>
-              </Link>
-            </NextLink>
           </Box>
         </Flex>
       </Flex>

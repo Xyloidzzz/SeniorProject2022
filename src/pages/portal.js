@@ -6,13 +6,10 @@ import {
   Heading,
   Img,
   Center,
-  propNames
 } from '@chakra-ui/react'
 import styles from '@/styles/Home.module.css'
 import HeadInfo from '@/components/HeadInfo'
 import NextLink from 'next/link'
-// import withSession from 'lib/session'
-import { useSession } from 'next-auth/react'
 import { getSession } from 'next-auth/react'
 
 
@@ -47,20 +44,18 @@ function Feature({title,imgUrl,url}){
 
 
 export default function Portal() {
-  // const {data:session,status} = useSession()
-  // console.log(session.user)
-  return (
-    // TODO: Add a setting that saves a default select through database
-    <Container centerContent className={styles.main}>
-      <HeadInfo title='Select a Portal' keyword='portal' />
-      <Box>
-        <HStack spacing={100} align='center'>
-          <Feature title='Students' imgUrl='student_icon.ico' url='portal'></Feature>
-          <Feature title='Educator' imgUrl='professor_icon.ico'url='classlist'></Feature>
-        </HStack>
-      </Box>
-    </Container>
-  )
+    return (
+      // TODO: Add a setting that saves a default select through database
+      <Container centerContent className={styles.main}>
+        <HeadInfo title='Select a Portal' keyword='portal' />
+        <Box>
+          <HStack spacing={100} align='center'>
+            <Feature title='Students' imgUrl='student_icon.ico' url='portal'></Feature>
+            <Feature title='Educator' imgUrl='professor_icon.ico'url='classlist'></Feature>
+          </HStack>
+        </Box>
+      </Container>
+    )
 }
 
 export async function getServerSideProps (context){
@@ -78,5 +73,4 @@ export async function getServerSideProps (context){
   return {
     props:{}
   }
-  
 }

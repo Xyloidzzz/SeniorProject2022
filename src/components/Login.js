@@ -48,7 +48,7 @@ const Login = ({ width, height, padding }) => {
               status:'success',
               isClosable:true
              })
-      route.push('/portal')
+      route.push('/classlist')
     }
     else{
       //pop up msg for failure
