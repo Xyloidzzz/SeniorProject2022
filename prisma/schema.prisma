@@ -52,6 +52,7 @@ model Class {
   students    Student[]
   educators   Educator[]
   assignments Assignment[]
+  posts       Post[]
   grades      Grade[]
 }
 
@@ -68,6 +69,7 @@ model Assignment {
   class            Class          @relation(fields: [classId], references: [id])
   classId          String
   files            String[]
+  submitFiles      String[]
   grades           Grade[]
 }
 
@@ -80,6 +82,15 @@ model Grade {
   assignment   Assignment @relation(fields: [assignmentId], references: [id])
   assignmentId String
   grade        Int
+}
+
+model Post {
+  id      String  @id @default(cuid())
+  Class   Class   @relation(fields: [classId], references: [id])
+  classId String
+  hidden  Boolean @default(true)
+  title   String  @default("Class Post")
+  body    String?
 }
 
 enum Role {
