@@ -20,7 +20,7 @@ export default NextAuth({
                         }
                     })
                     if(user){
-                        console.log(credentials.password)
+                        // console.log(credentials.password)
                             if(user.password==credentials.password){
                                 return {fname: user.firstName, lname: user.lastName, email: user.email}
                             }

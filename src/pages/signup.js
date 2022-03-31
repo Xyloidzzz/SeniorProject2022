@@ -18,7 +18,8 @@ export default function SignUp() {
 
   const toast = useToast()
 
-  const [show,setShow]=useState(false)
+  const [show1,setShow1]=useState(false)
+  const [show2,setShow2]=useState(false)
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -51,9 +52,19 @@ export default function SignUp() {
       route.push("/")
       resetState()
     }
+    else if(serverStatus == 404){
+      toast({
+        title: 'User already exist',
+        position:'top',
+        status:'error',
+        isClosable:true
+      })
+      setInvalidEmail(false)
+      setShow1(true)
+    }
     else{
       toast({
-        title: 'register failed',
+        title: 'Register failed',
         position:'top',
         status:'error',
         isClosable:true
@@ -62,7 +73,7 @@ export default function SignUp() {
       setInvalidPass(false)
       setInvalidFname(false)
       setInvalidLname(false)
-      setShow(true)
+      setShow2(true)
     }
       
   }
@@ -143,7 +154,8 @@ export default function SignUp() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p style={{display:show?'block':'none',color:'red'}}>Please enter all required field</p>
+          <p style={{display:show1?'block':'none',color:'red'}}>User already exist</p>
+          <p style={{display:show2?'block':'none',color:'red'}}>Please enter all required field</p>
           <Button
             mt={4}
             colorScheme='blue'
