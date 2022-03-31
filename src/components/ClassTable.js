@@ -24,6 +24,7 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import React, { useState } from "react";
+import ReactDOM from 'react-dom';
 
 
 
@@ -35,24 +36,40 @@ const ClassTable = ({ ...rest }) => {
   const handleChange = (event) => setIval(event.target.Ival)
   const num = Ival;*/
   
-  const Ival = {
-    rows: 0 ,
-    col: 0 ,
-  };
+  // const Ival = {
+  //   rows: 0 ,
+  //   col: 0 ,
+  // };
 
 
-  const [values, setValues] = useState(Ival);
+  // const [values, setValues] = useState(Ival);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setValues({
+  //     ...values,
+  //     [name]: value,
+  //   });
+  // };
 
-  const rnum = values.rows;
-  const cnum = values.col;
+  // const rnum = values.rows;
+  // const cnum = values.col;
+  //const Assignment = [];
+  const Atype = [];
+  const [assing, setAssing] = useState('');
+  const [astype, setAstype] = useState('');
+
+  const handleSubmit = (event) => {
+    resetState();
+    event.preventDefault();
+  }
+
+ 
+
+  const resetState = () => {
+    setAssing('');
+    setAstype('');
+  }
 
   return (
     <Flex
@@ -71,26 +88,27 @@ const ClassTable = ({ ...rest }) => {
         </Box>
         <Spacer />
         <Box width='full' height='full' flex='1'>
-          <Button onClick={onOpen}>Edit Table</Button>
+          <Button onClick={onOpen}>Add Assignment</Button>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Edit Table</ModalHeader>
+              <ModalHeader>Add Assignment</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <FormControl>
-                  <FormLabel>Number of Students (Rows)</FormLabel>
-                  <Input name='rows' placeholder='# of Rows' value={values.rows} onChange={handleInputChange} />
-                  <FormLabel>Number of Assignments (Columns)</FormLabel>
-                  <Input name='col' placeholder='# of Columns' value={values.col} onChange={handleInputChange} />
+                  <FormLabel>Name of the Assignment</FormLabel>
+                  <Input name='Assignments' placeholder='Name' value={assing} onChange={(e) => setAssing(e.target.value)}/>
+                  <FormLabel>Type of Assignment</FormLabel>
+                  <Input name='Type' placeholder='Type (Exam, Homework, etc)' value={astype} onChange={(e) => setAstype(e.target.value)}/>
                   <FormHelperText>Now numbers are saved!</FormHelperText>
                 </FormControl>
               </ModalBody>
  
               <ModalFooter>
-                <Button type='submit' colorScheme='blue' mr={3} onClick={onClose} /*onSubmit={onSubmitListener}*/>
-                  Save
+                <Button type='submit' colorScheme='blue' mr={3} onClick={onClose} value='Sumbit' onSubmit={handleSubmit}>
+                  Submit
                 </Button>
+                
               </ModalFooter>
             </ModalContent>
           </Modal>
@@ -98,7 +116,7 @@ const ClassTable = ({ ...rest }) => {
       </Flex>
       <Spacer />
       <Box maxWidth='full' maxHeight='680px' flex='16' overflowY='auto' overflowX='auto'>
-        <GradeTable rdata={rnum} cdata={cnum}></GradeTable>
+        <GradeTable tarea={assing} tipo={astype}></GradeTable>
       </Box>
     </Flex>
   )
