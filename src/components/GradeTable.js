@@ -18,33 +18,30 @@ import React, { useState } from "react";
 
 
 
-const GradeTable = ({rdata,cdata}) => {
+const GradeTable = ({tarea,tipo}) => {
 
-  
-  const row = cdata;
-  const col = rdata;
+    const numi = tarea.length+1;
   
     const assignment = [];
+    const AssignmentType = [];
     const a =[];
     const b =[];
     const c =['Alfredo Pena', 'Jesus Mendez', 'Jaehun Kim', 'John Doe', 'Diego Rivera', 'Peter Parker', 'Nathan Drake'];
     const s = [];
 
-   
-   for(let i = 0; i < row; i++){            //Row goes here 
-     assignment[i] = 'Assignment'+(i+1);
-   } 
+    assignment.push(tarea);
+    AssignmentType.push(tipo);
    
    for(let i = 0; i<assignment.length; i++){
     a[i] = <Th isNumeric>{ assignment[i] }</Th>;
     b[i] = <GradeCell
-    defaultValue='100'
+    defaultValue='0'
     studentName={c[i]}
     assignment={assignment[i]}
   />
    }
 
-   for(let i=0; i<col; i++){
+   for(let i=0; i<c.length; i++){
       s[i] = <Tr><Td>{c[i]}</Td>{b}</Tr>  
    }
    
