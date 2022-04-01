@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,96 +8,136 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(cuid())
-  createdAt DateTime   @default(now())
-  email     String     @unique
-  password  String
-  firstName String
-  lastName  String
-  avatar    String?
-  role      Role       @default(USER)
-  classes   Class[]
-  student   Student[]
-  educator  Educator[]
+  id         String      @id @default(cuid())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  email      String      @unique
+  password   String
+  prefix     String
+  firstName  String
+  lastName   String
+  avatar     String?
+  role       Role        @default(USER)
+  student    Student?
+  Instructor Instructor?
+  Assistant  Assistant?
 }
 
 model Student {
-  id         String  @id @default(cuid())
-  class      Class   @relation(fields: [classId], references: [id])
-  classId    String
-  user       User    @relation(fields: [userId], references: [id])
-  userId     String
-  grades     Grade[]
-  finalGrade Int?
+  studentID    String                 @id @default(cuid())
+  registerDate DateTime               @default(now())
+  user         User                   @relation(fields: [userID], references: [id])
+  userID       String                 @unique
+  classes      StudentTakesClass[]
+  assignments  StudentHasAssignment[]
 }
 
-model Educator {
-  id      String @id @default(cuid())
-  Class   Class  @relation(fields: [classId], references: [id])
-  classId String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+model Instructor {
+  instructorID String                   @id @default(cuid())
+  officeHours  String
+  user         User                     @relation(fields: [userID], references: [id])
+  userID       String                   @unique
+  classes      InstructorTeachesClass[]
+}
+
+model Assistant {
+  assistantID String                  @id @default(cuid())
+  user        User                    @relation(fields: [userID], references: [id])
+  userID      String                  @unique
+  classes     AssistantTeachesClass[]
 }
 
 model Class {
-  id          String       @id @default(cuid())
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  name        String       @db.VarChar(255)
-  owner       User         @relation(fields: [ownerId], references: [id])
-  ownerId     String
-  students    Student[]
-  educators   Educator[]
-  assignments Assignment[]
-  posts       Post[]
-  grades      Grade[]
+  classID     String                  @id @default(cuid())
+  department  String
+  term        String
+  name        String
+  description String?
+  isOnline    Boolean                 @default(false)
+  schedule    String?
+  attendance  Json?
+  students    StudentTakesClass[]
+  instructors InstructorTeachesClass?
+  assistants  AssistantTeachesClass[]
+  assignments ClassHasAssignment[]
+  posts       ClassHasPost[]
 }
 
 model Assignment {
-  id               String         @id @default(cuid())
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  type             AssignmentType @default(BASIC)
-  hidden           Boolean        @default(true)
-  title            String
-  body             String?
-  shortDescription String?
-  author           String
-  class            Class          @relation(fields: [classId], references: [id])
-  classId          String
-  files            String[]
-  submitFiles      String[]
-  grades           Grade[]
-}
-
-model Grade {
-  id           String     @id @default(cuid())
-  class        Class      @relation(fields: [classId], references: [id])
-  classId      String
-  student      Student    @relation(fields: [studentId], references: [id])
-  studentId    String
-  assignment   Assignment @relation(fields: [assignmentId], references: [id])
-  assignmentId String
-  grade        Int
+  assignmentID String                 @id @default(cuid())
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  title        String
+  description  String?
+  attachments  String? //_quiz_.md
+  students     StudentHasAssignment[]
+  class        ClassHasAssignment?
 }
 
 model Post {
-  id      String  @id @default(cuid())
-  Class   Class   @relation(fields: [classId], references: [id])
-  classId String
-  hidden  Boolean @default(true)
-  title   String  @default("Class Post")
-  body    String?
+  postID      String        @id @default(cuid())
+  title       String?
+  body        String?
+  attachments String?
+  class       ClassHasPost?
+}
+
+model StudentTakesClass {
+  id         String   @id @default(cuid()) // studentID + classID
+  finalGrade String?
+  Student    Student? @relation(fields: [studentID], references: [studentID])
+  studentID  String?
+  Class      Class?   @relation(fields: [classID], references: [classID])
+  classID    String?
+}
+
+model InstructorTeachesClass {
+  id           String      @id @default(cuid()) // instructorID + classID
+  Instructor   Instructor? @relation(fields: [instructorID], references: [instructorID])
+  instructorID String?
+  Class        Class?      @relation(fields: [classID], references: [classID])
+  classID      String?     @unique
+}
+
+model AssistantTeachesClass {
+  id               String     @id @default(cuid()) // assistantID + classID
+  classPermissions String
+  Assistant        Assistant? @relation(fields: [assistantID], references: [assistantID])
+  assistantID      String?
+  Class            Class?     @relation(fields: [classID], references: [classID])
+  classID          String?
+}
+
+model StudentHasAssignment {
+  id           String      @id @default(cuid()) // studentID + assignmentID
+  grade        String?
+  comments     String?
+  attachments  String?
+  Student      Student?    @relation(fields: [studentID], references: [studentID])
+  studentID    String?
+  Assignment   Assignment? @relation(fields: [assignmentID], references: [assignmentID])
+  assignmentID String?
+}
+
+model ClassHasAssignment {
+  id           String      @id @default(cuid()) // classID + assignmentID
+  isHidden     Boolean     @default(true)
+  Class        Class?      @relation(fields: [classID], references: [classID])
+  classID      String?
+  Assignment   Assignment? @relation(fields: [assignmentID], references: [assignmentID])
+  assignmentID String?     @unique
+}
+
+model ClassHasPost {
+  id       String  @id @default(cuid()) // classID + postID
+  isHidden Boolean @default(true)
+  Class    Class?  @relation(fields: [classID], references: [classID])
+  classID  String?
+  Post     Post?   @relation(fields: [postID], references: [postID])
+  postID   String? @unique
 }
 
 enum Role {
-  USER
   ADMIN
-}
-
-enum AssignmentType {
-  BASIC
-  LAB
-  QUIZ
-  EXAM
+  USER
 }
