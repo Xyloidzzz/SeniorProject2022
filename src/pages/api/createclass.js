@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   const isOnline = req.query.isOnline
   const schedule = req.query.schedule
   // TODO: missing attendance JSON we gotta figure out a mold for how to parse it.
+  // when you add a student then attendace should update
 
   if (department && term && name && description && isOnline && schedule) {
     try {
