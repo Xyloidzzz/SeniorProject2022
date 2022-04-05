@@ -24,7 +24,7 @@ model User {
 }
 
 model Student {
-  studentID    String                 @id @default(cuid())
+  id           String                 @id @default(cuid())
   registerDate DateTime               @default(now())
   user         User                   @relation(fields: [userID], references: [id])
   userID       String                 @unique
@@ -33,22 +33,22 @@ model Student {
 }
 
 model Instructor {
-  instructorID String                   @id @default(cuid())
-  officeHours  String
-  user         User                     @relation(fields: [userID], references: [id])
-  userID       String                   @unique
-  classes      InstructorTeachesClass[]
+  id          String                   @id @default(cuid())
+  officeHours String
+  user        User                     @relation(fields: [userID], references: [id])
+  userID      String                   @unique
+  classes     InstructorTeachesClass[]
 }
 
 model Assistant {
-  assistantID String                  @id @default(cuid())
-  user        User                    @relation(fields: [userID], references: [id])
-  userID      String                  @unique
-  classes     AssistantTeachesClass[]
+  id      String                  @id @default(cuid())
+  user    User                    @relation(fields: [userID], references: [id])
+  userID  String                  @unique
+  classes AssistantTeachesClass[]
 }
 
 model Class {
-  classID     String                  @id @default(cuid())
+  id          String                  @id @default(cuid())
   department  String
   term        String
   name        String
@@ -64,19 +64,19 @@ model Class {
 }
 
 model Assignment {
-  assignmentID String                 @id @default(cuid())
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
-  title        String
-  description  String?
-  dueDate      DateTime //yyyy-mm-dd
-  attachments  String? //_quiz_.md
-  students     StudentHasAssignment[]
-  class        ClassHasAssignment?
+  id          String                 @id @default(cuid())
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  title       String
+  description String?
+  dueDate     DateTime //yyyy-mm-dd
+  attachments String? //_quiz_.md
+  students    StudentHasAssignment[]
+  class       ClassHasAssignment?
 }
 
 model Post {
-  postID      String        @id @default(cuid())
+  id          String        @id @default(cuid())
   title       String?
   body        String?
   attachments String?
@@ -86,26 +86,26 @@ model Post {
 model StudentTakesClass {
   id         String   @id @default(cuid()) // studentID + classID
   finalGrade String?
-  Student    Student? @relation(fields: [studentID], references: [studentID])
+  Student    Student? @relation(fields: [studentID], references: [id])
   studentID  String?
-  Class      Class?   @relation(fields: [classID], references: [classID])
+  Class      Class?   @relation(fields: [classID], references: [id])
   classID    String?
 }
 
 model InstructorTeachesClass {
   id           String      @id @default(cuid()) // instructorID + classID
-  Instructor   Instructor? @relation(fields: [instructorID], references: [instructorID])
+  Instructor   Instructor? @relation(fields: [instructorID], references: [id])
   instructorID String?
-  Class        Class?      @relation(fields: [classID], references: [classID])
+  Class        Class?      @relation(fields: [classID], references: [id])
   classID      String?     @unique
 }
 
 model AssistantTeachesClass {
   id               String     @id @default(cuid()) // assistantID + classID
   classPermissions String
-  Assistant        Assistant? @relation(fields: [assistantID], references: [assistantID])
+  Assistant        Assistant? @relation(fields: [assistantID], references: [id])
   assistantID      String?
-  Class            Class?     @relation(fields: [classID], references: [classID])
+  Class            Class?     @relation(fields: [classID], references: [id])
   classID          String?
 }
 
@@ -114,27 +114,27 @@ model StudentHasAssignment {
   grade        String?
   comments     String?
   attachments  String?
-  Student      Student?    @relation(fields: [studentID], references: [studentID])
+  Student      Student?    @relation(fields: [studentID], references: [id])
   studentID    String?
-  Assignment   Assignment? @relation(fields: [assignmentID], references: [assignmentID])
+  Assignment   Assignment? @relation(fields: [assignmentID], references: [id])
   assignmentID String?
 }
 
 model ClassHasAssignment {
   id           String      @id @default(cuid()) // classID + assignmentID
   isHidden     Boolean     @default(true)
-  Class        Class?      @relation(fields: [classID], references: [classID])
+  Class        Class?      @relation(fields: [classID], references: [id])
   classID      String?
-  Assignment   Assignment? @relation(fields: [assignmentID], references: [assignmentID])
+  Assignment   Assignment? @relation(fields: [assignmentID], references: [id])
   assignmentID String?     @unique
 }
 
 model ClassHasPost {
   id       String  @id @default(cuid()) // classID + postID
   isHidden Boolean @default(true)
-  Class    Class?  @relation(fields: [classID], references: [classID])
+  Class    Class?  @relation(fields: [classID], references: [id])
   classID  String?
-  Post     Post?   @relation(fields: [postID], references: [postID])
+  Post     Post?   @relation(fields: [postID], references: [id])
   postID   String? @unique
 }
 

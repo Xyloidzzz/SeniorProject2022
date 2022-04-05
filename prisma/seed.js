@@ -42,56 +42,56 @@ async function main() {
   })
   const newTeachClass = await prisma.instructorTeachesClass.create({
     data: {
-      instructorID: newInstructor.instructorID,
-      classID: newClass.classID
+      instructorID: newInstructor.id,
+      classID: newClass.id
     }
   })
   const newTeachClass2 = await prisma.instructorTeachesClass.create({
     data: {
-      instructorID: newInstructor.instructorID,
-      classID: newClass2.classID
+      instructorID: newInstructor.id,
+      classID: newClass2.id
     }
   })
   const newAssignment = await prisma.assignment.create({
     data: {
       title: 'Homework 1',
       description: 'This is homework 1',
-      dueDate: '2022-05-10', //yyyy-mm-dd
+      dueDate: '2022-05-10T23:59:00-05:00', // ISO 8601 format date string
     }
   })
   const newAssignment2 = await prisma.assignment.create({
     data: {
       title: 'Homework 2',
       description: 'This is homework 2',
-      dueDate: '2022-05-16', //yyyy-mm-dd
+      dueDate: '2022-05-16T23:59:00-05:00', // ISO 8601 format date string
     }
   })
   const newAssignment3 = await prisma.assignment.create({
     data: {
       title: 'Homework 3',
       description: 'This is homework 3',
-      dueDate: '2022-05-28', //yyyy-mm-dd
+      dueDate: '2022-05-28T23:59:00-05:00', // ISO 8601 format date string
     }
   })
   const newClassHasAssignment = await prisma.classHasAssignment.create({
     data: {
       isHidden: false,
-      classID: newClass.classID,
-      assignmentID: newAssignment.assignmentID
+      classID: newClass.id,
+      assignmentID: newAssignment.id
     }
   })
   const newClassHasAssignment2 = await prisma.classHasAssignment.create({
     data: {
       isHidden: false,
-      classID: newClass.classID,
-      assignmentID: newAssignment2.assignmentID
+      classID: newClass.id,
+      assignmentID: newAssignment2.id
     }
   })
   const newClassHasAssignment3 = await prisma.classHasAssignment.create({
     data: {
       isHidden: false,
-      classID: newClass.classID,
-      assignmentID: newAssignment3.assignmentID
+      classID: newClass.is,
+      assignmentID: newAssignment3.id
     }
   })
 }
