@@ -69,6 +69,7 @@ model Assignment {
   updatedAt    DateTime               @updatedAt
   title        String
   description  String?
+  dueDate      DateTime //yyyy-mm-dd
   attachments  String? //_quiz_.md
   students     StudentHasAssignment[]
   class        ClassHasAssignment?
