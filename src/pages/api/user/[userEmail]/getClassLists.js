@@ -1,36 +1,40 @@
-import { PrismaClient } from "@prisma/client";
+import {
+    PrismaClient
+} from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-export default async function handler (req,res){
-    const {userEmail} = req.query
-    try{ 
+export default async function handler(req, res) {
+    const {
+        userEmail
+    } = req.query
+    try {
         const user = await prisma.user.findUnique({
             where: {
-                email:userEmail
+                email: userEmail
             },
-            select:{
+            select: {
                 id: true
             }
         })
         const teachInfo = await prisma.instructor.findUnique({
-            where:{
-                userID:user.id
+            where: {
+                userID: user.id
             },
-            select:{
+            select: {
                 classes: true
             }
         })
-        const getData = await Promise.all( teachInfo.classes.map(async(data)=>{
+        const getData = await Promise.all(teachInfo.classes.map(async (data) => {
             const classInfo = await prisma.class.findUnique({
-                where:{
-                    classID: data.classID
+                where: {
+                    id: data.classID
                 }
             })
             return classInfo
         }))
         res.json(getData)
-    }catch{
+    } catch {
         console.log(error)
     }
 }
