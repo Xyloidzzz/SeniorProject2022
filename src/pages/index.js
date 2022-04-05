@@ -25,7 +25,7 @@ export default function Home() {
 }
 
 //if user logged in, page will redirect to portal page
-export async function getServerSideProps (context){
+export async function getStaticProps (context){
   
   const session = await getSession(context)
   if(session){

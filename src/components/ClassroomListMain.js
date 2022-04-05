@@ -13,7 +13,10 @@ import React from 'react'
 import { useControllableState } from '@chakra-ui/react'
 
 
-const ClassroomListMain = () => {
+const ClassroomListMain = ({classLists}) => {
+  classLists.map(val=>{
+    console.log(val.name)
+  })
   const cl = [];
   var classr;
 
@@ -23,7 +26,6 @@ const ClassroomListMain = () => {
     value,
     onChange: setValue,
   })
-
   
   /*if(cl.length == 0){
     cl[0] = internalValue
@@ -40,13 +42,12 @@ const ClassroomListMain = () => {
 }*/
 for(let i = 0; i < internalValue; i++){
   classr = 'Classroom'+(i+1);
-  cl[i] = <ClassBlock
+  cl[i] = <ClassBlock key={i}
   title={classr}
   description="This is a classroom description. It can be a bit long. However, that's ok because we can simply truncate this."
   link='/classroom'
 /> ;
 }
-
 
   return (
     <Flex width='full' height='full' p='8' mx='auto'>
@@ -55,6 +56,17 @@ for(let i = 0; i < internalValue; i++){
           <Heading width='full'>Classrooms</Heading>
           <Divider />
           <Spacer />
+            {classLists.map(val=>{
+              return(
+                <ClassBlock 
+                  key={val.id}
+                  title={val.name}
+                  description={val.description}
+                  link='/classroom'
+                >
+                </ClassBlock>
+              )
+            })}
           {cl}
           <Spacer />
           {/* TODO: FIX THIS DAMN BUTTON STRETCH????? LEFT ALIGN PLEASE FUTURE ME */}

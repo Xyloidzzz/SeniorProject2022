@@ -33,8 +33,9 @@ const GradeTable = ({tarea,tipo}) => {
     AssignmentType.push(tipo);
    
    for(let i = 0; i<assignment.length; i++){
-    a[i] = <Th isNumeric>{ assignment[i] }</Th>;
+    a[i] = <Th key={i} isNumeric>{ assignment[i] }</Th>;
     b[i] = <GradeCell
+    key={i}
     defaultValue='0'
     studentName={c[i]}
     assignment={assignment[i]}
@@ -42,7 +43,7 @@ const GradeTable = ({tarea,tipo}) => {
    }
 
    for(let i=0; i<c.length; i++){
-      s[i] = <Tr><Td>{c[i]}</Td>{b}</Tr>  
+      s[i] = <Tr key={i}><Td>{c[i]}</Td>{b}</Tr>  
    }
    
   

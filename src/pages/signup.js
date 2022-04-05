@@ -47,7 +47,8 @@ export default function SignUp() {
         title: 'register successfully',
         position:'top',
         status:'success',
-        isClosable:true
+        isClosable:true,
+        duration: 2000
       })
       route.push("/")
       resetState()
@@ -57,7 +58,8 @@ export default function SignUp() {
         title: 'User already exist',
         position:'top',
         status:'error',
-        isClosable:true
+        isClosable:true,
+        duration: 2000
       })
       setInvalidEmail(false)
       setShow1(true)
@@ -67,7 +69,8 @@ export default function SignUp() {
         title: 'Register failed',
         position:'top',
         status:'error',
-        isClosable:true
+        isClosable:true,
+        duration: 2000
       })
       setInvalidEmail(false)
       setInvalidPass(false)
