@@ -44,9 +44,10 @@ const Login = ({ width, height, padding }) => {
       //login success msg
       toast({
               title: 'login successfully',
-              position:'top',
-              status:'success',
-              isClosable:true
+              position: 'top',
+              status: 'success',
+              isClosable: true,
+              duration: 2000
              })
       route.push('/classlist')
     }
@@ -54,9 +55,10 @@ const Login = ({ width, height, padding }) => {
       //pop up msg for failure
       toast({
               title: 'login failed',
-              position:'top',
-              status:'error',
-              isClosable:true
+              position: 'top',
+              status: 'error',
+              isClosable: true,
+              duration: 2000
             })
       setValidEamil(false)
       setValidPass(false)

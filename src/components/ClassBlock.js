@@ -23,14 +23,14 @@ const ClassBlock = ({ title, description, link, ...rest }) => {
       {...rest}
     >
       <Box width='full' flex='5'>
-        <Heading fontSize='xl'>{title}</Heading>
+        <Heading fontSize='xl' key='{title}'>{title}</Heading>
         <Divider orientation='horizontal' colorScheme='black' />
         <Text mt={4} noOfLines={1}>
           {description}
         </Text>
       </Box>
       <Box width='full' flex='1' align='right'>
-        <NextLink href={link} passHref>
+        <NextLink key='{link}' href={link} passHref>
           <Link>
             <IconButton
               aria-label='Enter Class'

@@ -29,10 +29,25 @@ async function main() {
       isOnline: true,
     }
   })
+  const newClass2 = await prisma.class.create({
+    data:{
+      department:'Computer science department',
+      term: 'Fall 2022',
+      name: 'CSCI 3333',
+      description: 'Data structure and Algorithm',
+      isOnline: false,
+    }
+  })
   const newTeachClass = await prisma.instructorTeachesClass.create({
     data:{
       instructorID: newInstructor.instructorID,
       classID: newClass.classID
+    }
+  })
+  const newTeachClass2 = await prisma.instructorTeachesClass.create({
+    data:{
+      instructorID: newInstructor.instructorID,
+      classID: newClass2.classID
     }
   })
 }
