@@ -4,8 +4,6 @@ import {
 
 const prisma = new PrismaClient()
 
-// TODO: THIS IS ACTUALLY ALL WRONG LMAO
-
 export default async function handler(req, res) {
   const {
     classID
