@@ -4,51 +4,56 @@ import {
 
 const prisma = new PrismaClient()
 
+// TODO: THIS IS ACTUALLY ALL WRONG LMAO
+
 export default async function handler(req, res) {
   const {
     classID
   } = req.query
   try {
-    const studentTakesClass = await prisma.studentTakesClass.findUnique({
+    const findClass = await prisma.class.findUnique({
       where: {
-        classID: classID
+        id: classID
       },
       select: {
-        studentID: true,
+        students: true,
       }
     })
-    const student = await prisma.student.findUnique({
-      where: {
-        id: studentTakesClass.studentID
-      },
-      select: {
-        id: true,
-        userID: true,
-        registerDate: true,
+    const getData = await Promise.all(findClass.students.map(async (data) => {
+      const student = await prisma.student.findUnique({
+        where: {
+          studentID: data.studentID
+        },
+        select: {
+          id: true,
+          registerDate: true,
+          userID: true,
+        }
+      })
+      const user = await prisma.user.findUnique({
+        where: {
+          id: student.userID
+        },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          avatar: true,
+        }
+      })
+      const studentInfo = {
+        studentID: student.id,
+        registerDate: student.registerDate,
+        userID: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatar: user.avatar,
       }
-    })
-    const user = await prisma.user.findUnique({
-      where: {
-        id: student.userID
-      },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        avatar: true,
-      }
-    })
-    const data = {
-      studentID: student.id,
-      userID: user.id,
-      registerDate: student.registerDate,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      avatar: user.avatar,
-    }
-    res.json(data)
+      return studentInfo
+    }))
+    res.json(getData)
   } catch {
     console.log(error)
   }
