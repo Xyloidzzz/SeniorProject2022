@@ -14,11 +14,7 @@ import { getSession } from 'next-auth/react'
 
 const ClassList = ({data,classes}) => {
   const name = data.firstName+' '+data.lastName
-  console.log(classes.length)
-  classes.map(val=>{
-    console.log(val.name)
-    console.log(val.description)
-  })
+
   return (
     <Flex width='full' m='0' p='0'>
       <HeadInfo
@@ -28,7 +24,7 @@ const ClassList = ({data,classes}) => {
       />
       <Flex width='full' flexDir='row'>
         <Box width='full' flex='1'>
-          <SideBar userInfo={name} />
+          <SideBar userInfo={name} isStudent={classes.isStudent} />
         </Box>
         <Box width='full' flex='16'>
         
@@ -42,9 +38,10 @@ const ClassList = ({data,classes}) => {
 export default ClassList
 
 
-
+//this is for fetching the needed data from api (to get classes that were taken)
 export async function getServerSideProps(context){
   const session = await getSession(context)
+  //check to see if user login
   if(!session){
     return{
       redirect:{
@@ -62,7 +59,7 @@ export async function getServerSideProps(context){
     const classlists = await fetch('http://localhost:3000/api/user/'+email+'/getClassLists')
     const classListsInfo = await classlists.json()
     console.log(data) //prints out json user's first name and last name
-    // console.log(classListsInfo)
+    console.log(classListsInfo)
     return {
       props:{
         data,

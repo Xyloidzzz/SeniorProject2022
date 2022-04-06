@@ -14,9 +14,10 @@ import { useControllableState } from '@chakra-ui/react'
 
 
 const ClassroomListMain = ({classLists}) => {
-  classLists.map(val=>{
+  classLists.classes.map(val=>{
     console.log(val.name)
   })
+
   const cl = [];
   var classr;
 
@@ -56,7 +57,7 @@ for(let i = 0; i < internalValue; i++){
           <Heading width='full'>Classrooms</Heading>
           <Divider />
           <Spacer />
-            {classLists.map(val=>{
+            {classLists.classes.map(val=>{
               return(
                 <ClassBlock 
                   key={val.id}
@@ -70,7 +71,7 @@ for(let i = 0; i < internalValue; i++){
           {cl}
           <Spacer />
           {/* TODO: FIX THIS DAMN BUTTON STRETCH????? LEFT ALIGN PLEASE FUTURE ME */}
-          <Button mt={4} colorScheme='blue' onClick={() => setInternalValue(value+1)}>
+          <Button mt={4} colorScheme='blue' onClick={() => setInternalValue(value+1) } style={{display:classLists.isStudent?'none':'block'}}>
             Add Class +
           </Button>
         </VStack>

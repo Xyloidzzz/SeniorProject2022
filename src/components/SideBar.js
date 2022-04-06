@@ -24,7 +24,7 @@ import NavItem from '@/components/NavItem'
 import { signOut } from 'next-auth/react'
 
 
-export default function Sidebar({userInfo}) {
+export default function Sidebar({userInfo,isStudent}) {
   const router = useRouter()
   const [navSize, changeNavSize] = useState('large')
 
@@ -106,7 +106,7 @@ export default function Sidebar({userInfo}) {
             <Heading as='h3' size='sm'>
               {userInfo}
             </Heading>
-            <Text color='gray'>Professor</Text>
+            <Text color='gray'>{isStudent?'Student':'Professor'}</Text>
           </Flex>
           <Spacer />
           <Box width='full' flex='1' align='center'>
