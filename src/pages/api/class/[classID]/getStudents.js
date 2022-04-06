@@ -22,7 +22,9 @@ export default async function handler(req, res) {
         id: studentTakesClass.studentID
       },
       select: {
-        userID: true
+        id: true,
+        userID: true,
+        registerDate: true,
       }
     })
     const user = await prisma.user.findUnique({
@@ -37,7 +39,16 @@ export default async function handler(req, res) {
         avatar: true,
       }
     })
-    res.json(user)
+    const data = {
+      studentID: student.id,
+      userID: user.id,
+      registerDate: student.registerDate,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      avatar: user.avatar,
+    }
+    res.json(data)
   } catch {
     console.log(error)
   }
