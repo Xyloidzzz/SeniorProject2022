@@ -9,11 +9,59 @@ async function main() {
   const newUser = await prisma.user.create({
     data: {
       email: "test123@gmail.com",
-      firstName: "test",
-      lastName: "testing",
-      avatar: "default avatar",
+      firstName: "Test",
+      lastName: "Testing",
+      avatar: "default",
       password: "test123",
+      prefix: 'Dr'
+    }
+  })
+  const newUser2 = await prisma.user.create({
+    data: {
+      email: "alfred@gradeflex.com",
+      firstName: "Alfredo",
+      lastName: "Pena",
+      avatar: "default",
+      password: "password",
       prefix: 'Mr'
+    }
+  })
+  const newUser3 = await prisma.user.create({
+    data: {
+      email: "jesus@gradeflex.com",
+      firstName: "Jesus",
+      lastName: "Mendez",
+      avatar: "default",
+      password: "password",
+      prefix: 'Mr'
+    }
+  })
+  const newUser4 = await prisma.user.create({
+    data: {
+      email: "james@gradeflex.com",
+      firstName: "James",
+      lastName: "Kim",
+      avatar: "default",
+      password: "password",
+      prefix: 'Mr'
+    }
+  })
+  const newStudent = await prisma.student.create({
+    data: {
+      registerDate: new Date(),
+      userID: newUser2.id,
+    }
+  })
+  const newStudent2 = await prisma.student.create({
+    data: {
+      registerDate: new Date(),
+      userID: newUser3.id,
+    }
+  })
+  const newStudent3 = await prisma.student.create({
+    data: {
+      registerDate: new Date(),
+      userID: newUser4.id,
     }
   })
   const newInstructor = await prisma.instructor.create({
@@ -91,6 +139,99 @@ async function main() {
     data: {
       isHidden: false,
       classID: newClass.is,
+      assignmentID: newAssignment3.id
+    }
+  })
+  const newStudentTakesClass = await prisma.studentTakesClass.create({
+    data: {
+      studentID: newStudent.id,
+      classID: newClass.id,
+      finalGrade: '100',
+    }
+  })
+  const newStudentTakesClass2 = await prisma.studentTakesClass.create({
+    data: {
+      studentID: newStudent2.id,
+      classID: newClass.id,
+      finalGrade: '100',
+    }
+  })
+  const newStudentTakesClass3 = await prisma.studentTakesClass.create({
+    data: {
+      studentID: newStudent3.id,
+      classID: newClass.id,
+      finalGrade: '100',
+    }
+  })
+  const newStudentHasAssignment = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent.id,
+      assignmentID: newAssignment.id
+    }
+  })
+  const newStudentHasAssignment2 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent.id,
+      assignmentID: newAssignment2.id
+    }
+  })
+  const newStudentHasAssignment3 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent.id,
+      assignmentID: newAssignment3.id
+    }
+  })
+  const newStudentHasAssignment4 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent2.id,
+      assignmentID: newAssignment.id
+    }
+  })
+  const newStudentHasAssignment5 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent2.id,
+      assignmentID: newAssignment2.id
+    }
+  })
+  const newStudentHasAssignment6 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent2.id,
+      assignmentID: newAssignment3.id
+    }
+  })
+  const newStudentHasAssignment7 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent3.id,
+      assignmentID: newAssignment.id
+    }
+  })
+  const newStudentHasAssignment8 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent3.id,
+      assignmentID: newAssignment2.id
+    }
+  })
+  const newStudentHasAssignment9 = await prisma.studentHasAssignment.create({
+    data: {
+      grade: '100',
+      comments: 'This is a comment.',
+      studentID: newStudent3.id,
       assignmentID: newAssignment3.id
     }
   })
