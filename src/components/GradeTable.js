@@ -16,49 +16,35 @@ import GradeCell from '@/components/GradeCell'
 import React, { useState } from 'react'
 
 const GradeTable = ({ tarea, tipo, classData }) => {
-  const numi = tarea.length + 1
+  // for (let i = 0; i < assignment.length; i++) {
+  //   a[i] = (
+  // <Th key={i} isNumeric>
+  //   {assignment[i]}
+  // </Th>
+  //   )
+  //   b[i] = (
+  // <GradeCell
+  //   key={i}
+  //   defaultValue='0'
+  //   studentName={c[i]}
+  //   assignment={assignment[i]}
+  // />
+  //   )
+  // }
 
-  const assignment = []
-  const AssignmentType = []
-  const a = []
-  const b = []
-  const c = [
-    'Alfredo Pena',
-    'Jesus Mendez',
-    'Jaehun Kim',
-    'John Doe',
-    'Diego Rivera',
-    'Peter Parker',
-    'Nathan Drake',
-  ]
-  const s = []
+  // for (let i = 0; i < c.length; i++) {
+  //   s[i] = (
+  //     <Tr key={i}>
+  //       <Td>{c[i]}</Td>
+  //       {b}
+  //     </Tr>
+  //   )
+  // }
 
-  assignment.push(tarea)
-  AssignmentType.push(tipo)
-
-  for (let i = 0; i < assignment.length; i++) {
-    a[i] = (
-      <Th key={i} isNumeric>
-        {assignment[i]}
-      </Th>
-    )
-    b[i] = (
-      <GradeCell
-        key={i}
-        defaultValue='0'
-        studentName={c[i]}
-        assignment={assignment[i]}
-      />
-    )
-  }
-
-  for (let i = 0; i < c.length; i++) {
-    s[i] = (
-      <Tr key={i}>
-        <Td>{c[i]}</Td>
-        {b}
-      </Tr>
-    )
+  // get assignment title from assignments in classData grades
+  const assignmentNames = []
+  for (let i = 0; i < classData.grades[0].assignmentInfo.length; i++) {
+    assignmentNames.push(classData.grades[0].assignmentInfo[i].title)
   }
 
   return (
@@ -67,10 +53,28 @@ const GradeTable = ({ tarea, tipo, classData }) => {
       <Thead>
         <Tr>
           <Th>Students</Th>
-          {a}
+          {assignmentNames.map((val) => (
+            <Th key={val}>{val}</Th>
+          ))}
+          <Th key='finalGrade'>Final Grade</Th>
         </Tr>
       </Thead>
-      <Tbody>{s}</Tbody>
+      <Tbody>
+        {classData.grades.map((student) => (
+          <Tr key={student.studentID}>
+            <Td>{student.firstName + ' ' + student.lastName}</Td>
+            {student.assignmentInfo.map((assignment) => (
+              <GradeCell
+                key={student.studentID + assignment.assignmentID}
+                defaultValue={assignment.grade}
+                studentName={student.firstName + ' ' + student.lastName}
+                assignmentID={assignment.assignmentID}
+              />
+            ))}
+            <Td>{student.finalGrade}</Td>
+          </Tr>
+        ))}
+      </Tbody>
     </Table>
   )
 }

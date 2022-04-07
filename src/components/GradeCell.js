@@ -22,7 +22,7 @@ function updateDB() {
   // here we will sumbit new cell value to DB -> maybe upper component not here
 }
 
-const GradeCell = ({ defaultValue, studentName, assignment }) => {
+const GradeCell = ({ defaultValue, studentName, assignmentID }) => {
   const [value, setValue] = useState(defaultValue)
   const [valid, setValid] = useState(true)
 

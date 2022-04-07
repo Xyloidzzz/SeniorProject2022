@@ -28,6 +28,8 @@ import ReactDOM from 'react-dom'
 
 // TODO: FIX EVERYTHING HERE ONCE TABLE POPULATED
 
+// TODO: Add weights to DB so we can have percentages and call them in GradesTable
+
 const ClassTable = ({ classData, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
