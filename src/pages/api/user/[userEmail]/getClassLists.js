@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         }
     })
     //if user is a student
-    if(checkStudent){
+    if (checkStudent) {
         try {
             //save classes array into studentInfo
             const studentInfo = await prisma.student.findUnique({
@@ -50,13 +50,14 @@ export default async function handler(req, res) {
             //send json with classes info and bool to check if student
             res.json({
                 classes: getData,
-                isStudent: true})
-        } catch (error){
+                isStudent: true
+            })
+        } catch (error) {
             throw new Error('Something went wronng..')
         }
     }
     //if the user is instructor
-    else{
+    else {
         try {
             //get classes array
             const teachInfo = await prisma.instructor.findUnique({
@@ -85,5 +86,5 @@ export default async function handler(req, res) {
             throw new Error('Something went wronng..')
         }
     }
-   
+
 }
