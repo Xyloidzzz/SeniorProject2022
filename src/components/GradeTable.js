@@ -13,53 +13,65 @@ import {
   Text,
 } from '@chakra-ui/react'
 import GradeCell from '@/components/GradeCell'
-import ClassTable from '@/components/ClassTable'
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
+const GradeTable = ({ tarea, tipo, classData }) => {
+  const numi = tarea.length + 1
 
+  const assignment = []
+  const AssignmentType = []
+  const a = []
+  const b = []
+  const c = [
+    'Alfredo Pena',
+    'Jesus Mendez',
+    'Jaehun Kim',
+    'John Doe',
+    'Diego Rivera',
+    'Peter Parker',
+    'Nathan Drake',
+  ]
+  const s = []
 
-const GradeTable = ({tarea,tipo}) => {
+  assignment.push(tarea)
+  AssignmentType.push(tipo)
 
-    const numi = tarea.length+1;
-  
-    const assignment = [];
-    const AssignmentType = [];
-    const a =[];
-    const b =[];
-    const c =['Alfredo Pena', 'Jesus Mendez', 'Jaehun Kim', 'John Doe', 'Diego Rivera', 'Peter Parker', 'Nathan Drake'];
-    const s = [];
+  for (let i = 0; i < assignment.length; i++) {
+    a[i] = (
+      <Th key={i} isNumeric>
+        {assignment[i]}
+      </Th>
+    )
+    b[i] = (
+      <GradeCell
+        key={i}
+        defaultValue='0'
+        studentName={c[i]}
+        assignment={assignment[i]}
+      />
+    )
+  }
 
-    assignment.push(tarea);
-    AssignmentType.push(tipo);
-   
-   for(let i = 0; i<assignment.length; i++){
-    a[i] = <Th key={i} isNumeric>{ assignment[i] }</Th>;
-    b[i] = <GradeCell
-    key={i}
-    defaultValue='0'
-    studentName={c[i]}
-    assignment={assignment[i]}
-  />
-   }
+  for (let i = 0; i < c.length; i++) {
+    s[i] = (
+      <Tr key={i}>
+        <Td>{c[i]}</Td>
+        {b}
+      </Tr>
+    )
+  }
 
-   for(let i=0; i<c.length; i++){
-      s[i] = <Tr key={i}><Td>{c[i]}</Td>{b}</Tr>  
-   }
-   
-  
   return (
-    <Table variant='unstyled' >
+    <Table variant='unstyled'>
+      {console.log(classData)}
       <Thead>
         <Tr>
           <Th>Students</Th>
           {a}
         </Tr>
       </Thead>
-      <Tbody>
-        {s}
-      </Tbody>
+      <Tbody>{s}</Tbody>
     </Table>
-    
   )
 }
 

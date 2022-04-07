@@ -23,24 +23,22 @@ import {
   Input,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import React, { useState } from "react";
-import ReactDOM from 'react-dom';
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 
+// TODO: FIX EVERYTHING HERE ONCE TABLE POPULATED
 
-
-const ClassTable = ({ ...rest }) => {
+const ClassTable = ({ classData, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  
   /*const [Ival, setIval] = React.useState('')
   const handleChange = (event) => setIval(event.target.Ival)
   const num = Ival;*/
-  
+
   // const Ival = {
   //   rows: 0 ,
   //   col: 0 ,
   // };
-
 
   // const [values, setValues] = useState(Ival);
 
@@ -55,20 +53,18 @@ const ClassTable = ({ ...rest }) => {
   // const rnum = values.rows;
   // const cnum = values.col;
   //const Assignment = [];
-  const Atype = [];
-  const [assing, setAssing] = useState('');
-  const [astype, setAstype] = useState('');
+  const Atype = []
+  const [assing, setAssing] = useState('')
+  const [astype, setAstype] = useState('')
 
   const handleSubmit = (event) => {
-    resetState();
-    event.preventDefault();
+    resetState()
+    event.preventDefault()
   }
 
- 
-
   const resetState = () => {
-    setAssing('');
-    setAstype('');
+    setAssing('')
+    setAstype('')
   }
 
   return (
@@ -83,7 +79,7 @@ const ClassTable = ({ ...rest }) => {
       {...rest}
     >
       <Flex width='full' height='full' flex='1' flexDir='column' p='8'>
-        <Box width='full' height='full' flex='1' >
+        <Box width='full' height='full' flex='1'>
           <Heading fontSize='xl'>Grades</Heading>
         </Box>
         <Spacer />
@@ -97,31 +93,55 @@ const ClassTable = ({ ...rest }) => {
               <ModalBody>
                 <FormControl>
                   <FormLabel>Name of the Assignment</FormLabel>
-                  <Input name='Assignments' placeholder='Name' value={assing} onChange={(e) => setAssing(e.target.value)}/>
+                  <Input
+                    name='Assignments'
+                    placeholder='Name'
+                    value={assing}
+                    onChange={(e) => setAssing(e.target.value)}
+                  />
                   <FormLabel>Type of Assignment</FormLabel>
-                  <Input name='Type' placeholder='Type (Exam, Homework, etc)' value={astype} onChange={(e) => setAstype(e.target.value)}/>
+                  <Input
+                    name='Type'
+                    placeholder='Type (Exam, Homework, etc)'
+                    value={astype}
+                    onChange={(e) => setAstype(e.target.value)}
+                  />
                   <FormHelperText>Now numbers are saved!</FormHelperText>
                 </FormControl>
               </ModalBody>
- 
+
               <ModalFooter>
-                <Button type='submit' colorScheme='blue' mr={3} onClick={onClose} value='Sumbit' onSubmit={handleSubmit}>
+                <Button
+                  type='submit'
+                  colorScheme='blue'
+                  mr={3}
+                  onClick={onClose}
+                  value='Sumbit'
+                  onSubmit={handleSubmit}
+                >
                   Submit
                 </Button>
-                
               </ModalFooter>
             </ModalContent>
           </Modal>
         </Box>
       </Flex>
       <Spacer />
-      <Box maxWidth='full' maxHeight='680px' flex='16' overflowY='auto' overflowX='auto'>
-        <GradeTable tarea={assing} tipo={astype}></GradeTable>
+      <Box
+        maxWidth='full'
+        maxHeight='680px'
+        flex='16'
+        overflowY='auto'
+        overflowX='auto'
+      >
+        <GradeTable
+          tarea={assing}
+          tipo={astype}
+          classData={classData}
+        ></GradeTable>
       </Box>
     </Flex>
   )
 }
-
-
 
 export default ClassTable

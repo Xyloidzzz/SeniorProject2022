@@ -12,14 +12,15 @@ import ClassBlock from '@/components/ClassBlock'
 import React from 'react'
 import { useControllableState } from '@chakra-ui/react'
 
-
-const ClassroomListMain = ({classLists}) => {
-  classLists.classes.map(val=>{
+const ClassroomListMain = ({ classLists }) => {
+  classLists.classes.map((val) => {
     console.log(val.name)
   })
 
-  const cl = [];
-  var classr;
+  // TODO: FIX ADD CLASS BUTTON SO IT UPDATES DB AND DISPLAYS REAL INFO
+
+  const cl = []
+  var classr
 
   const [value, setValue] = React.useState(0)
 
@@ -27,7 +28,7 @@ const ClassroomListMain = ({classLists}) => {
     value,
     onChange: setValue,
   })
-  
+
   /*if(cl.length == 0){
     cl[0] = internalValue
   }
@@ -41,14 +42,17 @@ const ClassroomListMain = ({classLists}) => {
     }
   }
 }*/
-for(let i = 0; i < internalValue; i++){
-  classr = 'Classroom'+(i+1);
-  cl[i] = <ClassBlock key={i}
-  title={classr}
-  description="This is a classroom description. It can be a bit long. However, that's ok because we can simply truncate this."
-  link='/classroom'
-/> ;
-}
+  for (let i = 0; i < internalValue; i++) {
+    classr = 'Classroom' + (i + 1)
+    cl[i] = (
+      <ClassBlock
+        key={i}
+        title={classr}
+        description="This is a classroom description. It can be a bit long. However, that's ok because we can simply truncate this."
+        link='/classroom'
+      />
+    )
+  }
 
   return (
     <Flex width='full' height='full' p='8' mx='auto'>
@@ -57,21 +61,25 @@ for(let i = 0; i < internalValue; i++){
           <Heading width='full'>Classrooms</Heading>
           <Divider />
           <Spacer />
-            {classLists.classes.map(val=>{
-              return(
-                <ClassBlock 
-                  key={val.id}
-                  title={val.name}
-                  description={val.description}
-                  link='/classroom'
-                >
-                </ClassBlock>
-              )
-            })}
+          {classLists.classes.map((val) => {
+            return (
+              <ClassBlock
+                key={val.id}
+                title={val.name}
+                description={val.description}
+                link={'/classroom/' + val.id}
+              ></ClassBlock>
+            )
+          })}
           {cl}
           <Spacer />
           {/* TODO: FIX THIS DAMN BUTTON STRETCH????? LEFT ALIGN PLEASE FUTURE ME */}
-          <Button mt={4} colorScheme='blue' onClick={() => setInternalValue(value+1) } style={{display:classLists.isStudent?'none':'block'}}>
+          <Button
+            mt={4}
+            colorScheme='blue'
+            onClick={() => setInternalValue(value + 1)}
+            style={{ display: classLists.isStudent ? 'none' : 'block' }}
+          >
             Add Class +
           </Button>
         </VStack>

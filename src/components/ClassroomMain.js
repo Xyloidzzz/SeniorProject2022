@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Heading, Spacer, VStack } from '@chakra-ui/react'
 import ClassTable from '@/components/ClassTable'
 
-const ClassroomMain = ({ title }) => {
+const ClassroomMain = ({ title, classData }) => {
   return (
     <Flex width='full' height='full' p='8' mx='auto'>
       <Box flex='1' width='full'>
@@ -9,7 +9,7 @@ const ClassroomMain = ({ title }) => {
           <Heading width='full'>{title}</Heading>
           <Divider />
           <Spacer />
-          <ClassTable />
+          <ClassTable classData={classData} />
         </VStack>
       </Box>
     </Flex>

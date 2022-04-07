@@ -14,6 +14,7 @@ export default async function handler(req, res) {
         id: classID
       },
       select: {
+        id: true,
         department: true,
         term: true,
         name: true,
