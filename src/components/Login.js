@@ -13,65 +13,69 @@ import {
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { signIn } from "next-auth/react"
-
+import { signIn } from 'next-auth/react'
 
 const Login = ({ width, height, padding }) => {
-
   const toast = useToast()
 
   const route = useRouter()
 
-  const [showMssg,setShowMssg] = useState(false)
-  
+  const [showMssg, setShowMssg] = useState(false)
+
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
-  const [email,setEmail] = useState('')             //get email value
-  const [password,setPassword] = useState('')       //get pw value
+  const [email, setEmail] = useState('') //get email value
+  const [password, setPassword] = useState('') //get pw value
 
-  const [validEmail,setValidEamil] = useState(true) //check for valid email
-  const [validPass,setValidPass] = useState(true)   //check for valid pw
+  const [validEmail, setValidEamil] = useState(true) //check for valid email
+  const [validPass, setValidPass] = useState(true) //check for valid pw
 
   //authentication
-  const submitLogin = async(e) =>{
-    const response = await signIn("credentials",{
+  const submitLogin = async () => {
+    const response = await signIn('credentials', {
       redirect: false,
       email: email,
-      password: password
+      password: password,
     })
-    if(!response.error){
+    if (!response.error) {
       //login success msg
       toast({
-              title: 'login successfully',
-              position: 'top',
-              status: 'success',
-              isClosable: true,
-              duration: 2000
-             })
+        title: 'login successfully',
+        position: 'top',
+        status: 'success',
+        isClosable: true,
+        duration: 2000,
+      })
       route.push('/classlist')
-    }
-    else{
+    } else {
       //pop up msg for failure
       toast({
-              title: 'login failed',
-              position: 'top',
-              status: 'error',
-              isClosable: true,
-              duration: 2000
-            })
+        title: 'login failed',
+        position: 'top',
+        status: 'error',
+        isClosable: true,
+        duration: 2000,
+      })
       setValidEamil(false)
       setValidPass(false)
       setShowMssg(true)
       resetState()
     }
-  } 
+  }
   //set email and pw input to empty string
   const resetState = () => {
     setEmail('')
     setPassword('')
   }
-  
+
+  // handle keypress event
+  const handleKeyPress = (e) => {
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+      submitLogin()
+    }
+  }
+
   return (
     <Container centerContent p={padding}>
       <Box width={width} height={height}>
@@ -82,11 +86,12 @@ const Login = ({ width, height, padding }) => {
             type='email'
             size='sm'
             variant='outline'
-            borderColor={validEmail?'gray.400':'red.400'}
+            borderColor={validEmail ? 'gray.400' : 'red.400'}
             _hover={{ borderColor: 'gray.600' }}
             focusBorderColor='black'
             value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={(e) => handleKeyPress(e)}
           />
           <FormLabel htmlFor='password'>Password</FormLabel>
           <InputGroup size='sm'>
@@ -96,11 +101,12 @@ const Login = ({ width, height, padding }) => {
               pr='4.5rem'
               size='sm'
               variant='outline'
-              borderColor={validPass?'gray.400':'red.400'}
+              borderColor={validPass ? 'gray.400' : 'red.400'}
               _hover={{ borderColor: 'gray.600' }}
               focusBorderColor='black'
               value={password}
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(e) => handleKeyPress(e)}
             />
             <InputRightElement width='4.5rem'>
               <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -110,20 +116,18 @@ const Login = ({ width, height, padding }) => {
           </InputGroup>
           <a href='/signup'>sign up</a>
           <br />
-          <p 
-            style={{display:showMssg?'block':'none',color:'red'}}
+          <p style={{ display: showMssg ? 'block' : 'none', color: 'red' }}>
+            Invalid Email and Password!!
+          </p>
+          <IconButton
+            aria-label='Login'
+            icon={<ArrowForwardIcon />}
+            mt={4}
+            colorScheme='blue'
+            onClick={submitLogin}
           >
-              Invalid Email and Password!!
-          </p>        
-              <IconButton
-                aria-label='Login'
-                icon={<ArrowForwardIcon />}
-                mt={4}
-                colorScheme='blue'
-                onClick={submitLogin}
-              >
-                Login
-              </IconButton>
+            Login
+          </IconButton>
         </FormControl>
       </Box>
     </Container>
@@ -135,4 +139,3 @@ Login.defaultProps = {
 }
 
 export default Login
-
