@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   try {
     const findClass = await prisma.class.findUnique({
       where: {
-        is: classID
+        id: classID
       },
       select: {
         department: true,
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         posts: true,
       }
     })
-    res.json(user)
+    res.json(findClass)
   } catch {
 
   }
