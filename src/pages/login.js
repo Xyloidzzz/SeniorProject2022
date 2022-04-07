@@ -1,34 +1,23 @@
-import { Container, Box, Heading, Button, Link } from '@chakra-ui/react'
-import styles from '@/styles/Home.module.css'
+import { Container } from '@chakra-ui/react'
 import HeadInfo from '@/components/HeadInfo'
-import Login from '@/components/Login'
 import { getSession } from 'next-auth/react'
 
-export default function Home() {
+export default function Login() {
   return (
-    <Container className={styles.main}>
+    <Container>
       <HeadInfo
-        title='GradeBook'
-        keyword='home'
-        description='gradebook system'
+        title='Redirecting...'
+        keyword='redirect'
+        description='redirect page'
         icon='/grade_icon.ico'
       />
-
-      <Box>
-        <Heading as='h1' size='4xl'>
-          GradeBook
-        </Heading>
-        <Login width='200px' padding='10' />
-      </Box>
     </Container>
   )
 }
 
-//if user logged in, page will redirect to portal page
 export async function getServerSideProps(context) {
   const session = await getSession(context)
   if (session) {
-    // fetch userInfo from /api/user/[userEmail]
     const res = await fetch(
       `http://localhost:3000/api/user/${session.user.email}`
     )
@@ -36,6 +25,13 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: '/' + userInfo.id + '/classlist',
+        permanent: false,
+      },
+    }
+  } else {
+    return {
+      redirect: {
+        destination: '/',
         permanent: false,
       },
     }

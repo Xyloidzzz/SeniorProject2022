@@ -14,6 +14,7 @@ export default async function handler(req, res) {
                 email: userEmail
             },
             select: {
+                id: true,
                 firstName: true,
                 lastName: true
             }
