@@ -68,6 +68,7 @@ const GradeTable = ({ tarea, tipo, classData }) => {
                 key={student.studentID + assignment.assignmentID}
                 defaultValue={assignment.grade}
                 studentName={student.firstName + ' ' + student.lastName}
+                studentID={student.studentID}
                 assignmentID={assignment.assignmentID}
               />
             ))}
