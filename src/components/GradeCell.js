@@ -14,6 +14,8 @@ import { useState } from 'react'
 // however maybe this will happen better in upper level component
 // cause then we might run DB connect a million times
 
+// TODO: Save Button grays out when shit doesn't match DB and onClick will change DB grade for specific assignment
+
 const isValidGrade = (grade) => {
   return grade >= 0 && /[0-9]/.test(grade) ? true : false
 }
