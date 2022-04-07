@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     const getData = await Promise.all(findClass.students.map(async (data) => {
       const student = await prisma.student.findUnique({
         where: {
-          studentID: data.studentID
+          id: data.studentID
         },
         select: {
           id: true,
@@ -42,8 +42,8 @@ export default async function handler(req, res) {
       })
       const studentInfo = {
         studentID: student.id,
-        registerDate: student.registerDate,
         userID: user.id,
+        registerDate: student.registerDate,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
