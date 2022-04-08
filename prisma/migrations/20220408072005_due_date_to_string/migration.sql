@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Assignment" ALTER COLUMN "dueDate" DROP NOT NULL,
+ALTER COLUMN "dueDate" SET DATA TYPE TEXT;

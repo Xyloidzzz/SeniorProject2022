@@ -55,7 +55,7 @@ model Class {
   description String?
   isOnline    Boolean                 @default(false)
   schedule    String?
-  gradeWeight Json?
+  gradeWeight Json[]
   students    StudentTakesClass[]
   instructors InstructorTeachesClass?
   assistants  AssistantTeachesClass[]
@@ -69,8 +69,8 @@ model Assignment {
   updatedAt   DateTime               @updatedAt
   title       String
   description String?
-  dueDate     DateTime //yyyy-mm-dd
-  attachments String? //_quiz_.md
+  dueDate     String? // YYYY-MM-DD HH:mm:ss
+  attachments String[] // _quiz_.md
   students    StudentHasAssignment[]
   class       ClassHasAssignment?
 }

@@ -21,6 +21,7 @@ export default async function handler(req, res) {
         description: true,
         isOnline: true,
         schedule: true,
+        gradeWeight: true,
         assignments: true,
         students: true,
         assignments: true,

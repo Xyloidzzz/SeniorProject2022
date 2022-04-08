@@ -15,7 +15,7 @@ import {
 import GradeCell from '@/components/GradeCell'
 import React, { useState } from 'react'
 
-const GradeTable = ({ tarea, tipo, classData }) => {
+const GradeTable = ({ classData }) => {
   // for (let i = 0; i < assignment.length; i++) {
   //   a[i] = (
   // <Th key={i} isNumeric>

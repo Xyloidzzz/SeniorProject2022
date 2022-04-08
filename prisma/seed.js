@@ -77,9 +77,13 @@ async function main() {
       name: 'CSCI 1101',
       description: 'Fundamentals of computer science',
       isOnline: true,
-      gradeWeight: {
-        'Homework': 0.45,
-      },
+      gradeWeight: [{
+        type: 'Homework',
+        weight: 0.5
+      }, {
+        type: 'Quiz',
+        weight: 0.25
+      }]
     }
   })
   const newClass2 = await prisma.class.create({
