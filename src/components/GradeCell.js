@@ -79,6 +79,7 @@ const GradeCell = ({ defaultValue, studentName, studentID, assignmentID }) => {
 
   const onCancelValueListener = (prevValue) => {
     isValidGrade(prevValue) ? setValid(true) : setValid(false)
+    setValue(prevValue)
   }
 
   const onSubmitListener = (nextValue) => {

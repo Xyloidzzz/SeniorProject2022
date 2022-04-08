@@ -15,6 +15,10 @@ export default async function handler(req, res) {
   // TODO: missing attendance JSON we gotta figure out a mold for how to parse it.
   // when you add a student then attendace should update
 
+  //  TODO: add a check to see if the class already exists
+
+  // TODO: add a finalGrade update when a student takes a class
+
   if (department && term && name && description && isOnline && schedule) {
     try {
       await prisma.user.create({
