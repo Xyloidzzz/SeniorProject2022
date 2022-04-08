@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   if (studentID && classID && finalGrade) {
     try {
-      await prisma.studentTakesClass.update({
+      await prisma.studentTakesClass.updateMany({
         where: {
           studentID: studentID,
           classID: classID
