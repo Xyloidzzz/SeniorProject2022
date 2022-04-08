@@ -77,6 +77,9 @@ async function main() {
       name: 'CSCI 1101',
       description: 'Fundamentals of computer science',
       isOnline: true,
+      gradeWeight: {
+        'Homework': 0.45,
+      },
     }
   })
   const newClass2 = await prisma.class.create({
@@ -125,21 +128,27 @@ async function main() {
     data: {
       isHidden: false,
       classID: newClass.id,
-      assignmentID: newAssignment.id
+      assignmentID: newAssignment.id,
+      type: 'Homework',
+      weight: 0.45,
     }
   })
   const newClassHasAssignment2 = await prisma.classHasAssignment.create({
     data: {
       isHidden: false,
       classID: newClass.id,
-      assignmentID: newAssignment2.id
+      assignmentID: newAssignment2.id,
+      type: 'Homework',
+      weight: 0.45,
     }
   })
   const newClassHasAssignment3 = await prisma.classHasAssignment.create({
     data: {
       isHidden: false,
       classID: newClass.is,
-      assignmentID: newAssignment3.id
+      assignmentID: newAssignment3.id,
+      type: 'Homework',
+      weight: 0.45,
     }
   })
   const newStudentTakesClass = await prisma.studentTakesClass.create({
@@ -147,6 +156,12 @@ async function main() {
       studentID: newStudent.id,
       classID: newClass.id,
       finalGrade: '100',
+      attendance: {
+        '2022-01-24': '1',
+        '2022-01-26': '1',
+        '2022-01-31': '1',
+        '2022-02-02': '1',
+      },
     }
   })
   const newStudentTakesClass2 = await prisma.studentTakesClass.create({
@@ -154,6 +169,12 @@ async function main() {
       studentID: newStudent2.id,
       classID: newClass.id,
       finalGrade: '100',
+      attendance: {
+        '2022-01-24': '1',
+        '2022-01-26': '0',
+        '2022-01-31': '0',
+        '2022-02-02': '0',
+      },
     }
   })
   const newStudentTakesClass3 = await prisma.studentTakesClass.create({
@@ -161,6 +182,12 @@ async function main() {
       studentID: newStudent3.id,
       classID: newClass.id,
       finalGrade: '100',
+      attendance: {
+        '2022-01-24': '1',
+        '2022-01-26': '1',
+        '2022-01-31': '0',
+        '2022-02-02': '1',
+      },
     }
   })
   const newStudentHasAssignment = await prisma.studentHasAssignment.create({

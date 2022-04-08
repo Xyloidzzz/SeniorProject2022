@@ -55,6 +55,7 @@ model Class {
   description String?
   isOnline    Boolean                 @default(false)
   schedule    String?
+  gradeWeight Json?
   students    StudentTakesClass[]
   instructors InstructorTeachesClass?
   assistants  AssistantTeachesClass[]
