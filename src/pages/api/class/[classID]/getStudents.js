@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       },
       select: {
         students: true,
+        attendance: true
       }
     })
     const getData = await Promise.all(findClass.students.map(async (data) => {
@@ -48,6 +49,7 @@ export default async function handler(req, res) {
         firstName: user.firstName,
         lastName: user.lastName,
         avatar: user.avatar,
+        attendance: students.attendance,
       }
       return studentInfo
     }))

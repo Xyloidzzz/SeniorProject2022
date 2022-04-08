@@ -55,7 +55,6 @@ model Class {
   description String?
   isOnline    Boolean                 @default(false)
   schedule    String?
-  attendance  Json?
   students    StudentTakesClass[]
   instructors InstructorTeachesClass?
   assistants  AssistantTeachesClass[]
@@ -79,13 +78,14 @@ model Post {
   id          String        @id @default(cuid())
   title       String?
   body        String?
-  attachments String?
+  attachments String[]
   class       ClassHasPost?
 }
 
 model StudentTakesClass {
   id         String   @id @default(cuid()) // studentID + classID
   finalGrade String?
+  attendance Json?
   Student    Student? @relation(fields: [studentID], references: [id])
   studentID  String?
   Class      Class?   @relation(fields: [classID], references: [id])
@@ -113,7 +113,8 @@ model StudentHasAssignment {
   id           String      @id @default(cuid()) // studentID + assignmentID
   grade        String?
   comments     String?
-  attachments  String?
+  attachments  String[]
+  isGraded     Boolean     @default(false)
   Student      Student?    @relation(fields: [studentID], references: [id])
   studentID    String?
   Assignment   Assignment? @relation(fields: [assignmentID], references: [id])
@@ -123,6 +124,8 @@ model StudentHasAssignment {
 model ClassHasAssignment {
   id           String      @id @default(cuid()) // classID + assignmentID
   isHidden     Boolean     @default(true)
+  type         String?
+  weight       Float?
   Class        Class?      @relation(fields: [classID], references: [id])
   classID      String?
   Assignment   Assignment? @relation(fields: [assignmentID], references: [id])

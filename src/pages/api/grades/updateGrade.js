@@ -18,7 +18,8 @@ export default async function handler(req, res) {
             assignmentID: assignmentID
           },
           data: {
-            grade: grade
+            grade: grade,
+            isGraded: true
           }
         })
         res.status(200).json({

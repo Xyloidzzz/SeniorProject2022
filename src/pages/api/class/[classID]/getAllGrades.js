@@ -43,12 +43,15 @@ export default async function handler(req, res) {
           select: {
             id: true,
             title: true,
+            dueDate: true,
           }
         })
         const studentAssignmentGrade = {
           assignmentID: assignmentInfo.id,
           title: assignmentInfo.title,
+          dueDate: assignmentInfo.dueDate,
           grade: studentAssignment.grade,
+          isGraded: studentAssignment.isGraded,
         }
         return studentAssignmentGrade
       }))
