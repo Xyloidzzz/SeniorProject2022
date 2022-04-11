@@ -16,7 +16,7 @@ import {
   BiHome,
   BiListUl,
   BiBook,
-  BiBookOpen,
+  BiArrowBack,
   BiLogOut,
   BiCog,
 } from 'react-icons/bi'
@@ -51,10 +51,9 @@ export default function Sidebar({userInfo,isStudent}) {
           background='none'
           mt={5}
           _hover={{ background: 'none' }}
-          icon={<BiMenu />}
+          icon={<BiArrowBack />}
           onClick={() => {
-            if (navSize == 'small') changeNavSize('large')
-            else changeNavSize('small')
+            router.back();
           }}
         />
         <NavItem
