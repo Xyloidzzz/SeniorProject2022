@@ -36,41 +36,31 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 
-// TODO: FIX EVERYTHING HERE ONCE TABLE POPULATED
-
-// TODO: Add weights to DB so we can have percentages and call them in GradesTable
+// !IMPORTANT: FIX GRADECELL DISPLAY ORDER SOMEHOW... POSSIBLY BY ADDING ALL DATA TO ANOTHER JSON FILE ORDERED BY STUDENT AND HOMEWORK ITEM
+// const jsonExample = [
+//   {
+//     studentID: '0',
+//     studentName: firstName + ' ' + lastName,
+//     assignments: [
+//       {
+//         assignmentID: '0',
+//         assignmentName: 'Assignment 1',
+//         grade: '0',
+//       },
+//     ],
+//     finalGrade: '0',
+//   },
+// ]
 
 const ClassTable = ({ classData, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  /*const [Ival, setIval] = React.useState('')
-  const handleChange = (event) => setIval(event.target.Ival)
-  const num = Ival;*/
-
-  // const Ival = {
-  //   rows: 0 ,
-  //   col: 0 ,
-  // };
-
-  // const [values, setValues] = useState(Ival);
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setValues({
-  //     ...values,
-  //     [name]: value,
-  //   });
-  // };
-
-  // const rnum = values.rows;
-  // const cnum = values.col;
-  //const Assignment = [];
   const [assName, setAssName] = useState('')
   const [assDesc, setAssDesc] = useState('')
   // TODO: FIGURE OUT HOW TO DO A CUSTOM DATE & TIME PICKER
   const [assDue, setAssDue] = useState(
     moment().endOf('day').format('YYYY-MM-DD HH:mm:ss')
-  ) // convert ISOString at end
+  )
   // TODO: attachments eventually when we have file upload
 
   const [assType, setAssType] = useState('')
@@ -83,12 +73,7 @@ const ClassTable = ({ classData, ...rest }) => {
 
   const toast = useToast()
 
-  // FIX ME: HANDLE SUBMIT NOT WORKING????
-  const handleSubmit = async (e) => {
-    // get gradeWeight.weight from classData based on assType
-    const type = classData.gradeWeight.find((val) => val.type === assType)
-    setAssWeight(type.weight)
-
+  const createAssignment = async () => {
     // send form to DB NEW ASSIGNMENT
     const res = await fetch(
       '/api/class/' + classData.id + '/createAssignment',
@@ -120,7 +105,6 @@ const ClassTable = ({ classData, ...rest }) => {
         duration: 2000,
       })
       resetState()
-      e.preventDefault()
     } else {
       toast({
         title: 'Failed to Connect to Database',
@@ -133,6 +117,21 @@ const ClassTable = ({ classData, ...rest }) => {
     onClose()
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (assType === '') {
+      toast({
+        title: 'Please select an assignment type.',
+        position: 'top',
+        status: 'error',
+        isClosable: true,
+        duration: 2000,
+      })
+    } else {
+      createAssignment()
+    }
+  }
+
   const resetState = () => {
     setAssName('')
     setAssDesc('')
@@ -142,7 +141,10 @@ const ClassTable = ({ classData, ...rest }) => {
     setAssWeight('')
   }
 
+  // TODO: THIS WHOLE THING
   const saveNewType = async () => {
+    // check if newAssType already exists from classData.gradeWeight
+
     // send newAssType and newAssWeight to DB
 
     // reset newAssType and newAssWeight
@@ -184,6 +186,11 @@ const ClassTable = ({ classData, ...rest }) => {
         </InputGroup>
       </>
     )
+  }
+
+  const setTypeAndWeight = (e) => {
+    setAssType(e.target.value.split('!!%')[0])
+    setAssWeight(e.target.value.split('!!%')[1])
   }
 
   return (
@@ -241,11 +248,14 @@ const ClassTable = ({ classData, ...rest }) => {
                     <Box width='full'>
                       <Select
                         value={assType}
-                        onChange={(e) => setAssType(e.target.value)}
+                        onChange={(e) => setTypeAndWeight(e)}
                       >
                         <option value=''>Select</option>
                         {classData.gradeWeight.map((type) => (
-                          <option key={type.type} value={type.type}>
+                          <option
+                            key={type.type}
+                            value={type.type + '!!%' + type.weight}
+                          >
                             {type.type}
                           </option>
                         ))}

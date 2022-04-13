@@ -4,10 +4,10 @@ import {
 
 const prisma = new PrismaClient();
 
-// TODO: Relation Tables are not getting created properly. I think its cause its just doing the first one and excaping.
-
 export default async function handler(req, res) {
-  const classID = req.query
+  const {
+    classID
+  } = req.query
 
   const title = req.body.title
   const description = req.body.description
@@ -28,33 +28,16 @@ export default async function handler(req, res) {
             description: description,
             dueDate: dueDate,
             attachments: attachments,
-          },
-          select: {
-            id: true,
           }
         })
         // use new assignment to create classHasAssignment
-        const createClassHasAssignment = await prisma.classHasAssignment.create({
+        const createClassRelationship = await prisma.classHasAssignment.create({
           data: {
             classID: classID,
             assignmentID: newAssignment.id,
             type: type,
-            weight: weight,
-            isHidden: isHidden
-          }
-        })
-        // update class gradeWeight with new "type: weight" json field
-        const updateClass = await prisma.class.update({
-          where: {
-            id: classID
-          },
-          data: {
-            gradeWeight: {
-              create: {
-                type: type,
-                weight: weight
-              }
-            }
+            weight: parseFloat(weight),
+            isHidden: isHidden === "true" ? true : false,
           }
         })
         // students and their IDs from the classID
@@ -67,12 +50,6 @@ export default async function handler(req, res) {
           }
         })
 
-        prisma.$transaction([
-          newAssignment,
-          createClassHasAssignment,
-          updateClass,
-          students
-        ])
 
         // use new assignment to create studentHasAssignment
         if (students) {
