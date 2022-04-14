@@ -72,6 +72,10 @@ export default async function handler(req, res) {
         assignmentInfo: getStudentAssignment,
         finalGrade: student.finalGrade,
       }
+      gradeInfo.assignmentInfo.sort((a, b) => {
+        //sort by title
+        return a.title.localeCompare(b.title)
+      })
       return gradeInfo
     }))
     res.json(getData)
