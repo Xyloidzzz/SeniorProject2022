@@ -56,7 +56,7 @@ export default async function handler(req, res) {
           type: assignmentInfo.type,
           weight: assignmentInfo.weight,
           grade: studentAssignment.grade,
-          isGraded: studentAssignment.isGraded,
+          // isGraded: studentAssignment.isGraded,
         }
         return studentAssignmentGrade
       }))
@@ -67,14 +67,49 @@ export default async function handler(req, res) {
       return studentGrade
     }))
     // calculate final grade for each student for each assignment type
-    const finalGrade = await Promise.all(getData.map(async (student) => {
-      const gradesByType = []
+    const updateFinalGrade = await Promise.all(getData.map(async (student) => {
+      const typesWithGrade = []
       for (let i = 0; i < student.assignments.length; i++) {
         const assignment = student.assignments[i]
         const grade = assignment.grade
         const type = assignment.type
         const weight = assignment.weight
+        // if type is not yet in typesWithGrade, add it
+        if (!typesWithGrade.includes(type)) {
+          const json = {
+            type,
+            weight,
+            gradeSum: grade,
+            count: 1
+          }
+          typesWithGrade.push(json)
+        } else {
+          // if type is already in typesWithGrade, add grade to the existing type
+          for (let j = 0; j < typesWithGrade.length; j++) {
+            if (typesWithGrade[j].type === type) {
+              typesWithGrade[j].gradeSum += grade
+              typesWithGrade[j].count += 1
+            }
+          }
+        }
       }
+      // calculate final grade for each student by taking each type's gradeSum and dividing by the count then multiply that result by the weight
+      const gradePerType = typesWithGrade.map(type => {
+        const final = (type.gradeSum / type.count) * type.weight
+        return final
+      })
+      // return the sum of all values in gradePerType
+      const finalGrade = gradePerType.reduce((a, b) => a + b, 0)
+      // update the finalGrade in the studentTakesClass table for this student
+      await prisma.studentTakesClass.updateMany({
+        where: {
+          studentID: student.studentID,
+          classID: classID
+        },
+        data: {
+          finalGrade: finalGrade.toString()
+        }
+      })
     }))
     // // TODO: FIX THIS FUNCTION IT IS NOT CORRECT
     // const {
