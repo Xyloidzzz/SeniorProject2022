@@ -36,7 +36,8 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 
-// TODO: Be Able to Change Weight for specific assignments.
+// TODO: Be Able to Change/Update Weight for specific assignments.
+// TODO: Update assignment grade weight here by /checkWeight
 
 const ClassTable = ({ classData, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
