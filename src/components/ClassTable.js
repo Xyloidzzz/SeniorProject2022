@@ -36,22 +36,6 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import moment from 'moment'
 
-// !IMPORTANT: FIX GRADECELL DISPLAY ORDER SOMEHOW... POSSIBLY BY ADDING ALL DATA TO ANOTHER JSON FILE ORDERED BY STUDENT AND HOMEWORK ITEM
-// const jsonExample = [
-//   {
-//     studentID: '0',
-//     studentName: firstName + ' ' + lastName,
-//     assignments: [
-//       {
-//         assignmentID: '0',
-//         assignmentName: 'Assignment 1',
-//         grade: '0',
-//       },
-//     ],
-//     finalGrade: '0',
-//   },
-// ]
-
 // TODO: Be Able to Change Weight for specific assignments.
 
 const ClassTable = ({ classData, ...rest }) => {
