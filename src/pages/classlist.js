@@ -12,8 +12,8 @@ import ClassroomListMain from '@/components/ClassroomListMain'
 import SideBar from '@/components/SideBar'
 import { getSession } from 'next-auth/react'
 
-const ClassList = ({data,classes}) => {
-  const name = data.firstName+' '+data.lastName
+const ClassList = ({username,classes}) => {
+  const name = username
 
   return (
     <Flex width='full' m='0' p='0'>
@@ -53,16 +53,14 @@ export async function getServerSideProps(context){
   
   else{
     const email = session.user.email
-    //fetch user's first name and last name from email
-    const res = await fetch('http://localhost:3000/api/user/'+email);
-    const data = await res.json()
+    console.log(session.user.name)
     const classlists = await fetch('http://localhost:3000/api/user/'+email+'/getClassLists')
     const classListsInfo = await classlists.json()
-    console.log(data) //prints out json user's first name and last name
-    console.log(classListsInfo)
+    //console.log(data) //prints out json user's first name and last name
+    //console.log(classListsInfo)
     return {
       props:{
-        data,
+        username: session.user.name,
         classes: classListsInfo
       }
     }
