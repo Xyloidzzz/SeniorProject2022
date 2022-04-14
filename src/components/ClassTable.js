@@ -52,6 +52,8 @@ import moment from 'moment'
 //   },
 // ]
 
+// TODO: Be Able to Change Weight for specific assignments.
+
 const ClassTable = ({ classData, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -135,22 +137,70 @@ const ClassTable = ({ classData, ...rest }) => {
   const resetState = () => {
     setAssName('')
     setAssDesc('')
-    setAssDue(moment().endOf('day').fromNow())
+    setAssDue(moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'))
     setAssIsHidden(false)
     setAssType('')
     setAssWeight('')
   }
 
-  // TODO: THIS WHOLE THING
-  const saveNewType = async () => {
-    // check if newAssType already exists from classData.gradeWeight
-
-    // send newAssType and newAssWeight to DB
-
-    // reset newAssType and newAssWeight
+  const resetNewType = () => {
     setNewAssType('')
     setNewAssWeight('')
     setWantNewType(false)
+  }
+
+  // TODO: THIS WHOLE THING
+  const saveNewType = async () => {
+    // check if newAssType already exists from classData.gradeWeight
+    const newTypeExists = classData.gradeWeight.some((type) =>
+      type.type === newAssType ? true : false
+    )
+    if (newTypeExists) {
+      toast({
+        title: 'This type already exists.',
+        position: 'top',
+        status: 'error',
+        isClosable: true,
+        duration: 2000,
+      })
+    } else {
+      // maybe we just don't accept blank weights later
+      if (newAssWeight === '') {
+        setNewAssWeight('0')
+      }
+      // send newAssType and newAssWeight to DB
+      const res = await fetch('/api/class/' + classData.id + '/createType', {
+        method: 'POST',
+        body: JSON.stringify({
+          type: newAssType,
+          weight: newAssWeight,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = await res.json()
+      // check data response status code
+      const serverStatus = data.serverStat
+      if (serverStatus == 200) {
+        toast({
+          title: 'New Type Created',
+          position: 'top',
+          status: 'success',
+          isClosable: true,
+          duration: 2000,
+        })
+        resetNewType()
+      } else {
+        toast({
+          title: 'Failed to Connect to Database',
+          position: 'top',
+          status: 'error',
+          isClosable: true,
+          duration: 2000,
+        })
+      }
+    }
   }
 
   const newType = () => {
