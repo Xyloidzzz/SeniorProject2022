@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 
 let prisma = new PrismaClient()
 
+let user
+
 export default NextAuth({
     providers:[
         CredentialsProvider ({
@@ -14,7 +16,7 @@ export default NextAuth({
             },
             async authorize(credentials, req){
                 try{
-                    const user = await prisma.user.findUnique({
+                    user = await prisma.user.findUnique({
                         where:{
                             email: String(credentials.email)
                         }
@@ -22,7 +24,7 @@ export default NextAuth({
                     if(user){
                         // console.log(credentials.password)
                             if(user.password==credentials.password){
-                                return {fname: user.firstName, lname: user.lastName, email: user.email}
+                                return {name: user.firstName + ' ' + user.lastName, email: user.email}
                             }
                             else{
                                 throw new Error ('Could not login')
@@ -36,5 +38,18 @@ export default NextAuth({
                 }
             }
         })
-    ]
+    ],
+    secret: "LlKq6ZtYbr+hTC073mAmAh9/h2HwMfsFo4hrfCx5mLg=",
+    session:{   
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({token}){
+            return token
+        }
+    },
+    async session({session, token, user}){
+        return session
+    }
 })
+

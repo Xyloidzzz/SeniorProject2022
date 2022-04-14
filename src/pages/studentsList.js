@@ -14,7 +14,7 @@ import StudentList from '@/components/StudentList'
 import { getSession } from 'next-auth/react'
 
 
-const StudentsList = () => {
+const StudentsList = ({username}) => {
 
 return(
 <Flex width='full' m='0' p='0'>
@@ -25,7 +25,7 @@ return(
       />
       <Flex width='full' flexDir='row'>
         <Box width='full' flex='1'>
-          <SideBar />
+          <SideBar userInfo={username} />
         </Box>
         <Box width='full' flex='16'>
           <StudentList />
@@ -41,16 +41,18 @@ export default StudentsList
 export async function getServerSideProps (context){
   
   const session = await getSession(context)
-  if(session){
+  if(!session){
     return{
       redirect :{
-        destination: '/classlist',
+        destination: '/',
         permanent: false
       }
     }
   }
   return {
-    props:{}
+    props:{
+      username: session.user.name
+    }
   }
   
 }

@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 // TODO: Check if Student through one of the fetches so we don't do too many calls for one page
 
 export default function classroom({ userData, classData }) {
-  const userName = userData.firstName + ' ' + userData.lastName
+  const userName = userData
   return (
     <Flex width='full' m='0' p='0'>
       <HeadInfo title='Classroom' keyword='classroom' description='classroom' />
@@ -37,10 +37,6 @@ export async function getServerSideProps(context) {
       },
     }
   } else {
-    const email = session.user.email
-    //fetch user's first name and last name from email
-    const res = await fetch('http://localhost:3000/api/user/' + email)
-    const userData = await res.json()
     // grades
     const getGrades = await fetch(
       'http://localhost:3000/api/class/' +
@@ -54,10 +50,10 @@ export async function getServerSideProps(context) {
     )
     const classData = await classRes.json()
     classData.grades = grades
-
+    
     return {
       props: {
-        userData,
+        userData:session.user.name,
         classData,
       },
     }
