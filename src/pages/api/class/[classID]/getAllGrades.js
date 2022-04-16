@@ -78,6 +78,11 @@ export default async function handler(req, res) {
       })
       return gradeInfo
     }))
+    // TODO: sort by first name NOT WORKING
+    // // sort getData by firstName
+    // getData.sort((a, b) => {
+    //   return a.firstName.localeCompare(b.firstName)
+    // })
     res.json(getData)
   } catch (error) {
     console.log(error)
