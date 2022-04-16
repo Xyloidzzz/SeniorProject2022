@@ -86,7 +86,7 @@ model Post {
 model StudentTakesClass {
   id         String   @id @default(cuid()) // studentID + classID
   finalGrade String?
-  attendance Json?
+  attendance Json[]
   Student    Student? @relation(fields: [studentID], references: [id])
   studentID  String?
   Class      Class?   @relation(fields: [classID], references: [id])
