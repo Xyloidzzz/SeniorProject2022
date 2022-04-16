@@ -66,6 +66,7 @@ const GradeTable = ({ classData }) => {
             {student.assignmentInfo.map((assignment) => (
               <GradeCell
                 key={student.studentID + assignment.assignmentID}
+                classData={classData}
                 defaultValue={assignment.grade}
                 studentName={student.firstName + ' ' + student.lastName}
                 studentID={student.studentID}

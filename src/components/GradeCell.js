@@ -17,12 +17,30 @@ const isValidGrade = (grade) => {
   return grade >= 0 && /[0-9]/.test(grade) ? true : false
 }
 
-const GradeCell = ({ defaultValue, studentName, studentID, assignmentID }) => {
+const GradeCell = ({
+  defaultValue,
+  classData,
+  studentName,
+  studentID,
+  assignmentID,
+}) => {
   const [value, setValue] = useState(defaultValue)
   const [preValue, setPreValue] = useState(defaultValue)
   const [valid, setValid] = useState(true)
 
   const toast = useToast()
+
+  const updateFinalGrade = async () => {
+    // GET request to /api/[classID]/calculateFinalGrade
+    const res = await fetch(`/api/class/${classData.id}/calculateFinalGrade`)
+    const data = await res.json()
+    if (data.error) {
+      console.log(data.error)
+    } else {
+      // refresh table
+      window.location.reload()
+    }
+  }
 
   // updateDB
   const updateDB = async (grade) => {
@@ -44,6 +62,7 @@ const GradeCell = ({ defaultValue, studentName, studentID, assignmentID }) => {
         isClosable: true,
         duration: 2000,
       })
+      updateFinalGrade()
     } else {
       toast({
         title: 'Failed to Connect to Database',
