@@ -13,54 +13,61 @@ model User {
   updatedAt  DateTime    @updatedAt
   email      String      @unique
   password   String
-  prefix     String
+  prefix     String?
   firstName  String
   lastName   String
   avatar     String?
-  role       Role        @default(USER)
+  role       Role
   student    Student?
-  Instructor Instructor?
-  Assistant  Assistant?
+  instructor Instructor?
 }
 
 model Student {
-  id           String                 @id @default(cuid())
-  registerDate DateTime               @default(now())
-  user         User                   @relation(fields: [userID], references: [id])
-  userID       String                 @unique
-  classes      StudentTakesClass[]
+  id           String                  @id @default(cuid())
+  registerDate String
+  user         User                    @relation(fields: [userID], references: [id])
+  userID       String                  @unique
+  assistant    StudentAssistsSection[]
+  classes      StudentTakesSection[]
   assignments  StudentHasAssignment[]
 }
 
 model Instructor {
-  id          String                   @id @default(cuid())
+  id          String                     @id @default(cuid())
   officeHours String
-  user        User                     @relation(fields: [userID], references: [id])
-  userID      String                   @unique
-  classes     InstructorTeachesClass[]
+  user        User                       @relation(fields: [userID], references: [id])
+  userID      String                     @unique
+  classes     InstructorTeachesSection[]
 }
 
-model Assistant {
-  id      String                  @id @default(cuid())
-  user    User                    @relation(fields: [userID], references: [id])
-  userID  String                  @unique
-  classes AssistantTeachesClass[]
+model Section {
+  id            String                    @id @default(cuid()) // sectionNum-classID-term-year
+  fullName      String?
+  sectionNum    String
+  term          String
+  year          String
+  schedule      String
+  isOnline      Boolean                   @default(false)
+  isSynchronous Boolean                   @default(true)
+  isAvailable   Boolean                   @default(true)
+  gradeWeight   Json[]
+  class         Class?                    @relation(fields: [classID], references: [id])
+  classID       String                    @unique
+  instructors   InstructorTeachesSection?
+  students      StudentTakesSection[]
+  assistants    StudentAssistsSection[]
+  assignments   SectionHasAssignment[]
+  posts         SectionHasPost[]
 }
 
 model Class {
-  id          String                  @id @default(cuid())
+  id          String    @id @default(cuid())
+  title       String
+  description String
   department  String
-  term        String
-  name        String
-  description String?
-  isOnline    Boolean                 @default(false)
-  schedule    String?
-  gradeWeight Json[]
-  students    StudentTakesClass[]
-  instructors InstructorTeachesClass?
-  assistants  AssistantTeachesClass[]
-  assignments ClassHasAssignment[]
-  posts       ClassHasPost[]
+  classNum    String
+  creditHours Int
+  sections    Section[]
 }
 
 model Assignment {
@@ -71,78 +78,79 @@ model Assignment {
   description String?
   dueDate     String? // YYYY-MM-DD HH:mm:ss
   attachments String[] // _quiz_.md
+  class       SectionHasAssignment?
   students    StudentHasAssignment[]
-  class       ClassHasAssignment?
 }
 
 model Post {
-  id          String        @id @default(cuid())
+  id          String          @id @default(cuid())
   title       String?
   body        String?
   attachments String[]
-  class       ClassHasPost?
+  class       SectionHasPost?
 }
 
-model StudentTakesClass {
-  id         String   @id @default(cuid()) // studentID + classID
+model StudentTakesSection {
+  id         String   @id @default(cuid()) // studentID-sectionNum-classID-term-year
   finalGrade String?
   attendance Json[]
-  Student    Student? @relation(fields: [studentID], references: [id])
+  student    Student? @relation(fields: [studentID], references: [id])
   studentID  String?
-  Class      Class?   @relation(fields: [classID], references: [id])
-  classID    String?
+  section    Section? @relation(fields: [sectionID], references: [id])
+  sectionID  String?
 }
 
-model InstructorTeachesClass {
-  id           String      @id @default(cuid()) // instructorID + classID
-  Instructor   Instructor? @relation(fields: [instructorID], references: [id])
+model StudentAssistsSection {
+  id               String   @id @default(cuid()) // studentID-sectionNum-classID-term-year
+  classPermissions String?
+  student          Student? @relation(fields: [studentID], references: [id])
+  studentID        String?
+  section          Section? @relation(fields: [sectionID], references: [id])
+  sectionID        String?
+}
+
+model InstructorTeachesSection {
+  id           String      @id @default(cuid()) // instructorID-sectionNum-classID-term-year
+  instructor   Instructor? @relation(fields: [instructorID], references: [id])
   instructorID String?
-  Class        Class?      @relation(fields: [classID], references: [id])
-  classID      String?     @unique
-}
-
-model AssistantTeachesClass {
-  id               String     @id @default(cuid()) // assistantID + classID
-  classPermissions String
-  Assistant        Assistant? @relation(fields: [assistantID], references: [id])
-  assistantID      String?
-  Class            Class?     @relation(fields: [classID], references: [id])
-  classID          String?
+  section      Section?    @relation(fields: [sectionID], references: [id])
+  sectionID    String?     @unique
 }
 
 model StudentHasAssignment {
-  id           String      @id @default(cuid()) // studentID + assignmentID
-  grade        String?
-  comments     String?
-  attachments  String[]
-  isGraded     Boolean     @default(false)
-  Student      Student?    @relation(fields: [studentID], references: [id])
-  studentID    String?
-  Assignment   Assignment? @relation(fields: [assignmentID], references: [id])
-  assignmentID String?
+  id                String      @id @default(cuid()) // studentID-assignmentID
+  grade             String?
+  comments          String?
+  submitAttachments String[]
+  isGraded          Boolean     @default(false)
+  student           Student?    @relation(fields: [studentID], references: [id])
+  studentID         String?
+  assignment        Assignment? @relation(fields: [assignmentID], references: [id])
+  assignmentID      String?
 }
 
-model ClassHasAssignment {
-  id           String      @id @default(cuid()) // classID + assignmentID
-  isHidden     Boolean     @default(true)
+model SectionHasAssignment {
+  id           String      @id @default(cuid()) // assignmentID-sectionNum-classID-term-year
   type         String?
   weight       Float?
-  Class        Class?      @relation(fields: [classID], references: [id])
-  classID      String?
-  Assignment   Assignment? @relation(fields: [assignmentID], references: [id])
+  isHidden     Boolean     @default(false)
+  section      Section?    @relation(fields: [sectionID], references: [id])
+  sectionID    String?
+  assignment   Assignment? @relation(fields: [assignmentID], references: [id])
   assignmentID String?     @unique
 }
 
-model ClassHasPost {
-  id       String  @id @default(cuid()) // classID + postID
-  isHidden Boolean @default(true)
-  Class    Class?  @relation(fields: [classID], references: [id])
-  classID  String?
-  Post     Post?   @relation(fields: [postID], references: [id])
-  postID   String? @unique
+model SectionHasPost {
+  id        String   @id @default(cuid()) // postID-sectionNum-classID-term-year
+  isHidden  Boolean  @default(false)
+  section   Section? @relation(fields: [sectionID], references: [id])
+  sectionID String?
+  Post      Post?    @relation(fields: [postID], references: [id])
+  postID    String?  @unique
 }
 
 enum Role {
   ADMIN
-  USER
+  STUDENT
+  INSTRUCTOR
 }
