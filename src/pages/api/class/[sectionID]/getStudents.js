@@ -6,19 +6,18 @@ const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
   try {
-    const findClass = await prisma.class.findUnique({
+    const findSection = await prisma.section.findUnique({
       where: {
-        id: classID
+        id: sectionID
       },
       select: {
         students: true,
-        attendance: true
       }
     })
-    const getData = await Promise.all(findClass.students.map(async (data) => {
+    const getData = await Promise.all(findSection.students.map(async (data) => {
       const student = await prisma.student.findUnique({
         where: {
           id: data.studentID
@@ -29,6 +28,17 @@ export default async function handler(req, res) {
           userID: true,
         }
       })
+      const studentSectionRelation = await prisma.studentTakesSection.findMany({
+        where: {
+          studentID: student.id,
+          sectionID: sectionID
+        },
+        select: {
+          id: true,
+          attendance: true,
+        }
+      })
+
       const user = await prisma.user.findUnique({
         where: {
           id: student.userID
@@ -49,7 +59,7 @@ export default async function handler(req, res) {
         firstName: user.firstName,
         lastName: user.lastName,
         avatar: user.avatar,
-        attendance: students.attendance,
+        attendance: studentSectionRelation.attendance,
       }
       return studentInfo
     }))

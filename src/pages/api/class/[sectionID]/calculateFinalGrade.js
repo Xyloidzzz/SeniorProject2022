@@ -4,26 +4,26 @@ import {
 
 const prisma = new PrismaClient();
 
-// update final grade for every student in a class
+// update final grade for every student in a section
 // based on all their assignment grades and the associated weights
 
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
 
   if (req.method === "GET") {
     try {
-      const theClass = await prisma.class.findUnique({
+      const theSection = await prisma.section.findUnique({
         where: {
-          id: classID
+          id: sectionID
         },
         select: {
           students: true,
           assignments: true
         }
       })
-      const getData = await Promise.all(theClass.students.map(async (student) => {
+      const getData = await Promise.all(theSection.students.map(async (student) => {
         const studentInfo = await prisma.student.findUnique({
           where: {
             id: student.studentID
@@ -49,10 +49,10 @@ export default async function handler(req, res) {
               title: true,
             }
           })
-          // get class type and weight from classHasAssignment table
-          const classHasAssignment = await prisma.classHasAssignment.findFirst({
+          // get section type and weight from sectionHasAssignment table
+          const sectionHasAssignment = await prisma.sectionHasAssignment.findFirst({
             where: {
-              classID: classID,
+              sectionID: sectionID,
               assignmentID: assignmentInfo.id
             },
             select: {
@@ -63,8 +63,8 @@ export default async function handler(req, res) {
           const studentAssignmentGrade = {
             assignmentID: assignmentInfo.id,
             title: assignmentInfo.title,
-            type: classHasAssignment.type,
-            weight: classHasAssignment.weight,
+            type: sectionHasAssignment.type,
+            weight: sectionHasAssignment.weight,
             grade: studentAssignment.grade,
             // isGraded: studentAssignment.isGraded,
           }
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         for (let i = 0; i < student.assignments.length; i++) {
           const grade = parseFloat(student.assignments[i].grade)
           const assType = student.assignments[i].type
-          const weight = student.assignments[i].weight * 100
+          const weight = student.assignments[i].weight
           // if type is not yet in typesWithGrade, add it
           if (!typesWithGrade.some(type => type.type === assType)) {
             typesWithGrade.push({
@@ -114,11 +114,11 @@ export default async function handler(req, res) {
         const firstSum = first.reduce((a, b) => a + b, 0)
         const secondSum = second.reduce((a, b) => a + b, 0)
         const finalGrade = firstSum / secondSum
-        // update the finalGrade in the studentTakesClass table for this student
-        await prisma.studentTakesClass.updateMany({
+        // update the finalGrade in the studentTakesSection table for this student
+        await prisma.studentTakesSection.updateMany({
           where: {
             studentID: student.studentID,
-            classID: classID
+            sectionID: sectionID
           },
           data: {
             finalGrade: finalGrade.toString()

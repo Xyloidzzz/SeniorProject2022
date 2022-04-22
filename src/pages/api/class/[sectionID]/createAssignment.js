@@ -4,9 +4,11 @@ import {
 
 const prisma = new PrismaClient();
 
+// TODO: change frontend new weight % not 0-1
+
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
 
   const title = req.body.title
@@ -20,7 +22,7 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     // create new assignment
-    if (classID && title && description && dueDate && attachments && type && weight && isHidden) {
+    if (sectionID && title && description && dueDate && attachments && type && weight && isHidden) {
       try {
         const newAssignment = await prisma.assignment.create({
           data: {
@@ -30,20 +32,20 @@ export default async function handler(req, res) {
             attachments: attachments,
           }
         })
-        // use new assignment to create classHasAssignment
-        const createClassRelationship = await prisma.classHasAssignment.create({
+        // use new assignment to create sectionHasAssignment
+        const createSectionRelationship = await prisma.sectionHasAssignment.create({
           data: {
-            classID: classID,
+            sectionID: sectionID,
             assignmentID: newAssignment.id,
             type: type,
             weight: parseFloat(weight),
             isHidden: isHidden === "true" ? true : false,
           }
         })
-        // students and their IDs from the classID
-        const students = await prisma.studentTakesClass.findMany({
+        // students and their IDs from the sectionID
+        const students = await prisma.studentTakesSection.findMany({
           where: {
-            classID: classID
+            sectionID: sectionID
           },
           select: {
             studentID: true

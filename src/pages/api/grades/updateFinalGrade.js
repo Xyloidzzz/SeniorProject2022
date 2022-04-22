@@ -6,15 +6,15 @@
 
 // export default async function handler(req, res) {
 //   const studentID = req.query.studentID
-//   const classID = req.query.classID
+//   const sectionID = req.query.sectionID
 //   const finalGrade = req.query.finalGrade
 
-//   if (studentID && classID && finalGrade) {
+//   if (studentID && sectionID && finalGrade) {
 //     try {
-//       await prisma.studentTakesClass.updateMany({
+//       await prisma.studentTakesSection.updateMany({
 //         where: {
 //           studentID: studentID,
-//           classID: classID
+//           sectionID: sectionID
 //         },
 //         data: {
 //           finalGrade: finalGrade

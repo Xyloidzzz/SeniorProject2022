@@ -4,31 +4,31 @@ import {
 
 const prisma = new PrismaClient();
 
-// check class gradeWeight and update type and weight from Assignment
+// check section gradeWeight and update type and weight from Assignment
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
 
   try {
-    const theClass = await prisma.class.findUnique({
+    const theSection = await prisma.section.findUnique({
       where: {
-        id: classID
+        id: sectionID
       },
       select: {
         gradeWeight: true
       }
     })
-    const currentJson = theClass.gradeWeight
+    const currentJson = theSection.gradeWeight
 
-    // find all assignments in class with same type name as each type in gradeWeight
+    // find all assignments in section with same type name as each type in gradeWeight
     for (let i = 0; i < currentJson.length; i++) {
       const assignments = await prisma.assignment.findMany({
         where: {
           type: currentJson[i].type
         }
       })
-      // update Assignment type and weight with class gradeWeight
+      // update Assignment type and weight with section gradeWeight
       for (let j = 0; j < assignments.length; j++) {
         await prisma.assignment.update({
           where: {

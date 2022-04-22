@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
 
   const type = req.body.type
@@ -15,23 +15,23 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     if (type && weight) {
       try {
-        const theClass = await prisma.class.findUnique({
+        const theSection = await prisma.section.findUnique({
           where: {
-            id: classID
+            id: sectionID
           },
           select: {
             gradeWeight: true
           }
         })
-        const currentJson = theClass.gradeWeight
+        const currentJson = theSection.gradeWeight
         currentJson.push({
           type: type,
           weight: weight
         })
-        // update class gradeWeight with new "type & weight" json field
-        await prisma.class.update({
+        // update section gradeWeight with new "type & weight" json field
+        await prisma.section.update({
           where: {
-            id: classID
+            id: sectionID
           },
           data: {
             gradeWeight: currentJson

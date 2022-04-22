@@ -4,22 +4,22 @@ import {
 
 const prisma = new PrismaClient()
 
-// get all grades based on classID from prisma database
+// get all grades based on sectionID from prisma database
 export default async function handler(req, res) {
   const {
-    classID
+    sectionID
   } = req.query
   try {
-    const findClass = await prisma.class.findUnique({
+    const findSection = await prisma.section.findUnique({
       where: {
-        id: classID
+        id: sectionID
       },
       select: {
         students: true,
         assignments: true
       }
     })
-    const getData = await Promise.all(findClass.students.map(async (student) => {
+    const getData = await Promise.all(findSection.students.map(async (student) => {
       const studentInfo = await prisma.student.findUnique({
         where: {
           id: student.studentID
