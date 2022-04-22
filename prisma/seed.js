@@ -65,6 +65,7 @@ async function main() {
     data: {
       id: '20217084',
       registerDate: new Date(),
+      isAssistant: false,
       userID: newUserStudent1.id,
     }
   })
@@ -72,6 +73,7 @@ async function main() {
     data: {
       id: '20528094',
       registerDate: new Date(),
+      isAssistant: false,
       userID: newUserStudent2.id,
     }
   })
@@ -79,6 +81,7 @@ async function main() {
     data: {
       id: '20632104',
       registerDate: new Date(),
+      isAssistant: false,
       userID: newUserStudent3.id,
     }
   })
