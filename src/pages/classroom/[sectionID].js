@@ -40,20 +40,20 @@ export async function getServerSideProps(context) {
     // grades
     const getGrades = await fetch(
       'http://localhost:3000/api/class/' +
-        context.params.classID +
+        context.params.sectionID +
         '/getAllGrades'
     )
     const grades = await getGrades.json()
     // class
     const classRes = await fetch(
-      'http://localhost:3000/api/class/' + context.params.classID
+      'http://localhost:3000/api/class/' + context.params.sectionID
     )
     const classData = await classRes.json()
     classData.grades = grades
-    
+
     return {
       props: {
-        userData:session.user.name,
+        userData: session.user.name,
         classData,
       },
     }
