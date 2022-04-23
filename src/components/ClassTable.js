@@ -55,7 +55,7 @@ const ClassTable = ({ classData, ...rest }) => {
   const createAssignment = async () => {
     // send form to DB NEW ASSIGNMENT
     const res = await fetch(
-      '/api/class/' + classData.id + '/createAssignment',
+      '/api/class/' + classData.sectionID + '/createAssignment',
       {
         method: 'POST',
         body: JSON.stringify({
@@ -146,16 +146,19 @@ const ClassTable = ({ classData, ...rest }) => {
         setNewAssWeight('0')
       }
       // send newAssType and newAssWeight to DB
-      const res = await fetch('/api/class/' + classData.id + '/createType', {
-        method: 'POST',
-        body: JSON.stringify({
-          type: newAssType,
-          weight: newAssWeight,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const res = await fetch(
+        '/api/class/' + classData.sectionID + '/createType',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            type: newAssType,
+            weight: newAssWeight,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       const data = await res.json()
       // check data response status code
       const serverStatus = data.serverStat

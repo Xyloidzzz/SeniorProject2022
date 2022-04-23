@@ -32,10 +32,12 @@ const GradeCell = ({
 
   const updateFinalGrade = async () => {
     // GET request to /api/[classID]/calculateFinalGrade
-    const res = await fetch(`/api/class/${classData.id}/calculateFinalGrade`)
+    const res = await fetch(
+      `/api/class/${classData.sectionID}/calculateFinalGrade`
+    )
     const data = await res.json()
     if (data.error) {
-      console.log(data.error)
+      console.log(data.message)
     } else {
       // refresh table
       window.location.reload()
