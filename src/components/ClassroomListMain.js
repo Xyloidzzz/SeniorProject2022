@@ -14,7 +14,7 @@ import { useControllableState } from '@chakra-ui/react'
 
 const ClassroomListMain = ({ classLists }) => {
   classLists.classes.map((val) => {
-    console.log(val.name)
+    console.log(val.fullName)
   })
 
   // TODO: FIX ADD CLASS BUTTON SO IT UPDATES DB AND DISPLAYS REAL INFO
@@ -54,7 +54,7 @@ const ClassroomListMain = ({ classLists }) => {
                 key={val.id}
                 title={val.fullName}
                 description={val.description}
-                link={'/classroom/' + val.id}
+                link={'/classroom/' + val.sectionID}
               ></ClassBlock>
             )
           })}
