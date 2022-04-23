@@ -16,6 +16,7 @@ import GradeCell from '@/components/GradeCell'
 import React, { useState } from 'react'
 
 const GradeTable = ({ classData }) => {
+  console.log(classData.grades.length)
   // for (let i = 0; i < assignment.length; i++) {
   //   a[i] = (
   // <Th key={i} isNumeric>
@@ -43,10 +44,12 @@ const GradeTable = ({ classData }) => {
 
   // get assignment title from assignments in classData grades
   const assignmentNames = []
-  for (let i = 0; i < classData.grades[0].assignmentInfo.length; i++) {
-    assignmentNames.push(classData.grades[0].assignmentInfo[i].title)
+  if(classData.grades.length>0){
+    for (let i = 0; i < classData.grades[0].assignmentInfo.length; i++) {
+      assignmentNames.push(classData.grades[0].assignmentInfo[i].title)
+    }
   }
-
+  
   return (
     <Table variant='unstyled'>
       {console.log(classData)}
