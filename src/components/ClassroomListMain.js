@@ -29,19 +29,6 @@ const ClassroomListMain = ({ classLists }) => {
     onChange: setValue,
   })
 
-  /*if(cl.length == 0){
-    cl[0] = internalValue
-  }
-  else{
-  for(let i =0; i<cl.length;i++){
-    if(cl[i] == null){
-    cl[i] = internalValue;
-    }
-    else{
-      continue;
-    }
-  }
-}*/
   for (let i = 0; i < internalValue; i++) {
     classr = 'Classroom' + (i + 1)
     cl[i] = (
@@ -65,7 +52,7 @@ const ClassroomListMain = ({ classLists }) => {
             return (
               <ClassBlock
                 key={val.id}
-                title={val.name}
+                title={val.fullName}
                 description={val.description}
                 link={'/classroom/' + val.id}
               ></ClassBlock>

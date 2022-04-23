@@ -56,6 +56,7 @@ export async function getServerSideProps(context){
     console.log(session.user.name)
     const classlists = await fetch('http://localhost:3000/api/user/'+email+'/getClassLists')
     const classListsInfo = await classlists.json()
+    console.log(classListsInfo)
     //console.log(data) //prints out json user's first name and last name
     //console.log(classListsInfo)
     return {

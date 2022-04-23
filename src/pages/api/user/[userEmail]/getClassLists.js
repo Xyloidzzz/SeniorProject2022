@@ -28,8 +28,9 @@ export default async function handler(req, res) {
             role: true
         }
     })
+    console.log(checkStudent.role)
     //if user is a student
-    if (checkStudent === "STUDENT") {
+    if (checkStudent.role == "STUDENT") {
         try {
             //save classes array into studentInfo
             const studentInfo = await prisma.student.findUnique({
@@ -40,39 +41,21 @@ export default async function handler(req, res) {
                     classes: true
                 }
             })
+            console.log(studentInfo)
             //loop through classes array, get each classes id and save each section to getData variable
             const getData = await Promise.all(studentInfo.classes.map(async (data) => {
                 const section = await prisma.section.findUnique({
                     where: {
                         id: data.sectionID
-                    },
-                    select: {
-                        id: true,
-                        classID: true,
-                        fullName: true,
-                        sectionNum: true,
-                        term: true,
-                        year: true,
-                        schedule: true,
-                        isOnline: true,
-                        isSynchronous: true,
-                        isAvailable: true,
                     }
                 })
                 const classInfo = await prisma.class.findUnique({
                     where: {
                         id: section.classID
-                    },
-                    select: {
-                        id: true,
-                        title: true,
-                        description: true,
-                        department: true,
-                        classNum: true,
-                        creditHours: true,
                     }
                 })
-                return sectionInfo = {
+                console.log(classInfo)
+                return {
                     sectionID: section.id,
                     classID: section.classID,
                     fullName: section.fullName,
@@ -100,7 +83,7 @@ export default async function handler(req, res) {
         }
     }
     //if the user is instructor
-    else if (checkStudent === "INSTRUCTOR") {
+    else if (checkStudent.role == "INSTRUCTOR") {
         try {
             //get classes array
             const teachInfo = await prisma.instructor.findUnique({
@@ -116,34 +99,14 @@ export default async function handler(req, res) {
                 const section = await prisma.section.findUnique({
                     where: {
                         id: data.sectionID
-                    },
-                    select: {
-                        id: true,
-                        classID: true,
-                        fullName: true,
-                        sectionNum: true,
-                        term: true,
-                        year: true,
-                        schedule: true,
-                        isOnline: true,
-                        isSynchronous: true,
-                        isAvailable: true,
                     }
                 })
                 const classInfo = await prisma.class.findUnique({
                     where: {
                         id: section.classID
-                    },
-                    select: {
-                        id: true,
-                        title: true,
-                        description: true,
-                        department: true,
-                        classNum: true,
-                        creditHours: true,
                     }
                 })
-                return sectionInfo = {
+                return {
                     sectionID: section.id,
                     classID: section.classID,
                     fullName: section.fullName,
