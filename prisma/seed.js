@@ -114,7 +114,7 @@ async function main() {
   })
   const newSection1 = await prisma.section.create({
     data: {
-      id: '01-' + newClass1.id + 'Fall-2022', // sectionNum-classID-term-year
+      id: '01-' + newClass1.id + '-Fall-2022', // sectionNum-classID-term-year
       classID: newClass1.id,
       fullName: newClass1.department + ' ' + newClass1.classNum + '-01 Fall2022 | ' + newClass1.title,
       sectionNum: '01',
@@ -135,7 +135,7 @@ async function main() {
   })
   const newSection2 = await prisma.section.create({
     data: {
-      id: '01-' + newClass2.id + 'Fall-2022', // sectionNum-classID-term-year
+      id: '01-' + newClass2.id + '-Fall-2022', // sectionNum-classID-term-year
       classID: newClass2.id,
       fullName: newClass2.department + ' ' + newClass2.classNum + '-01 Fall2022 | ' + newClass2.title,
       sectionNum: '01',
