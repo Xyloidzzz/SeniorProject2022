@@ -9,15 +9,20 @@ export default async function handler(req, res) {
         userEmail
     } = req.query
     try {
-        const user = await prisma.user.findUnique({
+        const getUser = await prisma.user.findUnique({
             where: {
                 email: userEmail
             },
-            select: {
-                firstName: true,
-                lastName: true
-            }
         })
+        const isStudent = getUser.role === "STUDENT"
+        const isAdmin = getUser.role === "ADMIN"
+        const user = {
+            id: getUser.id,
+            firstName: getUser.firstName,
+            lastName: getUser.lastName,
+            isStudent,
+            isAdmin
+        }
         res.json(user)
     } catch {
 

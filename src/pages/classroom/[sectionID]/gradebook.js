@@ -13,17 +13,17 @@ export default function classroom({ userData, classData }) {
           userData={userData}
           inClass={true}
           classData={classData}
-          where='announcements'
+          where='gradebook'
         />
-      </Box>{' '}
+      </Box>
       <Box width='full' flex='16'>
         <ClassroomMain
           userData={userData}
-          title='Announcements'
+          title='Gradebook'
           classData={classData}
-          where='announcements'
+          where='gradebook'
         />
-      </Box>{' '}
+      </Box>
     </Flex>
   )
 }

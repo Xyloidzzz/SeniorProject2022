@@ -12,8 +12,7 @@ import ClassroomListMain from '@/components/ClassroomListMain'
 import SideBar from '@/components/SideBar'
 import { getSession } from 'next-auth/react'
 
-const ClassList = ({ username, classes }) => {
-  const name = username
+const ClassList = ({ userData, classes }) => {
   // sort classes by fullName
   classes.classes.sort((a, b) => {
     if (a.fullName < b.fullName) {
@@ -34,7 +33,11 @@ const ClassList = ({ username, classes }) => {
       />
       <Flex width='full' flexDir='row'>
         <Box width='full' flex='1'>
-          <SideBar userInfo={name} isStudent={classes.isStudent} />
+          <SideBar
+            userData={userData}
+            inClass={false}
+            classData={classes.classes}
+          />
         </Box>
         <Box width='full' flex='16'>
           <ClassroomListMain classLists={classes} />
@@ -65,11 +68,11 @@ export async function getServerSideProps(context) {
     )
     const classListsInfo = await classlists.json()
     console.log(classListsInfo)
-    //console.log(data) //prints out json user's first name and last name
-    //console.log(classListsInfo)
+    const userRes = await fetch('http://localhost:3000/api/user/' + email)
+    const user = await userRes.json()
     return {
       props: {
-        username: session.user.name,
+        userData: user,
         classes: classListsInfo,
       },
     }
