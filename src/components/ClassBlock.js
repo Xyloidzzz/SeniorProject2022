@@ -23,7 +23,7 @@ const ClassBlock = ({ key, title, description, link, ...rest }) => {
       {...rest}
     >
       <Box width='full' flex='5'>
-        <Heading fontSize='xl' key='{title}'>
+        <Heading fontSize='xl' key={title}>
           {title}
         </Heading>
         <Divider orientation='horizontal' colorScheme='black' />
