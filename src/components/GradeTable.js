@@ -17,39 +17,25 @@ import React, { useState } from 'react'
 
 const GradeTable = ({ classData }) => {
   console.log(classData.grades.length)
-  // for (let i = 0; i < assignment.length; i++) {
-  //   a[i] = (
-  // <Th key={i} isNumeric>
-  //   {assignment[i]}
-  // </Th>
-  //   )
-  //   b[i] = (
-  // <GradeCell
-  //   key={i}
-  //   defaultValue='0'
-  //   studentName={c[i]}
-  //   assignment={assignment[i]}
-  // />
-  //   )
-  // }
 
-  // for (let i = 0; i < c.length; i++) {
-  //   s[i] = (
-  //     <Tr key={i}>
-  //       <Td>{c[i]}</Td>
-  //       {b}
-  //     </Tr>
-  //   )
-  // }
+  classData.grades.sort((a, b) => {
+    if (a.firstName < b.firstName) {
+      return -1
+    }
+    if (a.firstName > b.firstName) {
+      return 1
+    }
+    return 0
+  })
 
   // get assignment title from assignments in classData grades
   const assignmentNames = []
-  if(classData.grades.length>0){
+  if (classData.grades.length > 0) {
     for (let i = 0; i < classData.grades[0].assignmentInfo.length; i++) {
       assignmentNames.push(classData.grades[0].assignmentInfo[i].title)
     }
   }
-  
+
   return (
     <Table variant='unstyled'>
       {console.log(classData)}
