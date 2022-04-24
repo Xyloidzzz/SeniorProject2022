@@ -196,7 +196,7 @@ const ClassTable = ({ classData, ...rest }) => {
           />
           <Input
             name='assignment weight'
-            placeholder='Weight (0-1)'
+            placeholder='Weight (%)'
             value={newAssWeight}
             onChange={(e) => setNewAssWeight(e.target.value)}
           />
