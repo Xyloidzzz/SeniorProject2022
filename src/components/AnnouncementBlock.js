@@ -8,6 +8,7 @@ import {
   Spacer,
   VStack,
 } from '@chakra-ui/react'
+import { AiOutlineEyeInvisible } from 'react-icons/ai'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import '@uiw/react-md-editor/markdown-editor.css'
@@ -23,6 +24,7 @@ const Markdown = dynamic(
 )
 
 // TODO: add a edit button if not student in edit-post link don't let student see? or maybe just modal
+// add edit button to full page post instead for ez editing for professor
 
 const AnnouncementBlock = ({
   key,
@@ -52,6 +54,14 @@ const AnnouncementBlock = ({
         <Text mt={4}>
           <Markdown source={body} rehypePlugins={[[rehypeSanitize]]} />
         </Text>
+      </Box>
+      <Box
+        width='full'
+        flex='1'
+        align='right'
+        display={isHidden && !userData.isStudent ? 'block' : 'none'}
+      >
+        <AiOutlineEyeInvisible />
       </Box>
     </Flex>
   )
