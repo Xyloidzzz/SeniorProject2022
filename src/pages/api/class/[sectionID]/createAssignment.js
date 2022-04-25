@@ -39,7 +39,7 @@ export default async function handler(req, res) {
             assignmentID: newAssignment.id,
             type: type,
             weight: parseFloat(weight),
-            isHidden: isHidden === "true" ? true : false,
+            isHidden: isHidden ? true : false,
           }
         })
         // students and their IDs from the sectionID

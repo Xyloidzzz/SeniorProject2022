@@ -32,7 +32,7 @@ const ClassBlock = ({ key, title, description, link, ...rest }) => {
         </Text>
       </Box>
       <Box width='full' flex='1' align='right'>
-        <NextLink key={key} href={link} passHref>
+        <NextLink key={key + 'button'} href={link} passHref>
           <Link>
             <IconButton
               aria-label='Enter Class'
@@ -45,7 +45,6 @@ const ClassBlock = ({ key, title, description, link, ...rest }) => {
             </IconButton>
           </Link>
         </NextLink>
-        {/* TODO: Add edit button here. */}
       </Box>
     </Flex>
   )

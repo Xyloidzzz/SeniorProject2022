@@ -119,7 +119,22 @@ export default async function handler(req, res) {
       }
       return studentInfo
     }))
-    // TODO: assistants, assignments, posts individual queries (whenever they become relevant)
+    // TODO: assistants, assignments individual queries (whenever they become relevant)
+    const findPosts = await Promise.all(findSection.posts.map(async (postRelation) => {
+      const findPost = await prisma.post.findUnique({
+        where: {
+          id: postRelation.postID
+        }
+      })
+      // TODO: add date to post in DB
+      const postInfo = {
+        postID: findPost.id,
+        title: findPost.title,
+        body: findPost.body,
+        isHidden: postRelation.isHidden,
+      }
+      return postInfo
+    }))
     const data = {
       sectionID: findSection.id,
       classID: findSection.classID,
@@ -141,7 +156,7 @@ export default async function handler(req, res) {
       students: findStudents,
       assistants: findSection.assistants,
       assignments: findSection.assignments,
-      posts: findSection.posts,
+      posts: findPosts,
       allClassSections: findClass.sections,
     }
     res.json(data)
