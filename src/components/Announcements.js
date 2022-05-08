@@ -32,12 +32,12 @@ const Announcements = ({ userData, classData, ...rest }) => {
       {classData.posts.map((post) => {
         return (
           <AnnouncementBlock
-            key={post.id}
+            key={post.postID}
             userData={userData}
             title={post.title}
             body={post.body}
             isHidden={post.isHidden}
-            link={'/classroom/' + classData.sectionID + '/post/' + post.id}
+            link={'/classroom/' + classData.sectionID + '/post/' + post.postID}
           ></AnnouncementBlock>
         )
       })}

@@ -1,4 +1,12 @@
-import { Box, Divider, Flex, Heading, Spacer, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  Spacer,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
 import ClassTable from '@/components/ClassTable'
 import Announcements from '@/components/Announcements'
 import NewPost from './NewPost'

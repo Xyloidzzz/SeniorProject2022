@@ -15,6 +15,7 @@ import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 import rehypeSanitize from 'rehype-sanitize'
 import { useRouter } from 'next/router'
+import NextLink from 'next/link'
 
 const Markdown = dynamic(
   () => import('@uiw/react-markdown-preview').then((mod) => mod.default),
@@ -47,9 +48,11 @@ const AnnouncementBlock = ({
       {...rest}
     >
       <Box width='full' flex='5' data-color-mode='light'>
-        <Heading fontSize='xl' key={key}>
-          <Markdown source={title} rehypePlugins={[[rehypeSanitize]]} />
-        </Heading>
+        <NextLink href={link} passHref>
+          <Heading fontSize='xl' key={key} cursor='pointer'>
+            <Markdown source={title} rehypePlugins={[[rehypeSanitize]]} />
+          </Heading>
+        </NextLink>
         <Divider orientation='horizontal' colorScheme='black' />
         <Text mt={4}>
           <Markdown source={body} rehypePlugins={[[rehypeSanitize]]} />

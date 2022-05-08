@@ -4,8 +4,6 @@ import {
 
 const prisma = new PrismaClient()
 
-// TODO: Update frontend [classID] to [sectionID]
-
 export default async function handler(req, res) {
   const {
     sectionID
