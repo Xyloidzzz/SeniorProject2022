@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 // TODO: This needs review once admin tools are added. Sign Up is now obsolete.
 // TODO: This should now be createStudent and a new route newInstructor
 
-async function newUser(firstname, lastname, Email, Password, Avatar, section_ID, res) {
+async function newUser(firstname, lastname, Email, Password, Avatar, section_ID, Prefix, Role, OfficeHours, Assistant, res) {
   if (firstname && lastname && Email && Password && Avatar) {
     const checkUser = await prisma.user.findUnique({
       where: {
@@ -16,16 +16,41 @@ async function newUser(firstname, lastname, Email, Password, Avatar, section_ID,
     })
     if (!checkUser) {
       try {
-        await prisma.user.create({
+        const newUser = await prisma.user.create({
           data: {
             email: Email,
             password: Password,
             firstName: firstname,
             lastName: lastname,
             avatar: Avatar,
-            prefix: 'default'
+            prefix: Prefix,
+            role: Role
           }
         })
+        if(Role == "INSTRUCTOR"){
+          await prisma.instructor.create({
+            data:{
+              userID: newUser.id,
+              officeHours: OfficeHours
+            }
+          })
+        }
+        else{
+          if(Assistant == "true"){
+            Assistant = true
+          }
+          else{
+            Assistant = false
+          }
+          console.log(newUser.id)
+          await prisma.student.create({
+            data:{
+              userID: newUser.id,
+              isAssistant: Assistant,
+              registerDate: ''
+            }
+          })
+        }
         if (section_ID) {
           //find new user id based on email
           const user = await prisma.user.findUnique({
@@ -93,11 +118,33 @@ export default async function handler(req, res) {
   const Avatar = 'default'
   const Password = req.body.password
   const sectionID = req.body.sectionID
+  const prefix = req.body.prefix
+  const role = req.body.role
+  const officeHours = req.body.officeHours
+  const assistant = req.body.assist
+
+  console.log(prefix)
+  console.log(role)
+  console.log(officeHours)
 
   if (!sectionID) {
-    newUser(firstname, lastname, Email, Password, Avatar, '', res)
+    if(role=="INSTRUCTOR"){
+      newUser(firstname, lastname, Email, Password, Avatar, '', prefix, role, officeHours, " ",res)
+    }
+    else{
+      newUser(firstname, lastname, Email, Password, Avatar, '', prefix, role, " ", assistant ,res)
+    }
+    // else{
+    //   newUser(firstname, lastname, Email, Password, Avatar, '', 'unknown', role, res)
+    // }
   } else {
-    newUser(firstname, lastname, Email, Password, Avatar, sectionID, res)
+    if(prefix){
+      newUser(firstname, lastname, Email, Password, Avatar, sectionID, prefix, role, res)
+    }
+    // else{
+    //   newUser(firstname, lastname, Email, Password, Avatar, sectionID, 'unknown', role, res)
+    // }
+    
   }
 
 }

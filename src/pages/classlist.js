@@ -60,14 +60,23 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     }
-  } else {
+  } 
+  else if(session.user.image=="ADMIN"){
+    return {
+      redirect: {
+        destination: '/AdminPg',
+        permanent: false
+      }
+    }
+  }
+  else {
     const email = session.user.email
-    console.log(session.user.name)
+    console.log(session)
     const classlists = await fetch(
       'http://localhost:3000/api/user/' + email + '/getClassLists'
     )
     const classListsInfo = await classlists.json()
-    console.log(classListsInfo)
+    //console.log(classListsInfo)
     const userRes = await fetch('http://localhost:3000/api/user/' + email)
     const user = await userRes.json()
     return {

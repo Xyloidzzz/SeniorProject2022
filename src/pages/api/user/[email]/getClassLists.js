@@ -28,7 +28,6 @@ export default async function handler(req, res) {
             role: true
         }
     })
-    console.log(checkStudent.role)
     //if user is a student
     if (checkStudent.role == "STUDENT") {
         try {
@@ -41,7 +40,6 @@ export default async function handler(req, res) {
                     classes: true
                 }
             })
-            console.log(studentInfo)
             //loop through classes array, get each classes id and save each section to getData variable
             const getData = await Promise.all(studentInfo.classes.map(async (data) => {
                 const section = await prisma.section.findUnique({
@@ -54,7 +52,7 @@ export default async function handler(req, res) {
                         id: section.classID
                     }
                 })
-                console.log(classInfo)
+                //console.log(classInfo)
                 return {
                     sectionID: section.id,
                     classID: section.classID,
