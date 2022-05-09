@@ -24,7 +24,7 @@ export default NextAuth({
                     if(user){
                         // console.log(credentials.password)
                             if(user.password==credentials.password){
-                                return {name: user.firstName + ' ' + user.lastName, email: user.email}
+                                return {name: user.firstName + ' ' + user.lastName, email: user.email, image: user.role}
                             }
                             else{
                                 throw new Error ('Could not login')
