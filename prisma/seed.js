@@ -227,6 +227,7 @@ async function main() {
   })
   const newStudentTakesSection1 = await prisma.studentTakesSection.create({
     data: {
+      id: newStudent1.id+'-'+newSection1.id,
       studentID: newStudent1.id,
       sectionID: newSection1.id,
       attendance: [{
@@ -250,6 +251,7 @@ async function main() {
   })
   const newStudentTakesSection2 = await prisma.studentTakesSection.create({
     data: {
+      id: newStudent2.id+'-'+newSection1.id,
       studentID: newStudent2.id,
       sectionID: newSection1.id,
       attendance: [{
@@ -273,6 +275,7 @@ async function main() {
   })
   const newStudentTakesSection3 = await prisma.studentTakesSection.create({
     data: {
+      id: newStudent3.id+'-'+newSection1.id,
       studentID: newStudent3.id,
       sectionID: newSection1.id,
       attendance: [{

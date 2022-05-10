@@ -10,12 +10,12 @@ import {
     IconButton,
     Container,
     Heading,
-    Spacer
+    Spacer,
   } from '@chakra-ui/react'
   import { ArrowForwardIcon } from '@chakra-ui/icons'
   import { BiArrowBack } from 'react-icons/bi'
   import { useRouter } from 'next/router'
-
+  import NextLink from 'next/link'
 
 export default function sClassCreate({studentList}){
 
@@ -54,17 +54,19 @@ export default function sClassCreate({studentList}){
                                 <Td>{val.lastName}</Td>
                                 <Td>{val.email}</Td>
                                 <Td> 
-                                    <Link>
-                                        <IconButton
-                                        aria-label='Enter Class'
-                                        size='sm'
-                                        icon={<ArrowForwardIcon />}
-                                        mt={4}
-                                        colorScheme='blue'
-                                        >
-                                        Enter
-                                        </IconButton>
-                                    </Link>
+                                    <NextLink href={val.id+'/addClsStu'}>
+                                        <Link>
+                                            <IconButton
+                                            aria-label='Enter Class'
+                                            size='sm'
+                                            icon={<ArrowForwardIcon />}
+                                            mt={4}
+                                            colorScheme='blue'
+                                            >
+                                            Enter
+                                            </IconButton>
+                                        </Link>
+                                    </NextLink>
                                 </Td>
                             </Tr>
                         ) 

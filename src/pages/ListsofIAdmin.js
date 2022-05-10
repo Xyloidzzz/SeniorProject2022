@@ -56,7 +56,7 @@ export default function insClassCreate({instructors}){
                                 <Td>{val.lastName}</Td>
                                 <Td>{val.email}</Td>
                                 <Td>
-                                    <NextLink href={val.email+'/addClsInst'}>
+                                    <NextLink href={val.id+'/addClsInst'}>
                                         <Link >
                                             <IconButton
                                             aria-label='Enter Class'
