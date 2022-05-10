@@ -42,7 +42,7 @@ const adminStudent = () => {
     const submitUser = async (e) => {
       const response = await fetch('/api/register', {
         method: 'POST',
-        body: JSON.stringify({ email, password, firstName, lastName, prefix, role, officeHours }),
+        body: JSON.stringify({ id, email, password, firstName, lastName, prefix, role, officeHours }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -57,7 +57,6 @@ const adminStudent = () => {
           isClosable:true,
           duration: 2000
         })
-        route.push("/")
         resetState()
       }
       else if(serverStatus == 404){

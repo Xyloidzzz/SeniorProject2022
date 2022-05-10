@@ -1,6 +1,7 @@
-import { Box, Divider, Flex, Heading, Spacer, VStack, Button, Link, Input, FormLabel } from '@chakra-ui/react'
+import { Box, Divider, Flex, Heading, Spacer, VStack, Button, Link, IconButton, FormLabel } from '@chakra-ui/react'
 import NextLink from 'next/link'
-
+import { signOut } from 'next-auth/react'
+import { BiLogOut } from 'react-icons/bi'
 const adminPg = () =>{
 
 return (
@@ -59,6 +60,12 @@ return (
           <br></br>
 
           <Spacer/>
+          <IconButton
+              aria-label='logout'
+              size='lg'
+              icon={<BiLogOut />}
+              onClick={() => signOut({ callbackUrl: '/' })}
+            ></IconButton>
         </VStack>
       </Box>
     </Flex>

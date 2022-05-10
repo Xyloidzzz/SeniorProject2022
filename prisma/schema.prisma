@@ -23,7 +23,7 @@ model User {
 }
 
 model Student {
-  id           String                  @id @default(cuid())
+  id           String                  @id
   registerDate String
   isAssistant  Boolean                 @default(false)
   user         User                    @relation(fields: [userID], references: [id])
@@ -34,7 +34,7 @@ model Student {
 }
 
 model Instructor {
-  id          String                     @id @default(cuid())
+  id          String                     @id
   officeHours String
   user        User                       @relation(fields: [userID], references: [id])
   userID      String                     @unique
@@ -42,7 +42,7 @@ model Instructor {
 }
 
 model Section {
-  id            String                    @id @default(cuid()) // sectionNum-classID-term-year
+  id            String                    @id // sectionNum-classID-term-year
   fullName      String?
   sectionNum    String
   term          String
@@ -92,7 +92,7 @@ model Post {
 }
 
 model StudentTakesSection {
-  id         String   @id @default(cuid()) // studentID-sectionNum-classID-term-year
+  id         String   @id  // studentID-sectionNum-classID-term-year
   finalGrade String?
   attendance Json[]
   student    Student? @relation(fields: [studentID], references: [id])
@@ -111,7 +111,7 @@ model StudentAssistsSection {
 }
 
 model InstructorTeachesSection {
-  id           String      @id @default(cuid()) // instructorID-sectionNum-classID-term-year
+  id           String      @id // instructorID-sectionNum-classID-term-year
   instructor   Instructor? @relation(fields: [instructorID], references: [id])
   instructorID String?
   section      Section?    @relation(fields: [sectionID], references: [id])

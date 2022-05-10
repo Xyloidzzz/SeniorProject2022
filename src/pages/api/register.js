@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 // TODO: This needs review once admin tools are added. Sign Up is now obsolete.
 // TODO: This should now be createStudent and a new route newInstructor
 
-async function newUser(firstname, lastname, Email, Password, Avatar, section_ID, Prefix, Role, OfficeHours, Assistant, res) {
+async function newUser(id, firstname, lastname, Email, Password, Avatar, section_ID, Prefix, Role, OfficeHours, Assistant, res) {
   if (firstname && lastname && Email && Password && Avatar) {
     const checkUser = await prisma.user.findUnique({
       where: {
@@ -30,6 +30,7 @@ async function newUser(firstname, lastname, Email, Password, Avatar, section_ID,
         if(Role == "INSTRUCTOR"){
           await prisma.instructor.create({
             data:{
+              id: id,
               userID: newUser.id,
               officeHours: OfficeHours
             }
@@ -45,6 +46,7 @@ async function newUser(firstname, lastname, Email, Password, Avatar, section_ID,
           console.log(newUser.id)
           await prisma.student.create({
             data:{
+              id: id,
               userID: newUser.id,
               isAssistant: Assistant,
               registerDate: ''
@@ -66,6 +68,7 @@ async function newUser(firstname, lastname, Email, Password, Avatar, section_ID,
           // TODO: Send a isAssistant variable with JSON admin tools (make relation)
           await prisma.student.create({
             data: {
+              id: id,
               registerDate: new Date(),
               userID: user.id
             }
@@ -112,6 +115,7 @@ async function newUser(firstname, lastname, Email, Password, Avatar, section_ID,
 
 export default async function handler(req, res) {
 
+  const id = req.body.id
   const firstname = req.body.firstName
   const lastname = req.body.lastName
   const Email = req.body.email
@@ -129,17 +133,17 @@ export default async function handler(req, res) {
 
   if (!sectionID) {
     if(role=="INSTRUCTOR"){
-      newUser(firstname, lastname, Email, Password, Avatar, '', prefix, role, officeHours, " ",res)
+      newUser(id, firstname, lastname, Email, Password, Avatar, '', prefix, role, officeHours, " ",res)
     }
     else{
-      newUser(firstname, lastname, Email, Password, Avatar, '', prefix, role, " ", assistant ,res)
+      newUser(id, firstname, lastname, Email, Password, Avatar, '', prefix, role, " ", assistant ,res)
     }
     // else{
     //   newUser(firstname, lastname, Email, Password, Avatar, '', 'unknown', role, res)
     // }
   } else {
     if(prefix){
-      newUser(firstname, lastname, Email, Password, Avatar, sectionID, prefix, role, res)
+      newUser(id, firstname, lastname, Email, Password, Avatar, sectionID, prefix, role, res)
     }
     // else{
     //   newUser(firstname, lastname, Email, Password, Avatar, sectionID, 'unknown', role, res)
