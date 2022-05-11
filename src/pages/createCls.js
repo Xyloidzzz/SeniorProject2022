@@ -25,12 +25,11 @@ import {
     const [show2,setShow2]=useState(false)
     
     const [id, setID] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [prefix, setPrefix] = useState('')
-    const [officeHours, setOffHours] = useState('')
+    const [clsTitle, setClsTitle] = useState('')
+    const [clsDesc, setClsDesc] = useState('')
+    const [clsDept, setClsDept] = useState('')
+    const [clsNum, setClsNum] = useState('')
+    const [creditH, setCreditH] = useState('')
   
     const [invalidEmail,setInvalidEmail]=useState(true)
     const [invalidPass,setInvalidPass]=useState(true)
@@ -38,10 +37,10 @@ import {
     const [invalidLname,setInvalidLname]=useState(true)
 
 
-    const submitUser = async (e) => {
-        const response = await fetch('/api/register', {
+    const submitCls = async (e) => {
+        const response = await fetch('/api/admin/createCls', {
           method: 'POST',
-          body: JSON.stringify({ email, password, firstName, lastName, prefix, role, officeHours }),
+          body: JSON.stringify({ id, clsTitle, clsDesc, clsDept, clsNum, creditH  }),
           headers: {
             'Content-Type': 'application/json',
           },
@@ -56,8 +55,6 @@ import {
             isClosable:true,
             duration: 2000
           })
-          route.push("/")
-          resetState()
         }
         else if(serverStatus == 404){
           toast({
@@ -71,6 +68,7 @@ import {
           setShow1(true)
         }
         else{
+          console.log(serverStatus)
           toast({
             title: 'Register failed',
             position:'top',
@@ -122,8 +120,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={id}
+                            onChange={(e) => setID(e.target.value)}
                         />
                         <FormLabel htmlFor='email' padding='10px'>Class Title</FormLabel>
                         <Input
@@ -136,8 +134,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={clsTitle}
+                            onChange={(e) => setClsTitle(e.target.value)}
                         />
                         
               </HStack>
@@ -153,8 +151,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={clsDesc}
+                            onChange={(e) => setClsDesc(e.target.value)}
                         />
                         <FormLabel htmlFor='email' padding='10px'>Class department</FormLabel>
                         <Input
@@ -167,8 +165,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={clsDept}
+                            onChange={(e) => setClsDept(e.target.value)}
                         />
 
               </HStack>
@@ -184,8 +182,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={clsNum}
+                            onChange={(e) => setClsNum(e.target.value)}
                         />
                         <FormLabel htmlFor='email' padding='10px'>Credit Hours</FormLabel>
                         <Input
@@ -198,8 +196,8 @@ import {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={creditH}
+                            onChange={(e) => setCreditH(e.target.value)}
                         />
                 </HStack>
                 <Button
@@ -207,7 +205,7 @@ import {
                 colorScheme='blue'
                 type='submit'
                 size="lg"
-                onClick={submitUser}
+                onClick={submitCls}
                 //disabled={isSubmitted}
               >
                 Add

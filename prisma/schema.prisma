@@ -62,7 +62,7 @@ model Section {
 }
 
 model Class {
-  id          String    @id @default(cuid())
+  id          String    @id
   title       String
   description String
   department  String
