@@ -25,24 +25,26 @@ export default function createSec({classes}) {
     const [show1,setShow1]=useState(false)
     const [show2,setShow2]=useState(false)
     
-    const [id, setID] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [prefix, setPrefix] = useState('')
-    const [officeHours, setOffHours] = useState('')
-    const [clsID, setclsID] = useState('')
+    const [secName, setSecName] = useState('')
+    const [secNum, setSecNum] = useState('')
+    const [schedule, setSchedule] = useState('')
+    const [year, setYear] = useState('')
+    const [term, setTerm] = useState('')
+    const [isOnline, setIsOn] = useState('')
+    const [Synchronous, setSynchronous] = useState('')
+    const [clsID, setClsID] = useState('')
   
     const [invalidEmail,setInvalidEmail]=useState(true)
     const [invalidPass,setInvalidPass]=useState(true)
     const [invalidFname,setInvalidFname]=useState(true)
     const [invalidLname,setInvalidLname]=useState(true)
 
-    const submitUser = async (e) => {
-      const response = await fetch('/api/register', {
+    const submitSec = async (e) => {
+      console.log(clsID)
+      const id = secNum+'-'+clsID+'-'+term+'-'+year
+      const response = await fetch('/api/admin/createSec', {
         method: 'POST',
-        body: JSON.stringify({ email, password, firstName, lastName, prefix, role, officeHours }),
+        body: JSON.stringify({ id, secName, secNum, schedule, year, term, isOnline,Synchronous, clsID }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -57,8 +59,6 @@ export default function createSec({classes}) {
           isClosable:true,
           duration: 2000
         })
-        route.push("/")
-        resetState()
       }
       else if(serverStatus == 404){
         toast({
@@ -120,20 +120,6 @@ export default function createSec({classes}) {
             <FormControl isRequired>
             
                 <HStack>
-                    <FormLabel htmlFor='firstName' padding='10px'>Section ID</FormLabel>
-                        <Input
-                            id='section ID'
-                            type='number'
-                            size='sm'
-                            variant='outline'
-                            // borderColor={invalidFname?'gray.400':'red.400'}
-                            // _hover={{
-                            //   borderColor: 'gray.600',
-                            // }}
-                            focusBorderColor='black'
-                            value={id}
-                            onChange={(e) => setID(e.target.value)}
-                        />
                         <FormLabel htmlFor='firstName' padding='10px'>Section Name</FormLabel>
                         <Input
                             id='section name'
@@ -145,8 +131,8 @@ export default function createSec({classes}) {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            value={secName}
+                            onChange={(e) => setSecName(e.target.value)}
                         />
                        
                 </HStack>
@@ -162,8 +148,8 @@ export default function createSec({classes}) {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            value={secNum}
+                            onChange={(e) => setSecNum(e.target.value)}
                         />
                         
                         <FormLabel htmlFor='text' padding='10px'>Schedule</FormLabel>
@@ -176,8 +162,8 @@ export default function createSec({classes}) {
                           //borderColor={invalidPass?'gray.400':'red.400'}
                           //_hover={{ borderColor: 'gray.600' }}
                           focusBorderColor='black'
-                          value={officeHours}
-                          onChange={(e) => setOffHours(e.target.value)}
+                          value={schedule}
+                          onChange={(e) => setSchedule(e.target.value)}
                         />
                 </HStack>
 
@@ -192,8 +178,8 @@ export default function createSec({classes}) {
                             //borderColor={invalidPass?'gray.400':'red.400'}
                             //_hover={{ borderColor: 'gray.600' }}
                             focusBorderColor='black'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
                         />
                         <FormLabel htmlFor='email' padding='10px'>Term</FormLabel>
                         <Input
@@ -206,24 +192,24 @@ export default function createSec({classes}) {
                             //   borderColor: 'gray.600',
                             // }}
                             focusBorderColor='black'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={term}
+                            onChange={(e) => setTerm(e.target.value)}
                         />
 
                         <FormLabel htmlFor='password' padding='10px'>Is Online</FormLabel>
-                        <Select placeholder='Select option' onChange={(e)=>setPrefix(e.target.value)}>
+                        <Select placeholder='Select option' onChange={(e)=>setIsOn(e.target.value)}>
                             <option value={true}>Yes</option>
                             <option value={false}>No</option>
                         </Select>
 
                         <FormLabel htmlFor='password' padding='10px'>Synchronous</FormLabel>
-                        <Select placeholder='Select option' onChange={(e)=>setPrefix(e.target.value)}>
+                        <Select placeholder='Select option' onChange={(e)=>setSynchronous(e.target.value)}>
                             <option value={true}>Yes</option>
                             <option value={false}>No</option>
                         </Select>
 
                         <FormLabel htmlFor='password' padding='10px'>Class ID</FormLabel>
-                        <Select placeholder='Select Class ID' onChange={(e)=>setclsID(e.target.value)}>
+                        <Select placeholder='Select Class ID' onChange={(e)=>setClsID(e.target.value)}>
                             {classes.data.map((item) => {
                                 return(
                                     <option key = { item.classNum} value={item.id}>{item.id}</option>
@@ -238,7 +224,7 @@ export default function createSec({classes}) {
                 colorScheme='blue'
                 type='submit'
                 size="lg"
-                onClick={submitUser}
+                onClick={submitSec}
                 //disabled={isSubmitted}
               >
                 Add
