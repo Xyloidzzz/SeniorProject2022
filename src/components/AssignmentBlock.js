@@ -1,5 +1,4 @@
 import { Flex, Box, Heading, Divider, Text } from '@chakra-ui/react'
-import { AiOutlineEyeInvisible } from 'react-icons/ai'
 import dynamic from 'next/dynamic'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
@@ -18,13 +17,40 @@ const Markdown = dynamic(
 
 const AssignmentBlock = ({
   key,
+  assignmentID,
   title,
   description,
   isHidden,
   userData,
+  classData,
   link,
   ...rest
 }) => {
+  const displaySideValue = () => {
+    const assignment = classData.assignments.find(
+      (assignment) => assignment.assignmentID === assignmentID
+    )
+    if (userData.isStudent) {
+      // find grade based on assignmentID and userID
+      const grade = assignment.grades.find(
+        (grade) => grade.userID === userData.id
+      )
+      if (grade) {
+        return grade.grade
+      } else {
+        return 'Not Graded'
+      }
+    } else {
+      // calculate class average based on assignment id on classData
+      if (assignment) {
+        const average = assignment.grades.reduce((acc, grade) => parseFloat(acc) + parseFloat(grade.grade), 0) / assignment.grades.length
+        return average.toFixed(2)
+      } else {
+        return 'N/A'
+      }
+    }
+  }
+
   return (
     <Flex
       width='full'
@@ -47,13 +73,11 @@ const AssignmentBlock = ({
           <Markdown source={description} rehypePlugins={[[rehypeSanitize]]} />
         </Text>
       </Box>
-      <Box
-        width='full'
-        flex='1'
-        align='right'
-        display={isHidden && !userData.isStudent ? 'block' : 'none'}
-      >
-        <AiOutlineEyeInvisible />
+      <Box width='full' flex='1' align='right' display='block'>
+        <Text fontWeight='bold' fontSize='sm'>
+          {userData.isStudent ? 'Grade' : 'Class Average'}
+        </Text>
+        {displaySideValue()}
       </Box>
     </Flex>
   )

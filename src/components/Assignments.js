@@ -1,9 +1,21 @@
-import { Button, Spacer, VStack } from '@chakra-ui/react'
+import { Box, Button, Spacer, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import AssignmentBlock from '@/components/AssignmentBlock'
 
 const Assignments = ({ userData, classData, ...rest }) => {
   const router = useRouter()
+
+  const getFinalGrade = () => {
+    // find finalGrade in classData.grades based on userID
+    const finalGrade = classData.grades.find(
+      (grade) => grade.userID === userData.id
+    )
+    if (finalGrade) {
+      return parseFloat(finalGrade.finalGrade).toFixed(2)
+    } else {
+      return 'Not Available'
+    }
+  }
 
   return (
     <VStack>
@@ -12,9 +24,11 @@ const Assignments = ({ userData, classData, ...rest }) => {
           <AssignmentBlock
             key={assignment.assignmentID}
             userData={userData}
+            classData={classData}
             title={assignment.title}
             description={assignment.description}
             isHidden={assignment.isHidden}
+            assignmentID={assignment.assignmentID}
             link={
               '/classroom/' +
               classData.sectionID +
@@ -36,6 +50,14 @@ const Assignments = ({ userData, classData, ...rest }) => {
       >
         + New Assignment
       </Button>
+      <Box
+        width='full'
+        mt={4}
+        style={{ display: !userData.isStudent ? 'none' : 'block' }}
+      >
+        <Text fontWeight='bold'>Final Grade:</Text>
+        {getFinalGrade()}
+      </Box>
     </VStack>
   )
 }

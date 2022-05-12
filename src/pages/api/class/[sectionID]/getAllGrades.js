@@ -67,6 +67,7 @@ export default async function handler(req, res) {
       })
       const gradeInfo = {
         studentID: studentInfo.id,
+        userID: studentInfo.userID,
         firstName: user.firstName,
         lastName: user.lastName,
         assignmentInfo: getStudentAssignment,
