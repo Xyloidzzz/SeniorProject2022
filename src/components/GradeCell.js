@@ -10,8 +10,10 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import updateFinalGrade from '../pages/api/grades/updateFinalGrade'
+import { useRouter } from 'next/router'
 
 // TODO: Save Button grays out when shit doesn't match DB and onClick will change DB grade for specific assignment
+
 
 const isValidGrade = (grade) => {
   return grade >= 0 && /[0-9]/.test(grade) ? true : false
@@ -28,6 +30,8 @@ const GradeCell = ({
   const [preValue, setPreValue] = useState(defaultValue)
   const [valid, setValid] = useState(true)
 
+  const router = useRouter()
+  
   const toast = useToast()
 
   const updateFinalGrade = async () => {
@@ -64,6 +68,7 @@ const GradeCell = ({
         isClosable: true,
         duration: 2000,
       })
+      router.reload(window.location.pathname)
       updateFinalGrade()
     } else {
       toast({
