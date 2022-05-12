@@ -1,31 +1,9 @@
-import {
-  Flex,
-  Box,
-  Heading,
-  Divider,
-  Text,
-  Button,
-  Spacer,
-  VStack,
-} from '@chakra-ui/react'
-import { useState } from 'react'
-import dynamic from 'next/dynamic'
-import '@uiw/react-md-editor/markdown-editor.css'
-import '@uiw/react-markdown-preview/markdown.css'
-import rehypeSanitize from 'rehype-sanitize'
-import { useRouter } from 'next/router'
+import { Button, Spacer, VStack } from '@chakra-ui/react'
 import AnnouncementBlock from '@/components/AnnouncementBlock'
-
-const Markdown = dynamic(
-  () => import('@uiw/react-markdown-preview').then((mod) => mod.default),
-  { ssr: false }
-)
+import { useRouter } from 'next/router'
 
 const Announcements = ({ userData, classData, ...rest }) => {
   const router = useRouter()
-  const [value, setValue] = useState(
-    '# Test Post\n\nThis is a test *markdown* post.\n\nIt uses states to provide us with the shit below.'
-  )
 
   return (
     <VStack>

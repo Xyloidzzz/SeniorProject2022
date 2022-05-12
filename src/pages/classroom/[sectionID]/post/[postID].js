@@ -1,12 +1,4 @@
-import {
-  Flex,
-  Box,
-  VStack,
-  Heading,
-  Divider,
-  Spacer,
-  Text,
-} from '@chakra-ui/react'
+import { Flex, Box, VStack, Heading, Divider, Text } from '@chakra-ui/react'
 import HeadInfo from '@/components/HeadInfo.js'
 import SideBar from '@/components/SideBar'
 import { getSession } from 'next-auth/react'
@@ -30,7 +22,11 @@ export default function FullPost({ userData, classData }) {
   )
   return (
     <Flex width='full' m='0' p='0'>
-      <HeadInfo title='Classroom' keyword='classroom' description='classroom' />
+      <HeadInfo
+        title={post.title.replace(/#/g, '')}
+        keyword='post'
+        description='Single Post'
+      />
       <Box width='full' flex='1'>
         <SideBar
           userData={userData}

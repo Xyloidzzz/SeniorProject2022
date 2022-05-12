@@ -117,7 +117,67 @@ export default async function handler(req, res) {
       }
       return studentInfo
     }))
-    // TODO: assistants, assignments individual queries (whenever they become relevant)
+    // TODO: assistants individual queries (whenever they become relevant)
+    const findAssignments = await Promise.all(findSection.assignments.map(async (assignmentRelation) => {
+      const findAssignment = await prisma.assignment.findUnique({
+        where: {
+          id: assignmentRelation.assignmentID
+        },
+      })
+      const studentsAssigned = await prisma.studentHasAssignment.findMany({
+        where: {
+          assignmentID: findAssignment.id
+        },
+      })
+      // for each studentAssigned, find the student's user block (firstName, lastName, email, userID, and studentID)
+      // shove into big array along with thier grade for this assignment
+      const studentsAssignedInfo = await Promise.all(studentsAssigned.map(async (studentAssignedRelation) => {
+        const findStudent = await prisma.student.findUnique({
+          where: {
+            id: studentAssignedRelation.studentID
+          },
+          select: {
+            id: true,
+            userID: true
+          }
+        })
+        const findStudentUser = await prisma.user.findUnique({
+          where: {
+            id: findStudent.userID
+          },
+          select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+          }
+        })
+        const studentAssignInfo = {
+          studentID: findStudent.id,
+          userID: findStudentUser.id,
+          email: findStudentUser.email,
+          firstName: findStudentUser.firstName,
+          lastName: findStudentUser.lastName,
+          grade: studentAssignedRelation.grade,
+          assignmentID: studentAssignedRelation.assignmentID,
+        }
+        return studentAssignInfo
+      }))
+      const assignmentInfo = {
+        assignmentID: findAssignment.id,
+        createdAt: findAssignment.createdAt,
+        updatedAt: findAssignment.updatedAt,
+        title: findAssignment.title,
+        description: findAssignment.description,
+        dueDate: findAssignment.dueDate,
+        attachments: findAssignment.attachments,
+        isHidden: assignmentRelation.isHidden,
+        type: assignmentRelation.type,
+        weight: assignmentRelation.weight,
+        grades: studentsAssignedInfo,
+      }
+      return assignmentInfo
+    }))
     const findPosts = await Promise.all(findSection.posts.map(async (postRelation) => {
       const findPost = await prisma.post.findUnique({
         where: {
@@ -153,7 +213,7 @@ export default async function handler(req, res) {
       instructor: instructorInfo,
       students: findStudents,
       assistants: findSection.assistants,
-      assignments: findSection.assignments,
+      assignments: findAssignments,
       posts: findPosts,
       allClassSections: findClass.sections,
     }

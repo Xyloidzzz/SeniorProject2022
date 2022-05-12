@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import ClassTable from '@/components/ClassTable'
 import Announcements from '@/components/Announcements'
+import Assignments from '@/components/Assignments'
 import NewPost from './NewPost'
 
 // TODO: if we ever make Notes a thing this is where they would show? along with the sidebar
@@ -30,7 +31,7 @@ const ClassroomMain = ({ userData, title, classData, where }) => {
     }
     if (where === 'assignments') {
       // TODO: PASS isStudent to this component
-      return <Heading width='full'> PLACEHOLDER </Heading>
+      return <Assignments userData={userData} classData={classData} />
     }
     if (where === 'settings') {
       // TODO: PASS isStudent to this component
